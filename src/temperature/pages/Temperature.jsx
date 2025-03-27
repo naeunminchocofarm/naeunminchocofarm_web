@@ -11,7 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { insertNowTemp, insertTempHour } from "../apis/exdata";
-import TestM from "../../pages/TestM";
+
 
 // Register required components for Chart.js
 ChartJS.register(
@@ -49,8 +49,7 @@ const Temperature = () => {
     insertTempHour()
       .then((res) => {
         setTemperature(res.data);
-        console.log([res.data]);
-        console.log("temp"+temperature);
+        console.log(res.data);
       })
       .catch((error) => console.log(error));
 
@@ -63,7 +62,7 @@ const Temperature = () => {
         setTempLight(false);
       }
     };
-  }, [temperature]);
+  }, [nowTemp]);
 
   const labels = Array.from({ length: 24 }, (_, i) => `${i + 1}시`);
   const data = {
@@ -74,7 +73,9 @@ const Temperature = () => {
     datasets: [
       {
         label: "평균온도 (°C)",
-        data: temperature, // 시간별 가상데이터 분리
+        data: temperature.map((time,i)=>{return(
+          time.temperatureC
+        )}), // 시간별 가상데이터 분리
         borderColor: "rgb(79, 192, 75)",
         backgroundColor: "rgba(7, 255, 19, 0.2)",
         fill: true, // 하단채움
