@@ -1,33 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsChevronDown, BsClipboardData, BsFlower3, BsPlusLg } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const UserHeader = () => {
-  function toggleMenu() {
-    document.getElementById("dropdown-nav-list").classList.toggle("hidden");    
-  }
-  // Close the dropdown if the user clicks outside of it
-  window.onclick = function(e) {
-    if (!e.target.matches('#dropdown-nav-list')) {
-    var myDropdown = document.getElementById("dropdown-nav-list");
-      if (myDropdown.classList.contains('hidden')) {
-        myDropdown.classList.remove('hidden');
-      }
-    }
-  }
+  const [isMenu, openMenu] = useState("header");
+  const toggleMenu = (e) => {
+    openMenu(!isMenu);
+    //토글이되려면 boolean값 if로 header에서 구분
+  };
 
   return (
     <>
       <header className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0">
+        나은민초코팜
         <aside
           id="sidebar-multi-level-sidebar"
           aria-label="Sidebar"
         >
           <div className="h-full px-3 py-4 overflow-y-auto bg-white">
             <ul className="space-y-2 font-semibold">
-              <li className="font-extrabold">
-                <Link to="/home">나은민초코팜 logo</Link>
-              </li>
               <li>
                 <Link
                   to="/home"
@@ -52,7 +43,7 @@ const UserHeader = () => {
                 </button>
                 <ul
                   id="dropdown-nav-list"
-                  className="py-2 space-y-2 transition duration-75 "
+                  className="py-2 space-y-2 transition duration-75 isMenu"                  
                 >
                   {/* 나중에 map 변수 돌려야하는 영역 지금은 몇개만 */}
                   <li className="nav-sub">
