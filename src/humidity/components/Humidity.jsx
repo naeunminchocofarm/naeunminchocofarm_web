@@ -75,9 +75,9 @@ const Humidity = () => {
           </div>
       </Card>
 
-      <Card>
+      {/* <Card>
         <p>Hello, World!</p>
-      </Card>
+      </Card> */}
 
       <Card>
         <soilHumidity  />
