@@ -1,30 +1,43 @@
+import { Stomp } from "@stomp/stompjs";
 import { useEffect, useRef, useState } from "react";
+import SockJS from "sockjs-client";
 
 export default function ExampleWebSocketPage() {
+  const [message, setMessage] = useState('');
   const [received, setReceived] = useState('');
-  const socket = useRef(undefined);
+  const socketClient = useRef(undefined);
 
   useEffect(init, []);
 
   function init() {
-    const sk = new WebSocket('ws://localhost:8081/ws');
-    sk.onopen = () => {
-      console.log('WebSocket 연결!');
-    }
+    const client = Stomp.over(new SockJS('http://localhost:8081/ws'));
 
-    sk.onmessage = e => {
-      setReceived(e.data);
-    }
+    client.connect({}, frame => {
+      console.log('Connected: ' + frame);
 
-    sk.onclose = () => {
-      console.log('WebSocket 연결 종료!');
-    }
+      // 서버 구독
+      client.subscribe('/subscribes/test-subject', messageOutput => {
+        setReceived(messageOutput.body);
+      });
 
-    socket.current = sk;
-    
+      socketClient.current = client;
+      client.disconnect
+    });
+
     return () => {
-      
+      if (socketClient.current) {
+        socketClient.current.disconnect();
+        socketClient.current = undefined;
+      }
     }
+  }
+
+  function sendMessage() {
+    if (socketClient.current) {
+      socketClient.current.send('/publish/test-send', {}, message);
+    }
+    
+    setMessage('');
   }
 
   const containerCss = "p-5";
@@ -32,18 +45,13 @@ export default function ExampleWebSocketPage() {
   const inputCss = "border border-gray-600 rounded-lg outline-purple-600 mx-3";
   const btnCss = "px-5 rounded-md hover:cursor-pointer hover:bg-purple-600 hover:text-white border border-purple-600"
 
-  function sendMessage() {
-    const socket = new WebSocket('ws://localhost:8081/ws');
-    socket.onopen
-  }
-
   return (
     <>
       <div className={containerCss}>
         <h1 className={titleCss}>WebSocket Example Page</h1>
         <label>
           text: 
-          <input type="text" className={inputCss}/>
+          <input type="text" className={inputCss} value={message} onChange={e => setMessage(e.target.value)}/>
         </label>
         <button type="button" className={btnCss} onClick={sendMessage}>send</button>
         <div>server: {received}</div>
