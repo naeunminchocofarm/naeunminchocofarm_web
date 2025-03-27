@@ -1,7 +1,31 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ExampleWebSocketPage() {
   const [received, setReceived] = useState('');
+  const socket = useRef(undefined);
+
+  useEffect(init, []);
+
+  function init() {
+    const sk = new WebSocket('ws://localhost:8081/ws');
+    sk.onopen = () => {
+      console.log('WebSocket 연결!');
+    }
+
+    sk.onmessage = e => {
+      setReceived(e.data);
+    }
+
+    sk.onclose = () => {
+      console.log('WebSocket 연결 종료!');
+    }
+
+    socket.current = sk;
+    
+    return () => {
+      
+    }
+  }
 
   const containerCss = "p-5";
   const titleCss = "text-4xl font-bold mb-10";
@@ -9,7 +33,8 @@ export default function ExampleWebSocketPage() {
   const btnCss = "px-5 rounded-md hover:cursor-pointer hover:bg-purple-600 hover:text-white border border-purple-600"
 
   function sendMessage() {
-    
+    const socket = new WebSocket('ws://localhost:8081/ws');
+    socket.onopen
   }
 
   return (
