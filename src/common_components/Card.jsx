@@ -1,5 +1,5 @@
 export default function Card({ children, className = "" }) {
-  const cardCss = `rounded-xl bg-red-50 p-4 w-fit ${className}`;
+  const cardCss = `rounded-xl bg-white shadow-md p-4 w-full ${className}`;
 
   return (
     <>
