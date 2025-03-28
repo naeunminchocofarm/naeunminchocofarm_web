@@ -1,114 +1,90 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsChevronDown, BsClipboardData, BsFlower3, BsPlusLg } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import logo from '../assets/images/layouts/h1-logo.png';
 
 const UserHeader = () => {
-  function toggleMenu() {
-    document.getElementById("dropdown-nav-list").classList.toggle("hidden");    
-  }
-  // Close the dropdown if the user clicks outside of it
-  window.onclick = function(e) {
-    if (!e.target.matches('#dropdown-nav-list')) {
-    var myDropdown = document.getElementById("dropdown-nav-list");
-      if (myDropdown.classList.contains('hidden')) {
-        myDropdown.classList.remove('hidden');
-      }
+  const [activeMenu, setActiveMenu] = useState(null); // 현재 열린 메뉴를 추적
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // 사이드바 열림 상태
+  
+  // 메뉴 토글 함수
+  const toggleMenu = (menu) => {
+    setActiveMenu(activeMenu === menu ? null : menu); // 동일한 메뉴를 다시 클릭하면 토글
+  };
+  
+  // 사이드바 토글 함수 (링크 클릭 시 사이드바 숨기기)
+  const closeSidebar = () => {
+    setIsSidebarOpen(false); // 링크 클릭 시 사이드바 숨기기
+  };
+
+  // 메뉴 데이터 배열 (반복되는 부분을 배열로 관리)
+  const menuItems = [
+    {
+      name: "My Farm",
+      link: "/home",
+      icon: <BsClipboardData />,
+      subMenu: []
+    },
+    {
+      name: "작물1",
+      link: "#",
+      icon: <BsFlower3 />,
+      subMenu: [
+        { name: "온도", link: "/temp" },
+        { name: "습도", link: "/hume" },
+        { name: "조도량", link: "/examples/chart" }
+      ]
+    },
+    {
+      name: "신규작물추가",
+      link: "#",
+      icon: <BsFlower3 />,
+      subMenu: []
     }
-  }
+  ];
 
   return (
-    <>
-      <header className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0">
-        <aside
-          id="sidebar-multi-level-sidebar"
-          aria-label="Sidebar"
-        >
-          <div className="h-full px-3 py-4 overflow-y-auto bg-white">
-            <ul className="space-y-2 font-semibold">
-              <li className="font-extrabold">
-                <Link to="/home">나은민초코팜 logo</Link>
-              </li>
-              <li>
+    <header className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform transform sm:translate-x-0 translate-x-full">
+      <h2 className="w-full p-4 pb-0"><img src={logo} alt="logo" className="w-full"/></h2>
+      <aside id="sidebar-multi-level-sidebar" aria-label="Sidebar">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-white">
+          <ul className="space-y-2 font-semibold">
+            {menuItems.map((item, index) => (
+              <li key={index}>
                 <Link
-                  to="/home"
-                  className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+                  className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-300"
+                  onClick={() => toggleMenu(item.name)} // 메뉴 이름을 기준으로 토글
+                  to={item.link} // 링크 이동
                 >
-                  <BsClipboardData /> My Farm
+                  {item.icon}
+                  <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                    {item.name}
+                  </span>
+                  {item.subMenu.length > 0 && <BsChevronDown />} {/* 서브 메뉴가 있을 때만 아이콘 표시 */}
                 </Link>
+
+                {/* 서브 메뉴가 있을 경우 토글된 상태에 따라 보여주기 */}
+                {item.subMenu.length > 0 && activeMenu === item.name && (
+                  <ul className="py-2 space-y-2 transition duration-75">
+                    {item.subMenu.map((subItem, subIndex) => (
+                      <li key={subIndex}>
+                        <Link
+                          to={subItem.link}
+                          onClick={closeSidebar} // 서브 메뉴 클릭 시 사이드바 숨기기
+                          className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group"
+                        >
+                          {subItem.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
-              {/* 작물추가용 메뉴 */}
-              <li>
-                <button
-                  type="button"
-                  className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-300 "
-                  id="dropdown-nav"
-                  onClick={(e)=>{toggleMenu(e);}}
-                >
-                  <BsFlower3 />
-                  <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
-                    작물1
-                  </span>
-                  <BsChevronDown />
-                </button>
-                <ul
-                  id="dropdown-nav-list"
-                  className="py-2 space-y-2 transition duration-75 "
-                >
-                  {/* 나중에 map 변수 돌려야하는 영역 지금은 몇개만 */}
-                  <li className="nav-sub">
-                    <Link
-                      to="/temp"
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group"
-                    >
-                      온도
-                    </Link>
-                  </li>
-                  <li className="nav-sub">
-                    <Link
-                      to="/hume"
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group"
-                    >
-                      습도
-                    </Link>
-                  </li>
-                  <li className="nav-sub">
-                    <Link
-                      to="/examples/chart"
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group"
-                    >
-                      조도량
-                    </Link>
-                  </li>
-                  {/* 나중에 map 변수 돌려야하는 영역 지금은 몇개만 */}
-                </ul>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-300 "
-                  id="dropdown-nav-sub" data-dropdown-toggle="dropdown"
-                >
-                  <BsFlower3 />
-                  <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
-                    신규작물추가
-                  </span>
-                  <BsPlusLg />
-                </button>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  icon
-                  <span className="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </aside>
-      </header>
-    </>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </header>
   );
 };
 
