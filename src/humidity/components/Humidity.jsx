@@ -12,6 +12,7 @@ import humidityApi from "../apis/humidity_api";
 import CurrentHumidity from "./CurrentHumidity";
 import Card from "../../common_components/Card";
 import HumidityChart from "./HumidityChart";
+import SoilHumidity from "./SoilHumidity";
 
 Chart.register(...registerables);
 
@@ -65,22 +66,22 @@ const Humidity = () => {
   
   return (
     <>
-
+      {/* Card에는 className 주면 안됨! 따로 감쌀 태그 만들어서 flex 주기!*/}
       <Card className="flex items-center">
-          <div>
-            <CurrentHumidity currentHumidity={currentHumidity} />
-          </div>
-          <div className="">
-            <HumidityChart humidities={humidities}/>
-          </div>
+        <div>
+          <CurrentHumidity currentHumidity={currentHumidity} />
+        </div>
+        <div className="">
+          <HumidityChart humidities={humidities}/>
+        </div>
       </Card>
 
-      <Card>
+      {/* <Card>
         <p>Hello, World!</p>
-      </Card>
+      </Card> */}
 
       <Card>
-        <soilHumidity  />
+        <SoilHumidity soilHumidity={soilHumidity}/>
       </Card>
 
       {/* 현재 토양 습도 */}
