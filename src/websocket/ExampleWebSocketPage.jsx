@@ -1,6 +1,5 @@
-import { Stomp } from "@stomp/stompjs";
 import { useEffect, useRef, useState } from "react";
-import SockJS from "sockjs-client";
+import ncfApiWebSocketHandler from "./ncf_api_websocket_client";
 
 export default function ExampleWebSocketPage() {
   const [message, setMessage] = useState('');
@@ -10,18 +9,14 @@ export default function ExampleWebSocketPage() {
   useEffect(init, []);
 
   function init() {
-    const client = Stomp.over(new SockJS('http://localhost:8081/ws'));
+    const client = ncfApiWebSocketHandler.createTestClient();
 
-    client.connect({}, frame => {
+    ncfApiWebSocketHandler.connect(client, {}, frame => {
       console.log('Connected: ' + frame);
-
-      // 서버 구독
-      client.subscribe('/subscribes/test-subject', messageOutput => {
+      ncfApiWebSocketHandler.subscribeTest(client, messageOutput => {
         setReceived(messageOutput.body);
-      });
-
+      })
       socketClient.current = client;
-      client.disconnect
     });
 
     return () => {
