@@ -9,8 +9,8 @@ export default function Router() {
   return (
     <>
       <Routes>
-        <Route path="/examples/chart" element={<ExamChart />} />
 
+        <Route path="/examples/chart" element={<ExamChart />} />
         {/* user */}
         <Route element={<AppLayout />}>
           <Route path="/home" element={<Home />} />
