@@ -4,6 +4,7 @@ import ExamChart from "./humidity/pages/ExamChart";
 import Temperature from "./temperature/pages/Temperature";
 import Home from "./pages/Dashboard/Home";
 import AppLayout from "./layout/AppLayout";
+import SunshinePage from "./sunshine/pages/SunshinePage";
 
 export default function Router() {
   return (
@@ -17,6 +18,7 @@ export default function Router() {
           <Route path="/temp" element={<Temperature />} />
           <Route path="/new" element={<Temperature />} />
           <Route path="/hume" element={<ExamChart />} />
+          <Route path="/sunshine" element={<SunshinePage/>}/>
         </Route>
 
         {/* 페이지없음 */}
