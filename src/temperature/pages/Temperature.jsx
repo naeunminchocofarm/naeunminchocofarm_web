@@ -31,7 +31,7 @@ const Temperature = () => {
   // 시간별 온도
   const [temperature, setTemperature] = useState([]);
 
-  // 현재 온도
+  // 현재 온도 <RecentTemp/>
   const [nowTemp, setNowTemp] = useState(0);
 
   //불켜짐 여부
@@ -88,6 +88,10 @@ const Temperature = () => {
   // Chart options
   const options = {
     responsive: true,
+    scales: {
+      x: { title: { display: true, text: "일 시간별 온도" } },
+      y: { title: { display: true, text: "온도 (°C)" } },
+    },
     plugins: {
       tooltip: {
         callbacks: {
@@ -96,10 +100,6 @@ const Temperature = () => {
         },
       },
     },
-    scales: {
-      x: { title: { display: true, text: "일 시간별 온도" } },
-      y: { title: { display: true, text: "온도 (°C)" } },
-    },
   };
 
   return (
@@ -107,7 +107,9 @@ const Temperature = () => {
       <div className="content-area">
         <div className="temp-area">
           <p>온도</p>
-          <div>현재온도 {nowTemp}</div>
+          {/* <div>현재온도 {nowTemp}</div>
+            nowtemp 실시간온도 <RecentTemp/>확인 
+          */}
           <Line options={options} data={data} />
         </div>
         <div className="setting-area">
