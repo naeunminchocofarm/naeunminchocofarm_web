@@ -5,6 +5,8 @@ const Awning = () => {
   const [autoAwning, setAutoAwning] = useState(false);
   const [manualAwning, setManualAwning] = useState(false);
 
+  
+
   return (
     <div>
       {/* 자동 어닝 시스템 */}
