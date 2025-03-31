@@ -45,7 +45,7 @@ const Sunshine = () => {
 
       {/* 어닝 시스템 */}
       <Card>
-        <Awning />
+        <Awning currentSunshine={currentSunshine} setCurrentSunshine={setCurrentSunshine}/>
       </Card>
 
       {/* 하루 일조량 그래프 */}

@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import sunshineApi from '../apis/sunshine_api';
 
-const Awning = () => {
+const Awning = ({setCurrentSunshine}) => {
   // 어닝 작동 여부
   const [autoAwning, setAutoAwning] = useState(false);
   const [manualAwning, setManualAwning] = useState(false);
 
-  
+  useEffect(() => {
+    const sunshineData = async () => {
+      try {
+        const response = await sunshineApi.getAll();
+        if (response.data.length > 0) {
+          const latestSunshine = response.data[response.data.length - 1].sunshineValue;
+          setCurrentSunshine(latestSunshine);
+
+          // 일조량이 일정 수준 이상이면 자동 어닝 작동
+          setAutoAwning(latestSunshine > 500); // 500 임시 값
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    sunshineData();
+    const intervalId = setInterval(sunshineData, 600000);
+    return () => clearInterval(intervalId);
+  }, []);
+
 
   return (
     <div>
