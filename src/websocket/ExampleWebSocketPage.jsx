@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import ncfApiWebSocketHandler from "./ncf_api_websocket_client";
+import NcfSubscriber from "./ncf_subscriber";
+import { webSocketPaths, subscribePaths } from "./wobsocket_paths";
 
 export default function ExampleWebSocketPage() {
   const [message, setMessage] = useState('');
@@ -9,27 +10,29 @@ export default function ExampleWebSocketPage() {
   useEffect(init, []);
 
   function init() {
-    const client = ncfApiWebSocketHandler.createTestClient();
+    const ncfSubscriber = new NcfSubscriber(webSocketPaths.local, subscribePaths.testSubject);
 
-    ncfApiWebSocketHandler.connect(client, {}, frame => {
-      console.log('Connected: ' + frame);
-      ncfApiWebSocketHandler.subscribeTest(client, messageOutput => {
-        setReceived(messageOutput.body);
-      })
-      socketClient.current = client;
-    });
+    ncfSubscriber.onOpen = function(e) {
+      ncfSubscriber.subscribe();
+    }
+
+    ncfSubscriber.onMessage = function(frame) {
+      setReceived(frame.body);
+    }
+
+    socketClient.current = ncfSubscriber;
 
     return () => {
       if (socketClient.current) {
-        socketClient.current.disconnect();
+        socketClient.current.close();
         socketClient.current = undefined;
       }
     }
   }
 
   function sendMessage() {
-    if (socketClient.current) {
-      socketClient.current.send('/publish/test-send', {}, message);
+    if (socketClient.current && socketClient.current.gerReadyState() === WebSocket.OPEN) {
+      socketClient.current.send(message);
     }
     
     setMessage('');
