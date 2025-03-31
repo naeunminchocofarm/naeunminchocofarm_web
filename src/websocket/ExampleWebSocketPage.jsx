@@ -31,7 +31,7 @@ export default function ExampleWebSocketPage() {
   }
 
   function sendMessage() {
-    if (socketClient.current && socketClient.current.gerReadyState() === WebSocket.OPEN) {
+    if (socketClient.current && socketClient.current.getReadyState() === WebSocket.OPEN) {
       socketClient.current.send(message);
     }
     

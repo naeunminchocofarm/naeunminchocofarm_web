@@ -8,6 +8,8 @@ function NcfSubscriber(webSocketPath, destination) {
   this.onMessage = _ => {};
   this.onSubscribeFaild = _ => {};
   this.onSubscribeSuccess = _ => {};
+  this.onClose = _ => {};
+  this.onError = _ => {};
 
   this.socket.onopen = e => {
     this.onOpen(e);
@@ -30,8 +32,11 @@ function NcfSubscriber(webSocketPath, destination) {
     };
   };
   this.socket.onerror = e => {
-    console.error(e);
+    this.onError(e);
   };
+  this.socket.onclose = e => {
+    this.onClose(e);
+  }
 }
 
 function _send(socket, message) {
@@ -58,7 +63,7 @@ NcfSubscriber.prototype.close = function() {
   this.socket.close();
 }
 
-NcfSubscriber.prototype.gerReadyState = function() {
+NcfSubscriber.prototype.getReadyState = function() {
   return this.socket.readyState;
 }
 
