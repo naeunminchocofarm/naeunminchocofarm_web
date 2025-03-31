@@ -1,4 +1,13 @@
-export default function Dayjs() {
-  const day = dayjs(exdata.measuredAt).format("YYYY.MM.DD HH:mm:ss");
-  return day;
-}
+import React from 'react';
+import dayjs from 'dayjs';
+
+const CurrentDate = () => {
+  const now = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  return (
+    <>
+      {now}
+    </>
+  );
+};
+
+export default CurrentDate;
