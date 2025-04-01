@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from "react";
+import { insertNowTemp } from "../apis/tempData";
 
 const RecentTemp = () => {
-  // 최신 온도
   const [nowTemp, setNowTemp] = useState(0);
 
-  useEffect(()=>{
-    
-  },[nowTemp]);
+  useEffect(() => {
+    insertNowTemp()
+      .then((res) => {
+        setNowTemp(res.data[0].temperatureC);
+        console.log(res.data[0].temperatureC);
+      })
+      .catch((error) => console.log(error));
+  }, [nowTemp]);
 
-  return (
-    {nowTemp}
-  )
-}
+  return <>{nowTemp}</>;
+};
 
-export default RecentTemp
+export default RecentTemp;

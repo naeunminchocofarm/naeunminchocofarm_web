@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const VideoComp = () => {
   const [isMovig, setIsMoving] = useState(false);
+  const [cameraLink,setCameraLink] = useState(null);
+  useEffect(()=>{
+    setCameraLink(cameraLink)
+  },[])
+
   return (
     <>
       <div className="flex flex-col">
@@ -17,13 +22,12 @@ const VideoComp = () => {
           </div>
         </div>
         <div className="compCont">
-          {/* 생각해보니.... 카메라가 1개니깐 움직임 감지되면 상태변경 */}
           <div className="compCcty compCctyOne">
             <p className="flex justify-between compCctyTitle pb-4">
               1번 CCTV
               {isMovig ? (
                 <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/20 ring-inset">
-                  움직임감지
+                  움직임 감지
                 </span>
               ) : (
                 <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-gray-600/20 ring-inset">
@@ -33,7 +37,7 @@ const VideoComp = () => {
             </p>
             <iframe
               className="aspect-video w-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              src={cameraLink}
             ></iframe>
           </div>
         </div>
