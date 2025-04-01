@@ -10,7 +10,7 @@ export default function ExampleWebSocketPage() {
   useEffect(init, []);
 
   function init() {
-    const ncfSubscriber = new NcfSubscriber(webSocketPaths.local,subscribePaths.testSubject);
+    const ncfSubscriber = new NcfSubscriber(webSocketPaths.local, subscribePaths.testSubject);
 
     ncfSubscriber.onOpen = function (e) {
       ncfSubscriber.subscribe();
