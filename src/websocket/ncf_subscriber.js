@@ -23,8 +23,11 @@ function _send(socket, message) {
 }
 
 NcfSubscriber.prototype.connect = function() {
+  console.log('trying connect websocket');
+
   this.socket = new WebSocket(this.webSocketPath);
   this.socket.onopen = e => {
+    console.log('websocket is opened');
     this.onOpen(e);
     this.reconnectDelay = MIN_RECONNECT_DELAY;
   };
@@ -49,10 +52,12 @@ NcfSubscriber.prototype.connect = function() {
     this.onError(e);
   };
   this.socket.onclose = e => {
+    console.log('websocket is closed')
     this.onClose(e);
+    console.log(`reconnect after ${this.reconnectDelay / 1000} seconds...`)
     setTimeout(() => {
-      this.connect();
       this.reconnectDelay = Math.min(this.reconnectDelay * 2, MAX_RECONNECT_DELAY);
+      this.connect();
     }, this.reconnectDelay);
   }
 }

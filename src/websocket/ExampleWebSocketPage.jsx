@@ -20,6 +20,7 @@ export default function ExampleWebSocketPage() {
       setReceived(frame.body);
     };
 
+    ncfSubscriber.connect();
     socketClient.current = ncfSubscriber;
 
     return () => {
