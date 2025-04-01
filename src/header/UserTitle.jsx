@@ -1,6 +1,7 @@
 import React from "react";
 import { BsBellFill, BsChevronRight, BsPersonFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import CurrentDate from "../common_components/Dayjs";
 
 const UserTitle = () => {
   return (
@@ -17,7 +18,7 @@ const UserTitle = () => {
                 HOME
               </h2>
               <div className="mt-2 flex items-center text-sm text-gray-500">
-                현재시각 : 
+                현재시각 : <CurrentDate />
               </div>
             </div>
           </div>

@@ -1,12 +1,23 @@
-import React from 'react';
-import dayjs from 'dayjs';
+import React, { useState, useEffect } from "react";
+import dayjs from "dayjs";
 
 const CurrentDate = () => {
-  const now = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  const [currentDate, setCurrentDate] = useState(
+    dayjs().format("YYYY-MM-DD HH:mm:ss")
+  );
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDate(dayjs().format("YYYY-MM-DD HH:mm:ss"));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
-    <>
-      {now}
-    </>
+    <div>
+      <p>{currentDate}</p>
+    </div>
   );
 };
 
