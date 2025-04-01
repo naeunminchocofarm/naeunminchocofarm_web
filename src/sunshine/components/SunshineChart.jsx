@@ -1,50 +1,48 @@
-import {
-  Chart as ChartJs,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-} from "chart.js";
+import React from "react";
 import { Line } from "react-chartjs-2";
-import { Chart, registerables } from "chart.js";
+import { CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJs, registerables } from "chart.js";
 
-Chart.register(...registerables);
-ChartJs.register(LineElement, CategoryScale, LinearScale, PointElement);
+ChartJs.register(...registerables);
+ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const SunshineChart = ({ sunshines, responsive = true, width = 400, height = 300 }) => {
-  // 1시간 단위 데이터만 필터링 (각 시간대 첫 번째 데이터만 유지)
-  const filteredSunshines = sunshines.reduce((acc, current) => {
-    const hour = new Date(current.measuredAt).getHours();
-    if (!acc.some((item) => new Date(item.measuredAt).getHours() === hour)) {
-      acc.push(current);
-    }
-    return acc;
-  }, []);
+  // X축 레이블 0~24시
+  const labels = Array.from({ length: 25 }, (_, i) => `${i}시`); 
 
-  // X축 시간 레이블
-  const labels = filteredSunshines.map((s) => new Date(s.measuredAt).getHours() + "시");
-  //Array.from({ length: 24 }, (_, i) => `${i + 1}시`);
+  // 현재 시간
+  const currentHour = new Date().getHours();
 
-  // 일조량 데이터
+  // Y축 데이터: 각 시간대별 일조량 데이터 (LDR 값)
+  const dataValues = Array.from({ length: 24 }, (_, h) => {
+    // 해당 시간에 대한 데이터를 찾아서 LDR 값을 반환, 없으면 0
+    const data = sunshines.find((s) => new Date(s.measuredAt).getHours() === h);
+    return data ? data.ldrValue : 0; 
+  });
+
+  // 마지막 데이터 이후는 0으로 처리하여 표시
+  const updatedDataValues = dataValues.map((value, index) => {
+    return index <= currentHour ? value : 0; // 현재 시간 이후는 0으로 처리
+  });
+
+  // 차트 데이터 설정
   const sunshineData = {
-    labels,
+    labels,  // 0~24시
     datasets: [
       {
-        label: "일조량(kWh)",
-        data: sunshines.map((x) => x.sunshineValue),
-        borderColor: "black",
-        backgroundColor: "black",
-        // 선의 곡률
-        tension: 0.4, 
+        label: "일조량 (LDR 값)",
+        data: updatedDataValues,
+        borderColor: "rgba(7, 99, 34, 0.5)",
+        backgroundColor: "rgba(7, 99, 34, 0.5)",
+        tension: 0.4,
       },
     ],
   };
 
+  // 차트 옵션 설정
   const options = {
-    //반응형 여부
-    responsive, 
-    // 기본 비율 유지 여부 (false로 설정하면 크기 조절 가능)
-    maintainAspectRatio: true, 
+    responsive,
+    maintainAspectRatio: !responsive,
     plugins: {
       legend: {
         display: true,
@@ -54,15 +52,14 @@ const SunshineChart = ({ sunshines, responsive = true, width = 400, height = 300
     scales: {
       y: {
         beginAtZero: true,
-        max: 100,
+        suggestedMax: Math.max(...updatedDataValues, 100),
       },
     },
   };
 
   return (
     <div className="w-full" style={{ width: responsive ? "100%" : width, height: responsive ? "100%" : height }}>
-      <Line data={sunshineData} opti
-      ons={options} />
+      <Line data={sunshineData} options={options} />
     </div>
   );
 };
