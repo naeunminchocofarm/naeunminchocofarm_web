@@ -1,12 +1,53 @@
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import NcfSubscriber from "../websocket/ncf_subscriber";
+import { subscribePaths, webSocketPaths } from "../websocket/wobsocket_paths";
 
 const VideoComp = () => {
   const [isMovig, setIsMoving] = useState(false);
-  const [cameraLink,setCameraLink] = useState(null);
-  useEffect(()=>{
-    setCameraLink(cameraLink)
-  },[])
+  const [cameraLink, setCameraLink] = useState(null);
+  const motionDetectTimer = useRef(undefined);
+  const webSocketClient = useRef(undefined);
+
+  useEffect(init, []);
+
+  function init() {
+    const subscriber = new NcfSubscriber(webSocketPaths.production, subscribePaths.motionDetecting);
+    subscriber.onOpen = function(e) {
+      subscriber.subscribe();
+    }
+    subscriber.onMessage = function(frame) {
+      if (frame.body === 'detected') {
+        // 3초 동안 true
+        setIsMovingWithLifeTime(3_000);
+      }
+    }
+
+    subscriber.connect();
+    webSocketClient.current = subscriber;
+
+    return () => {
+      if (webSocketClient.current) {
+        webSocketClient.current.close();
+        webSocketClient.current = undefined;
+      }
+    };
+  }
+
+  function setIsMovingWithLifeTime(milliSeconds) {
+    if (motionDetectTimer.current) {
+      clearTimeout(motionDetectTimer.current);
+    }
+
+    setIsMoving(true);
+
+    const newTimer = setTimeout(() =>{
+      setIsMoving(false);
+    }, milliSeconds);
+    
+    motionDetectTimer.current = newTimer;
+  }
 
   return (
     <>
