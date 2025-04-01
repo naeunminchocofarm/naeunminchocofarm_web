@@ -9,7 +9,7 @@ import testBanner from "../../assets/images/contents/testBanner.png"; // 상대 
 import VideoComp from "../../components/VideoComp";
 import SoilComp from "../../components/SoilComp";
 import CardLink from "../../common_components/CardLink";
-import CoTwo from "../Cotwo/components/HomeCoTwo";
+import CoTwo from "../../Cotwo/components/HomeCoTwo";
 import RecentTemp from "../../temperature/components/HomeTemp";
 
 const Home = () => {
