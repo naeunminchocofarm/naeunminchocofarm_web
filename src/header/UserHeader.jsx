@@ -37,7 +37,8 @@ const UserHeader = () => {
       subMenu: [
         { name: "온도", link: "/temp" },
         { name: "습도", link: "/hume" },
-        { name: "조도량", link: "/examples/chart" },
+        { name: "조도량", link: "/sunshine" },
+        { name: "이산화탄소", link: "/cotwo" },
       ],
     },
     {
