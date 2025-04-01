@@ -1,56 +1,57 @@
 import React, { useState, useEffect } from "react";
 import Card from "../../common_components/Card";
 import CurrentSunshine from "./CurrentSunshine";
-import SunshineChart from "./SunshineChart";
-import Awning from "./Awning";
 import sunshineApi from "../apis/sunshine_api";
+import Awning from "./Awning";
+import SunshineChart from "./SunshineChart";
 
 const Sunshine = () => {
   const [sunshines, setSunshines] = useState([]);
-  // 현재 일조량 데이터
   const [currentSunshine, setCurrentSunshine] = useState(0);
 
-  // API에서 데이터를 가져오는 useEffect
-  useEffect(() => {
-    const fetchSunshineData = async () => {
-      try {
-        const response = await sunshineApi.getAll();
-        console.log(response.data);
-        setSunshines(response.data);
-
-        // 현재 일조량 업데이트
-        if (response.data.length > 0) {
-          setCurrentSunshine(
-            response.data[response.data.length - 1].sunshineValue
-          );
-        }
-      } catch (error) {
-        console.error(error);
+  const fetchSunshineData = async () => {
+    try {
+      const response = await sunshineApi.getAll();
+      if (response.data.length > 0) {
+        // 데이터를 measuredAt(측정 시간)을 기준으로 정렬
+        const sortedSunshines = response.data.sort((a, b) => new Date(b.measuredAt) - new Date(a.measuredAt));
+        setSunshines(sortedSunshines);
+        // 가장 최신 LDR 값
+        setCurrentSunshine(sortedSunshines[0].ldrValue);
+        // LDR 값 확인용
+        // console.log(sortedSunshines);
       }
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
     fetchSunshineData();
-    const intervalId = setInterval(fetchSunshineData, 600000); // 10분마다 데이터 갱신
+    const intervalId = setInterval(fetchSunshineData, 600000); // 10분마다 갱신
     return () => clearInterval(intervalId);
   }, []);
 
   return (
     <>
+      {/* 대시보드용 */}
       <Card>
         <div className="flex items-center">
           <CurrentSunshine currentSunshine={currentSunshine} />
           <SunshineChart sunshines={sunshines} />
         </div>
       </Card>
+      
+      
+      {/* 상세페이지 */}
 
-      {/* 어닝 시스템 */}
-      <Card>
-        <Awning currentSunshine={currentSunshine} setCurrentSunshine={setCurrentSunshine}/>
-      </Card>
-
-      {/* 하루 일조량 그래프 */}
+      <CurrentSunshine currentSunshine={currentSunshine}/>
       <Card>
         <SunshineChart sunshines={sunshines} />
+      </Card>
+
+      <Card>
+        <Awning currentSunshine={currentSunshine} setCurrentSunshine={setCurrentSunshine}/>
       </Card>
     </>
   );
