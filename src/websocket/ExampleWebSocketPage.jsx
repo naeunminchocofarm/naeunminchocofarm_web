@@ -10,10 +10,7 @@ export default function ExampleWebSocketPage() {
   useEffect(init, []);
 
   function init() {
-    const ncfSubscriber = new NcfSubscriber(
-      webSocketPaths.dev,
-      subscribePaths.testSubject
-    );
+    const ncfSubscriber = new NcfSubscriber(webSocketPaths.local,subscribePaths.testSubject);
 
     ncfSubscriber.onOpen = function (e) {
       ncfSubscriber.subscribe();
@@ -68,6 +65,42 @@ export default function ExampleWebSocketPage() {
         </button>
         <div>server: {received}</div>
       </div>
+      <MotionDetecting />
+    </>
+  );
+}
+
+function MotionDetecting() {
+  const [count, setCount] = useState(0);
+  const websocketClient = useRef(undefined);
+
+  useEffect(init, []);
+
+  function init() {
+    const subscriber = new NcfSubscriber(webSocketPaths.local, subscribePaths.motionDetecting);
+    subscriber.onOpen = (e) => {
+      subscriber.subscribe();
+    }
+    subscriber.onMessage = (frame) => {
+      if (frame.body === 'detected') {
+        setCount(c => c + 1);
+      }
+    }
+
+    subscriber.connect()
+    websocketClient.current = subscriber;
+
+    return () => {
+      if (websocketClient.current) {
+        websocketClient.current.close();
+        websocketClient.current = undefined;
+      }
+    }
+  }
+
+  return (
+    <>
+      <p className="text-4xl font-bold">Detected Count: {count}</p>
     </>
   );
 }

@@ -6,6 +6,7 @@ const webSocketPaths = {
 
 const subscribePaths = {
   testSubject: "test-subject",
+  motionDetecting: "motion-detecting"
 };
 
 export { webSocketPaths, subscribePaths };

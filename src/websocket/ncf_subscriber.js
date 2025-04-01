@@ -1,18 +1,32 @@
 import NcfFrame from "./ncf_frame";
 
-function NcfSubscriber(webSocketPath, destination) {
-  this.destination = destination;
-  this.socket = new WebSocket(webSocketPath);
+const MAX_RECONNECT_DELAY = 30000;
+const MIN_RECONNECT_DELAY = 1000;
 
+function NcfSubscriber(webSocketPath, destination) {
+  this.webSocketPath = webSocketPath;
+  this.destination = destination;
+  this.socket = undefined;
   this.onOpen = _ => {};
   this.onMessage = _ => {};
   this.onSubscribeFaild = _ => {};
   this.onSubscribeSuccess = _ => {};
   this.onClose = _ => {};
   this.onError = _ => {};
+  this.reconnectDelay = MIN_RECONNECT_DELAY;
+}
 
+function _send(socket, message) {
+  if (socket && socket.readyState == WebSocket.OPEN) {
+    socket.send(message);
+  }
+}
+
+NcfSubscriber.prototype.connect = function() {
+  this.socket = new WebSocket(this.webSocketPath);
   this.socket.onopen = e => {
     this.onOpen(e);
+    this.reconnectDelay = MIN_RECONNECT_DELAY;
   };
   this.socket.onmessage = e => {
     const frame = NcfFrame.parse(e.data);
@@ -36,12 +50,10 @@ function NcfSubscriber(webSocketPath, destination) {
   };
   this.socket.onclose = e => {
     this.onClose(e);
-  }
-}
-
-function _send(socket, message) {
-  if (socket && socket.readyState == WebSocket.OPEN) {
-    socket.send(message);
+    setTimeout(() => {
+      this.connect();
+      this.reconnectDelay = Math.min(this.reconnectDelay * 2, MAX_RECONNECT_DELAY);
+    }, this.reconnectDelay);
   }
 }
 
@@ -59,8 +71,10 @@ NcfSubscriber.prototype.send = function(message = '', headers = {}) {
 }
 
 NcfSubscriber.prototype.close = function() {
-  this.unsubscribe();
-  this.socket.close();
+  if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+    this.unsubscribe();
+    this.socket.close();
+  }
 }
 
 NcfSubscriber.prototype.getReadyState = function() {
