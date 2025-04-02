@@ -10,7 +10,6 @@ import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { insertTempHour, insertNowTemp } from "../apis/tempData";
 import { useLocation } from "react-router-dom";
-import dayjs from "dayjs";
 
 Chart.register(...registerables);
 ChartJs.register(LineElement, CategoryScale, LinearScale, PointElement);
@@ -75,8 +74,10 @@ export const TempChart = () => {
 
   const tempValues = Array.from({ length: 24 }, (_, h) => {
     // 해당 시간에 대한 데이터를 찾아서 LDR 값을 반환, 없으면 0
-    const data = temperature.find((s) => new Date(s.measuredAt).getHours() === h);
-    return data ? data.ldrValue : 0; 
+    const data = temperature.find(
+      (s) => new Date(s.measuredAt).getHours() === h
+    );
+    return data ? data.temperatureC : 0;
   });
   const pointRControll = location.pathname === "/home" ? 0 : 1;
   const fillControll = location.pathname === "/home" ? false : true;

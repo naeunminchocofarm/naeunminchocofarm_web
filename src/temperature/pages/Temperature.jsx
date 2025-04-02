@@ -31,6 +31,11 @@ const Temperature = ({ tempData, optionsNo }) => {
               <Switch />
             </div>
           </Card>
+          <Card>
+            <div className="flex flex-row temp-value-area">
+              <p>온열전구 온도설정</p>
+            </div>
+          </Card>
         </div>
       </div>
     </>
