@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import NcfSubscriber from '../../websocket/ncf_subscriber';
+import { subscribePaths, webSocketPaths } from '../../websocket/wobsocket_paths';
 
 const Awning = ({ currentSunshine }) => {
+  const socketClient = useRef(undefined);
+
   // 어닝 작동 여부
   const [autoAwning, setAutoAwning] = useState(false);
   const [manualAwning, setManualAwning] = useState(false);
@@ -13,6 +17,12 @@ const Awning = ({ currentSunshine }) => {
       setAutoAwning(false);
     }
   }, [currentSunshine]);
+
+  useEffect(() => {
+    const subscriber = new NcfSubscriber(webSocketPaths.eun, subscribePaths.awning);
+    subscriber.connect();
+    socketClient.current = subscriber;
+  }, [])
 
   return (
     <div>
@@ -50,7 +60,15 @@ const Awning = ({ currentSunshine }) => {
 
       {/* 수동 어닝 시스템 */}
       <div
-        onClick={() => setManualAwning((prev) => !prev)}
+        onClick={() => {
+          setManualAwning((prev) => !prev);
+          if (manualAwning) {
+            socketClient.current.send('awning-off')
+          } else {
+            socketClient.current.send('awning-on')
+          } 
+        }}
+        
         style={{
           position: 'relative',
           display: 'inline-block',

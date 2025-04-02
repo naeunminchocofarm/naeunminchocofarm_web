@@ -14,7 +14,7 @@ const SunshineChart = ({ sunshines, responsive = true, width = 400, height = 300
   const currentHour = new Date().getHours();
 
   // Y축 데이터: 각 시간대별 일조량 데이터 (LDR 값)
-  const dataValues = Array.from({ length: 24 }, (_, h) => {
+  const dataValues = Array.from({ length: 25 }, (_, h) => {
     // 해당 시간에 대한 데이터를 찾아서 LDR 값을 반환, 없으면 0
     const data = sunshines.find((s) => new Date(s.measuredAt).getHours() === h);
     return data ? data.ldrValue : 0; 
