@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "../../common_components/Card";
-import Switch from "../../common_components/Switch";
 import RecentTemp from "../components/RecentTemp";
 import { TempChart } from "../components/TempChart";
+import ToggleButton from "../../common_components/ToggleButton";
 
 const Temperature = ({ tempData, optionsNo }) => {
   // //심은지 몇일째인지 받아오는 코드가 있어야함 > 얘는 나중에 new할때 불러옴
@@ -30,7 +30,7 @@ const Temperature = ({ tempData, optionsNo }) => {
           <Card>
             <div className="flex flex-row justify-between light-area">
               <p>온열전구</p>
-              <Switch />
+              <ToggleButton />
             </div>
           </Card>
         </div>
