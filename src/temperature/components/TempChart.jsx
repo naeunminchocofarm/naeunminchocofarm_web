@@ -9,6 +9,8 @@ import {
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { insertTempHour, insertNowTemp } from "../apis/tempData";
+import { useLocation } from "react-router-dom";
+import dayjs from "dayjs";
 
 Chart.register(...registerables);
 ChartJs.register(LineElement, CategoryScale, LinearScale, PointElement);
@@ -17,26 +19,35 @@ export const TempChart = () => {
   const [temperature, setTemperature] = useState([]);
   const [nowTemp, setNowTemp] = useState(0);
   const [useShowOption, setUseShowOption] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
-    setUseShowOption(true);
     insertTempHour()
       .then((res) => {
         setTemperature(res.data);
+        console.log(res.data);
       })
       .catch((error) => console.log(error));
 
     insertNowTemp()
       .then((res) => {
         setNowTemp(res.data[0].temperatureC);
-        console.log(res.data[0].temperatureC);
       })
       .catch((error) => console.log(error));
   }, [nowTemp]);
 
+  //홈일때만 false 다른 그래프들도 그럴거니깐 추가
+  useEffect(() => {
+    if (location.pathname === "/home") {
+      setUseShowOption(false);
+    } else {
+      setUseShowOption(true);
+    }
+  }, [location.pathname]);
+
   const labels = Array.from({ length: 24 }, (_, i) => `${i + 1}시`);
 
-  const options1 = {
+  const optionsShow = {
     responsive: true,
     scales: {
       x: { title: { display: true, text: "일 시간별 온도" } },
@@ -46,53 +57,56 @@ export const TempChart = () => {
       tooltip: {
         callbacks: {
           label: (tooltipItem) => `${tooltipItem.raw} °C`,
-          // Show temperature with °C symbol
         },
       },
     },
   };
 
-  const options2 = {
+  const optionsHide = {
     responsive: true,
     scales: {
-      x: { display: false }, // X축 숨김
-      y: { display: false }, // Y축 숨김
+      x: { display: false },
+      y: { display: false },
     },
     plugins: {
-      legend: { display: false }, // 범례 숨김
+      legend: { display: false },
     },
   };
 
+  const tempValues = Array.from({ length: 24 }, (_, h) => {
+    // 해당 시간에 대한 데이터를 찾아서 LDR 값을 반환, 없으면 0
+    const data = temperature.find((s) => new Date(s.measuredAt).getHours() === h);
+    return data ? data.ldrValue : 0; 
+  });
+  const pointRControll = location.pathname === "/home" ? 0 : 1;
+  const fillControll = location.pathname === "/home" ? false : true;
+  const currentHour = new Date().getHours();
+  const updatedTemperatureDatas = tempValues.map((value, i) => {
+    return i <= currentHour ? value : 0; // 현재 시간 이후는 0으로 처리
+  });
   const tempData = {
     labels,
     datasets: [
       {
         label: "평균온도 (°C)",
-        data: temperature.map((time, i) => {
-          return time.temperatureC;
-        }),
+        data: updatedTemperatureDatas,
+        pointStyle: "rectRot",
         borderColor: "rgb(79, 192, 75)",
         backgroundColor: "rgba(7, 255, 19, 0.2)",
-        fill: true, // 하단채움
+        fill: fillControll, // 하단채움
         tension: 0.4, // Smooth curve
-        pointBackgroundColor: "rgb(125, 197, 57)", // Point color
+        pointRadius: pointRControll,
+        borderWidth: 1, // 라인 두께
       },
     ],
   };
 
-  useEffect(() => {
-    // 페이지 로딩 시에 특정 조건에 맞게 options 선택
-    const useShowOption = true; // 여기서 조건을 변경해 주면 됩니다.
-    if (useShowOption) {
-      setUseShowOption(options2); // 조건에 맞으면 options2를 사용
-    } else {
-      setUseShowOption(options1); // 기본적으로 options1을 사용
-    }
-  }, []);
-
   return (
     <>
-      <Line options={useShowOption ? options1 : options2} data={tempData} />
+      <Line
+        options={useShowOption ? optionsShow : optionsHide}
+        data={tempData}
+      />
     </>
   );
 };

@@ -10,7 +10,8 @@ import VideoComp from "../../components/VideoComp";
 import SoilComp from "../../components/SoilComp";
 import CardLink from "../../common_components/CardLink";
 import CoTwo from "../../Cotwo/components/HomeCoTwo";
-import RecentTemp from "../../temperature/components/HomeTemp";
+import HomeTemp from "../../temperature/components/HomeTemp";
+import HomeSunshine from "../../sunshine/components/HomeSunshine";
 
 const Home = () => {
   return (
@@ -26,10 +27,10 @@ const Home = () => {
         </div>
         <div className="grid grid-cols-4 gap-4">
           <CardLink link={"/temp"} title={"온도"}>
-            <RecentTemp />
+            <HomeTemp />
           </CardLink>
           <CardLink link={"/hume"} title={"습도"}>
-            <CurrentHumidity />
+            {/* <HomeSunshine /> */}
           </CardLink>
           <CardLink link={"/sunshine"} title={"조도"}></CardLink>
           <CardLink link={"/cotwo"} title={"이산화탄소"}>
