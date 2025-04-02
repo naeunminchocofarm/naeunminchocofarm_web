@@ -13,7 +13,7 @@ const RecentTemp = () => {
       .catch((error) => console.log(error));
   }, [nowTemp]);
 
-  return <>{nowTemp}</>;
+  return <>{nowTemp}&#176;</>;
 };
 
 export default RecentTemp;

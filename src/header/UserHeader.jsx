@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 import logo from "../assets/images/layouts/h1-logo.png";
 
 const UserHeader = () => {
-  const [activeMenu, setActiveMenu] = useState(null); // 현재 열린 메뉴를 추적
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // 사이드바 열림 상태
-
+  const [activeMenu, setActiveMenu] = useState(null); 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
+  
   // 메뉴 토글 함수
   const toggleMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu); // 동일한 메뉴를 다시 클릭하면 토글

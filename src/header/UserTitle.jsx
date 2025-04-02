@@ -6,7 +6,7 @@ import CurrentDate from "../common_components/Dayjs";
 const UserTitle = () => {
   return (
     <>
-      <div className="title-area">
+      <div className="title-area mb-4">
         <div className="lg:flex lg:justify-between">
           <div className="min-w-0 flex-1">
             <div className="mt-1 sm:mt-0 sm:space-x-6">
