@@ -12,7 +12,7 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 ChartJs.register(LineElement, CategoryScale, LinearScale, PointElement);
 
-const ChartCoTwo = () => {
+const CoTwoChart = () => {
   //가상이산화탄소 영역
   const labels = Array.from({ length: 24 }, (_, i) => `${i + 1}시`);
   const co2data = {
@@ -49,4 +49,4 @@ const ChartCoTwo = () => {
   );
 };
 
-export default ChartCoTwo;
+export default CoTwoChart;

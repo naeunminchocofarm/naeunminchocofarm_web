@@ -24,7 +24,6 @@ export const TempChart = () => {
     insertTempHour()
       .then((res) => {
         setTemperature(res.data);
-        console.log(res.data);
       })
       .catch((error) => console.log(error));
 
@@ -77,13 +76,13 @@ export const TempChart = () => {
     const data = temperature.find(
       (s) => new Date(s.measuredAt).getHours() === h
     );
-    return data ? data.temperatureC : 0;
+    return data ? data.temperatureC : null;
   });
   const pointRControll = location.pathname === "/home" ? 0 : 1;
   const fillControll = location.pathname === "/home" ? false : true;
   const currentHour = new Date().getHours();
   const updatedTemperatureDatas = tempValues.map((value, i) => {
-    return i <= currentHour ? value : 0; // 현재 시간 이후는 0으로 처리
+    return i <= currentHour ? value : null; // 현재 시간 이후는 0으로 처리
   });
   const tempData = {
     labels,
