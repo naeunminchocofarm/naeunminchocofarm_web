@@ -7,11 +7,11 @@ const HomeSunshine = ({sunshines, currentSunshine}) => {
   return (
     <>
       <p className={FarmBasicContNow}>
-        <SunshineChart sunshines={sunshines} />
+        <currentSunshine currentSunshine={currentSunshine}/>
       </p>
       <div className="w-2/5 ">
         <div className="w-full ">
-          <CurrentSunshine currentSunshine={currentSunshine} />
+          <CurrentSunshine sunshines={sunshines} />
         </div>
       </div>
     </>
