@@ -19,10 +19,16 @@ const Awning = ({ currentSunshine }) => {
   }, [currentSunshine]);
 
   useEffect(() => {
-    const subscriber = new NcfSubscriber(webSocketPaths.eun, subscribePaths.awning);
+    const subscriber = new NcfSubscriber(webSocketPaths.production, subscribePaths.awning);
     subscriber.connect();
     socketClient.current = subscriber;
   }, [])
+
+  function handleClickBtnManualAwning() {
+    const newManualAwning = !manualAwning;
+    setManualAwning(newManualAwning);
+    socketClient.current.send(newManualAwning ? 'awning-on' : 'awning-off');
+  }
 
   return (
     <div>
@@ -60,15 +66,7 @@ const Awning = ({ currentSunshine }) => {
 
       {/* 수동 어닝 시스템 */}
       <div
-        onClick={() => {
-          setManualAwning((prev) => !prev);
-          if (manualAwning) {
-            socketClient.current.send('awning-off')
-          } else {
-            socketClient.current.send('awning-on')
-          } 
-        }}
-        
+        onClick={handleClickBtnManualAwning}
         style={{
           position: 'relative',
           display: 'inline-block',
@@ -80,19 +78,19 @@ const Awning = ({ currentSunshine }) => {
           transition: 'background-color 0.3s ease',
         }}
       >
-        <div
-          style={{
-            position: 'absolute',
-            top: '3px',
-            left: manualAwning ? '33px' : '3px',
-            width: '24px',
-            height: '24px',
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            transition: 'left 0.3s ease',
-            boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
-          }}
-        />
+      <div
+        style={{
+          position: 'absolute',
+          top: '3px',
+          left: manualAwning ? '33px' : '3px',
+          width: '24px',
+          height: '24px',
+          backgroundColor: 'white',
+          borderRadius: '50%',
+          transition: 'left 0.3s ease',
+          boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
+        }}
+      />
       </div>
       <div style={{ fontSize: '2rem', fontWeight: 'bold', marginTop: '10px' }}>
         수동 어닝 시스템: {manualAwning ? '작동 중' : '중지'}
