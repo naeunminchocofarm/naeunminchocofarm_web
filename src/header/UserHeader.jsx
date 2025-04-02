@@ -52,7 +52,9 @@ const UserHeader = () => {
   return (
     <header className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform transform sm:translate-x-0 translate-x-full">
       <h2 className="w-full p-4 pb-0">
-        <img src={logo} alt="logo" className="w-full" />
+        <Link to={"/home"}>
+          <img src={logo} alt="logo" className="w-full" />
+        </Link>
       </h2>
       <aside id="sidebar-multi-level-sidebar" aria-label="Sidebar">
         <div className="h-full px-3 py-4 overflow-y-auto bg-white">

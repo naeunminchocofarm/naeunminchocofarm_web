@@ -17,6 +17,7 @@ export default function Router() {
 
         {/* user */}
         <Route element={<AppLayout />}>
+          <Route path="/"element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/temp" element={<Temperature />} />
           <Route path="/new" element={<Temperature />} />
