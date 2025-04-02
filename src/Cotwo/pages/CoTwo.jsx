@@ -1,6 +1,6 @@
 import React from "react";
 import HomeCoTwo from "../components/HomeCoTwo";
-import ChartCoTwo from "../components/ChartCoTwo";
+import CoTwoChart from "../components/CoTwoChart";
 
 const CoTwo = () => {
   
@@ -8,7 +8,7 @@ const CoTwo = () => {
   return (
     <>
       <HomeCoTwo  />
-      <ChartCoTwo />
+      <CoTwoChart />
     </>
   );
 };

@@ -8,12 +8,11 @@ const RecentTemp = () => {
     insertNowTemp()
       .then((res) => {
         setNowTemp(res.data[0].temperatureC);
-        console.log(res.data[0].temperatureC);
       })
       .catch((error) => console.log(error));
   }, [nowTemp]);
 
-  return <>{nowTemp}&#176;</>;
+  return <>{nowTemp}&#8451;</>;
 };
 
 export default RecentTemp;
