@@ -1,6 +1,6 @@
 import axios from "axios";
 
-/** tempData > 디비에서 지금 이렇게인가?
+/** tempData 
   id : auto;
   value : 00.0;
   measuredAt : 0000-00-00 00:00:00;
