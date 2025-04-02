@@ -34,14 +34,6 @@ const Sunshine = () => {
 
   return (
     <>
-      {/* 대시보드용 */}
-      <Card>
-        <div className="flex items-center">
-          <CurrentSunshine currentSunshine={currentSunshine} />
-          <SunshineChart sunshines={sunshines} />
-        </div>
-      </Card>
-      
       
       {/* 상세페이지 */}
 
@@ -53,6 +45,8 @@ const Sunshine = () => {
       <Card>
         <Awning currentSunshine={currentSunshine} setCurrentSunshine={setCurrentSunshine}/>
       </Card>
+
+      
     </>
   );
 };
