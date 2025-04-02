@@ -32,10 +32,7 @@ export default function ExampleWebSocketPage() {
   }
 
   function sendMessage() {
-    if (
-      socketClient.current &&
-      socketClient.current.getReadyState() === WebSocket.OPEN
-    ) {
+    if (socketClient.current) {
       socketClient.current.send(message);
     }
 
@@ -66,7 +63,7 @@ export default function ExampleWebSocketPage() {
         </button>
         <div>server: {received}</div>
       </div>
-      <MotionDetecting />
+      {/* <MotionDetecting /> */}
     </>
   );
 }
