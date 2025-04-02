@@ -17,7 +17,7 @@ const SunshineChart = ({ sunshines, responsive = true, width = 400, height = 300
   const dataValues = Array.from({ length: 25 }, (_, h) => {
     // 해당 시간에 대한 데이터를 찾아서 LDR 값을 반환, 없으면 0
     const data = sunshines.find((s) => new Date(s.measuredAt).getHours() === h);
-    return data ? data.ldrValue : 0; 
+    return data ? data.ldrValue : 0;
   });
 
   // 마지막 데이터 이후는 0으로 처리하여 표시
