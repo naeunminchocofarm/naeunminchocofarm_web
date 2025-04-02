@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import NcfSubscriber from '../../websocket/ncf_subscriber';
+import { subscribePaths, webSocketPaths } from '../../websocket/wobsocket_paths';
 
 const Awning = ({ currentSunshine }) => {
+  const socketClient = useRef(undefined);
+
   // 어닝 작동 여부
   const [autoAwning, setAutoAwning] = useState(false);
   const [manualAwning, setManualAwning] = useState(false);
@@ -13,6 +17,18 @@ const Awning = ({ currentSunshine }) => {
       setAutoAwning(false);
     }
   }, [currentSunshine]);
+
+  useEffect(() => {
+    const subscriber = new NcfSubscriber(webSocketPaths.production, subscribePaths.awning);
+    subscriber.connect();
+    socketClient.current = subscriber;
+  }, [])
+
+  function handleClickBtnManualAwning() {
+    const newManualAwning = !manualAwning;
+    setManualAwning(newManualAwning);
+    socketClient.current.send(newManualAwning ? 'awning-on' : 'awning-off');
+  }
 
   return (
     <div>
@@ -50,7 +66,7 @@ const Awning = ({ currentSunshine }) => {
 
       {/* 수동 어닝 시스템 */}
       <div
-        onClick={() => setManualAwning((prev) => !prev)}
+        onClick={handleClickBtnManualAwning}
         style={{
           position: 'relative',
           display: 'inline-block',
@@ -62,19 +78,19 @@ const Awning = ({ currentSunshine }) => {
           transition: 'background-color 0.3s ease',
         }}
       >
-        <div
-          style={{
-            position: 'absolute',
-            top: '3px',
-            left: manualAwning ? '33px' : '3px',
-            width: '24px',
-            height: '24px',
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            transition: 'left 0.3s ease',
-            boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
-          }}
-        />
+      <div
+        style={{
+          position: 'absolute',
+          top: '3px',
+          left: manualAwning ? '33px' : '3px',
+          width: '24px',
+          height: '24px',
+          backgroundColor: 'white',
+          borderRadius: '50%',
+          transition: 'left 0.3s ease',
+          boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
+        }}
+      />
       </div>
       <div style={{ fontSize: '2rem', fontWeight: 'bold', marginTop: '10px' }}>
         수동 어닝 시스템: {manualAwning ? '작동 중' : '중지'}
