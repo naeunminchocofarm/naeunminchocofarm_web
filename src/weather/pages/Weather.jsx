@@ -24,7 +24,7 @@ const Weather = () => {
         <div className="weather">
             <div className="flex justify-between items-end mb-3">
             <div className="weatherTemp">
-                <p className='flex items-end text-6xl font-black'>dddd</p>
+                <p className='flex items-end text-6xl font-black'>20</p>
             </div>
             <div><></></div>
             <div className="weatherIcon text-6xl"><FiSun /></div>
