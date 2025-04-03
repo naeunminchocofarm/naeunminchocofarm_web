@@ -27,14 +27,12 @@ export const TempChart = () => {
       })
       .catch((error) => console.log(error));
 
-    // insertNowTemp()
-    //   .then((res) => {
-    //     setNowTemp(res.data[0].temperatureC);
-    //   })
-    //   .catch((error) => console.log(error));
-  }, []
-  // [nowTemp]
-);
+    insertNowTemp()
+      .then((res) => {
+        setNowTemp(res.data[0].temperatureC);
+      })
+      .catch((error) => console.log(error));
+  }, [nowTemp]);
 
   //홈일때만 false 다른 그래프들도 그럴거니깐 추가
   useEffect(() => {
