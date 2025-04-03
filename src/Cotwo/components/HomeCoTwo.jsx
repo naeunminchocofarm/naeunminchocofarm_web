@@ -48,11 +48,11 @@ const HomeCoTwo = () => {
   };
 
   const FarmBasicContNow = `co2Set text-4xl text-center font-black`;
-  const FarmBasicContLine = `text-xs font-light text-slate-400`;
+  const FarmBasicContUnit = `text-xs`;
 
   return (
     <>
-      <p className={FarmBasicContNow}>{nowCoTwo}</p>
+      <p className={FarmBasicContNow}>900 <span className={FarmBasicContUnit}>ppm</span></p>
       <div className="w-2/5 ">
         <div className="w-full ">
           <Line data={co2data} options={noOptions} />

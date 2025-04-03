@@ -2,7 +2,7 @@ import axios from "axios";
 
 const soil_humidityApi = {
   getAll: function() {
-    return axios.get('/api/soil-humidities')
+    return axios.get('/api/soil-moisture-values')
   }
 }
 
