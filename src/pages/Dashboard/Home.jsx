@@ -32,7 +32,9 @@ const Home = () => {
           <CardLink link={"/hume"} title={"습도"}>
             {/* <HomeSunshine /> */}
           </CardLink>
-          <CardLink link={"/sunshine"} title={"조도"}></CardLink>
+          <CardLink link={"/sunshine"} title={"조도"}>
+            <HomeSunshine />
+          </CardLink>
           <CardLink link={"/cotwo"} title={"이산화탄소"}>
             <CoTwo />
           </CardLink>

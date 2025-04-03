@@ -33,17 +33,8 @@ const Awning = ({ currentSunshine }) => {
 
   return (
     <div>
-      {/* 자동 어닝 시스템 */}
-      <ToggleButton value={autoAwning} onChange={value => setAutoAwning(value)} />
-      <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>
-        자동 어닝 시스템: {autoAwning ? '작동 중' : '중지'}
-      </div>
-
       {/* 수동 어닝 시스템 */}
       <ToggleButton value={manualAwning} onChange={handleChangeManualAwning} />
-      <div style={{ fontSize: '2rem', fontWeight: 'bold', marginTop: '10px' }}>
-        수동 어닝 시스템: {manualAwning ? '작동 중' : '중지'}
-      </div>
     </div>
   );
 };

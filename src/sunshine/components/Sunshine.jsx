@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "../../common_components/Card";
-import CurrentSunshine from "./CurrentSunshine";
 import sunshineApi from "../apis/sunshine_api";
-import Awning from "./Awning";
-import SunshineChart from "./SunshineChart";
 
 const Sunshine = () => {
   const [sunshines, setSunshines] = useState([]);
@@ -34,19 +30,7 @@ const Sunshine = () => {
 
   return (
     <>
-      
-      {/* 상세페이지 */}
-
-      <CurrentSunshine currentSunshine={currentSunshine}/>
-      <Card>
-        <SunshineChart sunshines={sunshines} />
-      </Card>
-
-      <Card>
-        <Awning currentSunshine={currentSunshine} setCurrentSunshine={setCurrentSunshine}/>
-      </Card>
-
-      
+      {currentSunshine}
     </>
   );
 };
