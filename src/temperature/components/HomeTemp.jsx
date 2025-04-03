@@ -2,17 +2,22 @@ import React from "react";
 import RecentTemp from "./RecentTemp";
 import { TempChart } from "./TempChart";
 
-const HomeTemp = ({ tempData, optionsHide }) => {
+const HomeTemp = ({ temperature, nowTemp, tempData, optionsHide }) => {
   const FarmBasicContNow = `co2Set text-4xl text-center font-black`;
-
+  const FarmBasicContUnit = `text-sm`;
   return (
     <>
-      <p className={FarmBasicContNow}>
-        <RecentTemp />
-      </p>
+      <div className={FarmBasicContNow}>
+        <RecentTemp nowTemp={nowTemp} />{" "}
+        <span className={FarmBasicContUnit}>&#8451;</span>
+      </div>
       <div className="w-2/5 ">
         <div className="w-full ">
-          <TempChart data={tempData} options={optionsHide} />
+          <TempChart
+            temperature={temperature}
+            data={tempData}
+            options={optionsHide}
+          />
         </div>
       </div>
     </>

@@ -12,6 +12,7 @@ import CardLink from "../../common_components/CardLink";
 import CoTwo from "../../Cotwo/components/HomeCoTwo";
 import HomeTemp from "../../temperature/components/HomeTemp";
 import HomeSunshine from "../../sunshine/components/HomeSunshine";
+import HomeSoil from "../../soil/components/HomeSoil";
 
 const Home = () => {
   return (
@@ -41,7 +42,7 @@ const Home = () => {
         </div>
         <div className="flex flex-row gap-4">
           <Card className="basis-5/13">
-            <SoilComp />
+            <HomeSoil link={"/soil"} title={"토양습도"} />
           </Card>
           <Card className="basis-5/13">
             <VideoComp />

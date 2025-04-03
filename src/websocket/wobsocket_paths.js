@@ -8,7 +8,8 @@ const webSocketPaths = {
 const subscribePaths = {
   testSubject: "test-subject",
   motionDetecting: "motion-detecting",
-  awning: "awning"
+  awning: "awning",
+  heatLamp: "heat-lamp"
 };
 
 export { webSocketPaths, subscribePaths };
