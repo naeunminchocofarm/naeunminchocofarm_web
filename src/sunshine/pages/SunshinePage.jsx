@@ -1,8 +1,8 @@
 import React from 'react'
 import Sunshine from '../components/Sunshine'
-import SunshineChart from '../components/SunshineChart'
 import Card from '../../common_components/Card'
 import Awning from '../components/Awning'
+import { SunshineChart } from '../components/SunshineChart'
 
 const SunshinePage = () => {
   return (
@@ -21,7 +21,7 @@ const SunshinePage = () => {
                 )}
               </p>
             </div>
-            <SunshineChart />
+            <SunshineChart/>
           </Card>
         </div>
         <div className="setting-area w-1/3">

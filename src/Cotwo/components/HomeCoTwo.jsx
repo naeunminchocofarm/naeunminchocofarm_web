@@ -52,9 +52,11 @@ const HomeCoTwo = () => {
 
   return (
     <>
-      <p className={FarmBasicContNow}>900 <span className={FarmBasicContUnit}>ppm</span></p>
+      <p className={FarmBasicContNow}>
+        900 <span className={FarmBasicContUnit}>ppm</span>
+      </p>
       <div className="w-2/5 ">
-        <div className="w-full ">
+        <div className="w-full aspect-[4/3] ">
           <Line data={co2data} options={noOptions} />
         </div>
       </div>
