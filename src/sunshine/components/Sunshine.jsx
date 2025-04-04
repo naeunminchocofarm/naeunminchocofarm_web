@@ -10,7 +10,9 @@ const Sunshine = () => {
       const response = await sunshineApi.getAll();
       if (response.data.length > 0) {
         // 데이터를 measuredAt(측정 시간)을 기준으로 정렬
-        const sortedSunshines = response.data.sort((a, b) => new Date(b.measuredAt) - new Date(a.measuredAt));
+        const sortedSunshines = response.data.sort(
+          (a, b) => new Date(b.measuredAt) - new Date(a.measuredAt)
+        );
         setSunshines(sortedSunshines);
         // 가장 최신 LDR 값
         setCurrentSunshine(sortedSunshines[0].ldrValue);
@@ -28,11 +30,7 @@ const Sunshine = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  return (
-    <>
-      {currentSunshine}
-    </>
-  );
+  return <>{currentSunshine}</>;
 };
 
 export default Sunshine;

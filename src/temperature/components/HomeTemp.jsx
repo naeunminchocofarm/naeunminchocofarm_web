@@ -1,8 +1,8 @@
 import React from "react";
 import RecentTemp from "./RecentTemp";
-import { TempChart } from "./TempChart";
+import { TempNoOptionChart } from "./TempChart";
 
-const HomeTemp = ({ temperature, nowTemp, tempData, optionsHide }) => {
+const HomeTemp = ({ nowTemp }) => {
   const FarmBasicContNow = `co2Set text-4xl text-center font-black`;
   const FarmBasicContUnit = `text-sm`;
   return (
@@ -13,11 +13,7 @@ const HomeTemp = ({ temperature, nowTemp, tempData, optionsHide }) => {
       </div>
       <div className="w-2/5 ">
         <div className="w-full ">
-          <TempChart
-            temperature={temperature}
-            data={tempData}
-            options={optionsHide}
-          />
+          <TempNoOptionChart />
         </div>
       </div>
     </>

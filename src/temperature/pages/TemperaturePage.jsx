@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../../common_components/Card";
 import RecentTemp from "../components/RecentTemp";
-import { TempChart } from "../components/TempChart";
+import { TempOptionChart } from "../components/TempChart";
 
 const Temperature = ({ nowTemp }) => {
   return (
@@ -19,7 +19,9 @@ const Temperature = ({ nowTemp }) => {
                 켜져요
               </div>
             </div>
-            <TempChart />
+            <div>
+                <TempOptionChart/>
+            </div>
           </Card>
         </div>
       </div>
