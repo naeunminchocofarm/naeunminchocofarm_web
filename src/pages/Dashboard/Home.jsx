@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Card from "../../common_components/Card";
-import CurrentHumidity from "../../humidity/components/CurrentHumidity";
 import Weather from "../../weather/pages/Weather";
-import Humidity from "../../humidity/components/Humidity";
 import MainPlantBasic from "../../components/MainPlantBasic";
 import testBanner from "../../assets/images/contents/testBanner.png"; // 상대 경로 수정
 import VideoComp from "../../components/VideoComp";
@@ -13,6 +11,7 @@ import CoTwo from "../../Cotwo/components/HomeCoTwo";
 import HomeTemp from "../../temperature/components/HomeTemp";
 import HomeSunshine from "../../sunshine/components/HomeSunshine";
 import HomeSoil from "../../soil/components/HomeSoil";
+import HomeHumidity from "../../humidity/components/HomeHumidity";
 
 const Home = () => {
   return (
@@ -31,7 +30,7 @@ const Home = () => {
             <HomeTemp />
           </CardLink>
           <CardLink link={"/hume"} title={"습도"}>
-            {/* <HomeSunshine /> */}
+            <HomeHumidity />
           </CardLink>
           <CardLink link={"/sunshine"} title={"조도"}>
             <HomeSunshine />
