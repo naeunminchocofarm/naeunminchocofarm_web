@@ -39,12 +39,12 @@ const getTempData = (temperatureAvg) => {
     const data = temperatureAvg.find(
       (s) => new Date(s.measuredAt).getHours() === h
     );
-    return data ? data.temperatureC : 0;
+    return data ? data.temperatureC : null;
   });
 
   const currentHour = new Date().getHours();
   const updatedTemperatureDatas = tempValues.map((value, i) =>
-    i <= currentHour ? value : 0
+    i <= currentHour ? value : null
   );
 
   return {
@@ -58,7 +58,6 @@ const getTempData = (temperatureAvg) => {
         backgroundColor: "rgba(7, 255, 19, 0.2)",
         fill: false,
         tension: 0.4,
-        pointRadius: 1,
         borderWidth: 1,
       },
     ],
@@ -105,6 +104,7 @@ const TempNoOptionChart = () => {
     responsive: true,
     maintainAspectRatio: true,
     aspectRatio: 4 / 3,
+    pointRadius: 0,
     scales: {
       x: { display: false },
       y: { display: false },

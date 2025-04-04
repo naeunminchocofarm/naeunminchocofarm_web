@@ -1,6 +1,6 @@
 import React from 'react'
 import CurrentHumidity from '../components/CurrentHumidity'
-import HumidityChart from '../components/HumidityChart'
+import { HumidityChart } from '../components/HumidityChart'
 import Humidifier from '../components/Humidifier'
 import Card from '../../common_components/Card'
 

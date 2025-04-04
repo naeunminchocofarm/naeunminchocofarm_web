@@ -28,7 +28,7 @@ const CurrentHumidity = () => {
 
   return (
     <>
-      {currentHumidity}%
+      {currentHumidity}
     </>
   )
 }

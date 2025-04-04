@@ -62,13 +62,13 @@ const getSunshineData = (sunshines) => {
   const dataValues = Array.from({ length: 25 }, (_, h) => {
     // 해당 시간에 대한 데이터를 찾아서 LDR 값을 반환, 없으면 null
     const data = sunshines.find((s) => new Date(s.measuredAt).getHours() === h);
-    return data ? data.ldrValue : 0;
+    return data ? data.ldrValue : null;
   });
 
   // 마지막 데이터 이후는 null로 처리하여 표시
   const updatedDataValues = dataValues.map((value, index) => {
     // 현재 시간 이후는 null로 처리
-    return index <= currentHour ? value : 0;
+    return index <= currentHour ? value : null;
   });
 
   return {
@@ -129,7 +129,7 @@ const SunshineNoOptionChart = () => {
   const sunshines = useSunshineData();
 
   const optionHide = {
-    responsive: false,
+    responsive: true,
     maintainAspectRatio: true,
     aspectRatio: 4 / 3,
     //포인트 X
