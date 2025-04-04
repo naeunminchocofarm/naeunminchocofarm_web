@@ -1,17 +1,19 @@
 import React from 'react'
 import CurrentHumidity from './CurrentHumidity';
-import HumidityChart from './HumidityChart';
+import { HumidityOptionChart } from './HumidityChart';
 
 const HomeHumidity = ({currentHumidity}) => {
   const FarmBasicContNow = "co2Set text-4xl text-center font-black";
+  const FarmBasicContUnit = `text-sm`;
   return (
     <>
-      <p className={FarmBasicContNow}>
+      <div className={FarmBasicContNow}>
         <CurrentHumidity currentHumidity={currentHumidity}/>
-      </p>
-      <div>
-        <div>
-          <HumidityChart />
+        <span className={FarmBasicContUnit}>%</span>
+      </div>
+      <div className="w-2/5 ">
+        <div className="w-full ">
+          <HumidityOptionChart />
         </div>
       </div>
     </>

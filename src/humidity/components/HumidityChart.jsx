@@ -3,23 +3,14 @@ import { Line } from "react-chartjs-2";
 import { CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import { Chart as ChartJs, registerables } from "chart.js";
 import humidityApi from '../apis/humidity_api';
-import { useLocation } from "react-router-dom";
 
 ChartJs.register(...registerables);
 ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const HumidityChart = () => {
+const useHumidityData = () => {
   const [humidity, setHumidity] = useState([]);
-  const [useShowOption, setUseShowOption] = useState(true);
-  const location = useLocation();
   
   useEffect(() => {
-    if(location.pathname === "/home"){
-      setUseShowOption(false); 
-    } else {
-      setUseShowOption(true);
-    }
-
     const fetchHumidityData = async () => {
       try {
         const response = await humidityApi.getAll();
@@ -35,9 +26,13 @@ const HumidityChart = () => {
     fetchHumidityData();
     const intervalId = setInterval(fetchHumidityData, 600000); // 10분마다 갱신
     return () => clearInterval(intervalId);
-  }, [location.pathname]);
+  }, []);
+  return humidity;// 전체에서 리턴
+};
 
-  // X축 시간 레이블
+  //데이터용 변환함수
+  const getHumidityData = (humidity) => {
+    // X축 시간 레이블
   const labels = Array.from({ length: 25 }, (_, i) => `${i + 1}시`);
 
   //현재시간
@@ -54,8 +49,7 @@ const HumidityChart = () => {
     return index <= currentHour ? value : null;
   });
   
-  // 습도 차트 데이터 설정
-  const humidityData = {
+  return {
     labels,
     datasets: [
       {
@@ -68,39 +62,58 @@ const HumidityChart = () => {
         borderWidth: 1,
       },
     ],
-  };
+  }
+}
 
-
-
-  // 차트 옵션 설정
-  const optionsShow = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: true,
-        position: "top",
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        min: 0,
-        max: 100,
-        ticks: {
-          // 100 단위로 눈금 표시
-          stepSize: 100, 
+//차트 옵션 설정
+const HumidityChart = () => {
+  const humidity = useHumidityData();
+  
+    // 차트 옵션 설정
+    const optionsShow = {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 4 / 3,
+      plugins: {
+        legend: {
+          display: true,
+          position: "top",
         },
-
       },
-    },
-  };
+      scales: {
+        y: {
+          beginAtZero: true,
+          min: 0,
+          max: 100,
+          ticks: {
+            // 100 단위로 눈금 표시
+            stepSize: 100, 
+          },
+        },
+      },
+    };
+  
+  return (
+    <div className="w-full">
+      <Line 
+        aspect={4 / 3}
+        data={getHumidityData(humidity)}
+        options={optionsShow}
+      />
+    </div>
+  );
+};
+
+//차트 옵션 설정
+const HumidityOptionChart = () => {
+  const humidity = useHumidityData();
 
   const optionHide ={
-    responsive: false,
+    responsive: true,
     //true: 16:9 유지
     //false: 반응형
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
+    aspectRatio: 4 / 3,
     //포인트 X
     pointRadius: 0,
     scales: {
@@ -113,13 +126,12 @@ const HumidityChart = () => {
   };
 
   return (
-    <div className={"w-full"} >
+    <div className="w-full h-1/3 aspect-w-4 aspect-h-3" >
       <Line 
-        data={humidityData} 
-        options={useShowOption ? optionsShow : optionHide} 
+        data={getHumidityData(humidity)} options={optionHide}
       />
     </div>
   );
-};
+}
 
-export default HumidityChart;
+export { HumidityChart, HumidityOptionChart };
