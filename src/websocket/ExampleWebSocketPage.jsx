@@ -10,7 +10,7 @@ export default function ExampleWebSocketPage() {
   useEffect(init, []);
 
   function init() {
-    const ncfSubscriber = new NcfSubscriber(webSocketPaths.local, subscribePaths.testSubject);
+    const ncfSubscriber = new NcfSubscriber(webSocketPaths.production, subscribePaths.testSubject);
 
     ncfSubscriber.onOpen = function (e) {
       ncfSubscriber.subscribe();
@@ -63,7 +63,7 @@ export default function ExampleWebSocketPage() {
         </button>
         <div>server: {received}</div>
       </div>
-      {/* <MotionDetecting /> */}
+      <MotionDetecting />
     </>
   );
 }
@@ -75,7 +75,7 @@ function MotionDetecting() {
   useEffect(init, []);
 
   function init() {
-    const subscriber = new NcfSubscriber(webSocketPaths.local, subscribePaths.motionDetecting);
+    const subscriber = new NcfSubscriber(webSocketPaths.production, subscribePaths.motionDetecting);
     subscriber.onOpen = (e) => {
       subscriber.subscribe();
     }
