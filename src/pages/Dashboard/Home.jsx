@@ -1,11 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Card from "../../common_components/Card";
 import Weather from "../../weather/pages/Weather";
 import MainPlantBasic from "../../components/MainPlantBasic";
-import testBanner from "../../assets/images/contents/testBanner.png"; // 상대 경로 수정
+import homeBanner from "../../assets/images/contents/testbanner.jpg"; // 상대 경로 수정
 import VideoComp from "../../components/VideoComp";
-import SoilComp from "../../components/SoilComp";
 import CardLink from "../../common_components/CardLink";
 import CoTwo from "../../Cotwo/components/HomeCoTwo";
 import HomeTemp from "../../temperature/components/HomeTemp";
@@ -47,7 +45,7 @@ const Home = () => {
             <VideoComp />
           </Card>
           <Card className="basis-3/13">
-            <img src={testBanner} alt="My Image" />
+            <img src={homeBanner} alt="My Image" />
           </Card>
         </div>
       </div>
