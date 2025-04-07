@@ -1,8 +1,8 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import NcfSubscriber from "../websocket/ncf_subscriber";
 import { subscribePaths, webSocketPaths } from "../websocket/wobsocket_paths";
+import homeVideo from "../assets/images/contents/homevideo.jpg";
 
 const VideoComp = () => {
   const [isMovig, setIsMoving] = useState(false);
@@ -13,16 +13,19 @@ const VideoComp = () => {
   useEffect(init, []);
 
   function init() {
-    const subscriber = new NcfSubscriber(webSocketPaths.production, subscribePaths.motionDetecting);
-    subscriber.onOpen = function(e) {
+    const subscriber = new NcfSubscriber(
+      webSocketPaths.production,
+      subscribePaths.motionDetecting
+    );
+    subscriber.onOpen = function (e) {
       subscriber.subscribe();
-    }
-    subscriber.onMessage = function(frame) {
-      if (frame.body === 'detected') {
+    };
+    subscriber.onMessage = function (frame) {
+      if (frame.body === "detected") {
         // 3초 동안 true
         setIsMovingWithLifeTime(3_000);
       }
-    }
+    };
 
     subscriber.connect();
     webSocketClient.current = subscriber;
@@ -42,10 +45,10 @@ const VideoComp = () => {
 
     setIsMoving(true);
 
-    const newTimer = setTimeout(() =>{
+    const newTimer = setTimeout(() => {
       setIsMoving(false);
     }, milliSeconds);
-    
+
     motionDetectTimer.current = newTimer;
   }
 
@@ -76,10 +79,13 @@ const VideoComp = () => {
                 </span>
               )}
             </p>
-            <iframe
+            {/* <iframe
               className="aspect-video w-full"
               src={cameraLink}
-            ></iframe>
+            ></iframe> */}
+            <div className="w-full">
+              <img src={homeVideo} alt="My Image" />
+            </div>
           </div>
         </div>
       </div>
