@@ -1,4 +1,5 @@
 import React from 'react'
+import AdminFarmDetail from './AdminFarmDetail'
 
 const AdminFarmList = () => {
   return (
@@ -39,6 +40,8 @@ const AdminFarmList = () => {
       </table>
 
       <div className="mt-6 text-sm text-gray-500">페이지네이션 영역</div>
+
+      <AdminFarmDetail/>
     </>
   )
 }

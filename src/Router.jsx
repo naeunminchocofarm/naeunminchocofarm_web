@@ -14,6 +14,7 @@ import Admin from "./admin/pages/AdminHome";
 import AdminMemberList from "./admin/components/members/AdminMemberList";
 import ApplicationList from "./admin/components/farm_apply/AdminFarmApplyList";
 import FarmList from "./admin/components/farm/AdminFarmList";
+import FarmDetail from "./admin/components/farm/AdminFarmDetail";
 import CropList from "./admin/components/crops/AdminCropsList";
 
 //user
