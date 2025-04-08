@@ -1,5 +1,5 @@
-import React from 'react'
-import AdminFarmDetail from './AdminFarmDetail'
+import React from "react";
+import AdminFarmDetail from "./AdminFarmDetail";
 
 const AdminFarmList = () => {
   return (
@@ -34,16 +34,18 @@ const AdminFarmList = () => {
             <td className="p-3">500㎡</td>
             <td className="p-3">토마토</td>
             <td className="p-3">운영중</td>
-            <td className="p-3 text-blue-500 hover:underline cursor-pointer">편집</td>
+            <td className="p-3 text-blue-500 hover:underline cursor-pointer">
+              편집
+            </td>
           </tr>
         </tbody>
       </table>
 
-      <div className="mt-6 text-sm text-gray-500">페이지네이션 영역</div>
+      <div className="mt-6 text-sm text-gray-500">페이지네이션 영역 </div>
 
-      <AdminFarmDetail/>
+      <AdminFarmDetail />
     </>
-  )
-}
+  );
+};
 
-export default AdminFarmList
+export default AdminFarmList;
