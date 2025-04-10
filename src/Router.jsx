@@ -27,6 +27,7 @@ import HumidityPage from "./humidity/pages/HumidityPage";
 //members
 import Login from "./members/pages/Login";
 import Signup from "./members/pages/Signup";
+import WebLayout from "./layout/WebLayout";
 
 
 export default function Router() {
@@ -36,7 +37,12 @@ export default function Router() {
         <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
 
         {/*web*/}
-        <Route>
+        <Route element={<WebLayout />}>
+          {/* member*/}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          {/*member*/}
+
           <Route path="/web" element={<Web />} />
           <Route path="/company" element={<Company />} />
           <Route path="/aboutFarms" element={<AboutFarms />} />
@@ -46,7 +52,7 @@ export default function Router() {
 
         {/*admin*/}
         <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/adminhome" element={<Admin />} />
           <Route path="/members" element={<AdminMemberList />} /> 
           <Route path="/applications" element={<ApplicationList />} />
           <Route path="/farms" element={<FarmList />} /> 
@@ -55,19 +61,12 @@ export default function Router() {
 
         {/* user*/}
         <Route element={<AppLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/userhome" element={<Home />} />
           <Route path="/temp" element={<TemperaturePage />} />
           <Route path="/hume" element={<HumidityPage />} />
           <Route path="/sunshine" element={<SunshinePage />} />
           <Route path="/soil" element={<SoilPage />} />
           <Route path="/cotwo" element={<CoTwo />} />
-        </Route>
-
-        {/* member*/}
-        <Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
         </Route>
 
         {/* 페이지없음 */}

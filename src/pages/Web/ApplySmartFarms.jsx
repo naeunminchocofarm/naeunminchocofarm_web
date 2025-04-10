@@ -29,7 +29,6 @@ const ApplySmartFarm = () => {
 
   return (
     <>
-      <WebHeader/>
       <div className="max-w-2xl mx-auto p-6 bg-green-50 rounded-xl shadow space-y-6">
       <h2 className="text-xl font-bold text-green-700">스마트팜 도입 신청</h2>
 

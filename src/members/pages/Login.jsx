@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 const Login = () => {
   return (
     <>
-      <WebHeader />
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]">
+      <div className="w-full h-80vh flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]">
         <div className="flex flex-col md:flex-row bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl max-w-4xl w-full overflow-hidden">
           {/* 왼쪽: 로그인 폼 */}
           <div className="w-full md:w-1/2 p-10">
