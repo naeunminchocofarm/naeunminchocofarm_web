@@ -14,9 +14,9 @@ const WebHeader = () => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-6">
           <Link to="/company" className="hover:text-green-600">회사소개</Link>
-          <Link to="/about-smartfarm" className="hover:text-green-600">스마트팜이란?</Link>
+          <Link to="/aboutFarms" className="hover:text-green-600">스마트팜이란?</Link>
           <Link to="/business" className="hover:text-green-600">사업소개</Link>
-          <Link to="/apply" className="hover:text-green-600">스마트팜신청</Link>
+          <Link to="/applySmartFarm" className="hover:text-green-600">스마트팜신청</Link>
         </nav>
 
         {/* 로그인/회원가입 */}
@@ -43,9 +43,9 @@ const WebHeader = () => {
       {isOpen && (
         <nav className="md:hidden px-4 pb-4 space-y-2 bg-white border-t">
           <Link to="/company" className="block hover:text-green-600">회사소개</Link>
-          <Link to="/about-smartfarm" className="block hover:text-green-600">스마트팜이란?</Link>
+          <Link to="/aboutFarms" className="block hover:text-green-600">스마트팜이란?</Link>
           <Link to="/business" className="block hover:text-green-600">사업소개</Link>
-          <Link to="/apply" className="block hover:text-green-600">스마트팜신청</Link>
+          <Link to="/applySmartFarm" className="block hover:text-green-600">스마트팜신청</Link>
           <Link to="/login" className="block text-green-600 font-semibold">로그인</Link>
           <Link to="/signup" className="block text-gray-500 hover:text-green-600">회원가입</Link>
         </nav>

@@ -4,10 +4,8 @@ import WebHeader from "../../header/WebHeader";
 const WebMain = () => {
   return (
     <>
-      <div className="font-sans bg-[#F8FBF8] text-gray-800">
+      <div className="text-gray-800 w-full">
         
-        <WebHeader/>
-
         {/* Hero Section */}
         <section className="bg-green-100 py-16">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
