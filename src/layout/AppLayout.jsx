@@ -5,10 +5,10 @@ import { Outlet } from "react-router-dom";
 const AppLayout = () => {
   return (
     <>
-      <div className="p-4 sm:ml-65 bg-gray-100 h-screen overflow-scroll">
-        <UserHeader />
-        <Outlet />
-      </div>
+        <div className="container p-4 flex bg-gray-100 h-screen overflow-scroll">
+            <UserHeader />
+            <Outlet />
+        </div>
     </>
   );
 };
