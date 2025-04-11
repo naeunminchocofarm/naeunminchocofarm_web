@@ -1,137 +1,96 @@
-import React, { useState } from "react";
+import React from "react";
 
-const AdminFarmDetail = () => {
-  const [zones, setZones] = useState([]);
+const FarmDetail = () => {
+  const user = {
+    name: "홍길동",
+    status: "정상",
+    phone: "010-1234-5678",
+    username: "gildong",
+    email: "gildong@example.com",
+  };
 
-  const handleAddZone = () => {
-    const newZoneId = `ZONE-${Date.now()}`;
-    setZones([
-      ...zones,
-      {
-        id: newZoneId,
-        name: "",
-        area: "",
-        sensors: [],
+  const farm = {
+    name: "그린팜",
+    location: "경기도 파주",
+    createdAt: "2024-01-15",
+  };
+
+  const zones = [
+    {
+      id: 1,
+      name: "1번 구역",
+      location: "북동쪽",
+      createdAt: "2024-01-16",
+      sensors: {
+        temp: 24.5,
+        hume: 68,
+        sunshine: 720,
       },
-    ]);
-  };
-
-  const handleZoneChange = (index, field, value) => {
-    const updated = [...zones];
-    updated[index][field] = value;
-    setZones(updated);
-  };
-
-  const handleRemoveZone = (index) => {
-    setZones(zones.filter((_, i) => i !== index));
-  };
-
-  const handleAddSensor = (zoneIndex) => {
-    const sensorId = `SNS-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-    const updated = [...zones];
-    updated[zoneIndex].sensors.push({
-      id: sensorId,
-      name: "",
-      type: "",
-    });
-    setZones(updated);
-  };
-
-  const handleSensorChange = (zoneIndex, sensorIndex, field, value) => {
-    const updated = [...zones];
-    updated[zoneIndex].sensors[sensorIndex][field] = value;
-    setZones(updated);
-  };
-
-  const handleRemoveSensor = (zoneIndex, sensorIndex) => {
-    const updated = [...zones];
-    updated[zoneIndex].sensors.splice(sensorIndex, 1);
-    setZones(updated);
-  };
+    },
+    {
+      id: 2,
+      name: "2번 구역",
+      location: "남서쪽",
+      createdAt: "2024-02-01",
+      sensors: {
+        temp: 25.3,
+        hume: 70,
+        sunshine: 800,
+      },
+    },
+  ];
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-green-700">🌿 스마트팜 상세 관리</h2>
-
-      {zones.map((zone, zoneIdx) => (
-        <div key={zone.id} className="border p-4 rounded-xl bg-white mb-6 shadow">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">구역 {zoneIdx + 1} ({zone.id})</h3>
-            <button
-              onClick={() => handleRemoveZone(zoneIdx)}
-              className="text-red-500 hover:underline text-sm"
-            >
-              구역 삭제
-            </button>
-          </div>
-
-          <input
-            type="text"
-            placeholder="구역명"
-            value={zone.name}
-            onChange={(e) => handleZoneChange(zoneIdx, "name", e.target.value)}
-            className="block w-full border p-2 rounded mb-2"
-          />
-
-          <input
-            type="number"
-            placeholder="면적 (㎡)"
-            value={zone.area}
-            onChange={(e) => handleZoneChange(zoneIdx, "area", e.target.value)}
-            className="block w-full border p-2 rounded mb-4"
-          />
-
-          <div className="mb-2">
-            <h4 className="font-medium text-gray-700 mb-2">📡 센서 목록</h4>
-            {zone.sensors.map((sensor, sensorIdx) => (
-              <div key={sensor.id} className="grid grid-cols-3 gap-3 mb-2">
-                <input
-                  type="text"
-                  placeholder="센서명"
-                  value={sensor.name}
-                  onChange={(e) =>
-                    handleSensorChange(zoneIdx, sensorIdx, "name", e.target.value)
-                  }
-                  className="border p-2 rounded"
-                />
-                <input
-                  type="text"
-                  placeholder="센서 종류 (ex: 온도)"
-                  value={sensor.type}
-                  onChange={(e) =>
-                    handleSensorChange(zoneIdx, sensorIdx, "type", e.target.value)
-                  }
-                  className="border p-2 rounded"
-                />
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">{sensor.id}</span>
-                  <button
-                    onClick={() => handleRemoveSensor(zoneIdx, sensorIdx)}
-                    className="text-red-500 hover:underline text-xs ml-2"
-                  >
-                    삭제
-                  </button>
-                </div>
-              </div>
-            ))}
-            <button
-              onClick={() => handleAddSensor(zoneIdx)}
-              className="text-sm text-green-600 hover:underline mt-2"
-            >
-              + 센서 추가
-            </button>
-          </div>
+    <div className="p-6 space-y-10">
+      {/* 담당 회원 정보 */}
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">회원 정보</h2>
+        <div className="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-md">
+          <div>상태: <span className="font-semibold">{user.status}</span></div>
+          <div>이름: {user.name}</div>
+          <div>아이디: {user.username}</div>
+          <div>이메일: {user.email}</div>
+          <div>전화번호: {user.phone}</div>
         </div>
-      ))}
+      </section>
 
-      <button
-        onClick={handleAddZone}
-        className="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 mt-4"
-      >
-        + 구역 추가
-      </button>
+      {/* 스마트팜 정보 */}
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">스마트팜 정보</h2>
+        <div className="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-md">
+          <div>팜 이름: {farm.name}</div>
+          <div>위치: {farm.location}</div>
+          <div>등록일: {farm.createdAt}</div>
+        </div>
+      </section>
+
+      {/* 구역 정보 */}
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">구역 정보</h2>
+        {zones.map((zone) => (
+          <div key={zone.id} className="border rounded-md p-4 space-y-2 bg-white shadow-sm">
+            <div className="flex justify-between items-center">
+              <h3 className="font-semibold">{zone.name}</h3>
+              <span className="text-sm text-gray-500">등록일: {zone.createdAt}</span>
+            </div>
+            <p className="text-sm text-gray-600">위치: {zone.location}</p>
+
+            {/* 센서 데이터 */}
+            <div className="grid grid-cols-3 gap-4 text-sm mt-2 bg-gray-50 p-3 rounded-md">
+              <div>온도: <span className="font-semibold">{zone.sensors.temp}°C</span></div>
+              <div>습도: <span className="font-semibold">{zone.sensors.hume}%</span></div>
+              <div>조도: <span className="font-semibold">{zone.sensors.sunshine}lx</span></div>
+            </div>
+
+            {/* 차트 자리 */}
+            <div className="bg-gray-100 rounded-md h-32 mt-2 flex items-center justify-center text-gray-500 text-sm">
+              [ 차트 영역 – 센서 데이터 시각화 예정 ]
+            </div>
+          </div>
+        ))}
+      </section>
     </div>
   );
 };
 
-export default AdminFarmDetail;
+export default FarmDetail;

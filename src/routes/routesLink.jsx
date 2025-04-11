@@ -10,9 +10,10 @@ import ApplySmartFarms from "../pages/Web/ApplySmartFarms";
 
 //admin
 import Admin from "../admin/pages/AdminHome";
-import AdminMemberList from "../admin/components/members/AdminMemberList";
+import AdminMemberList from "../admin/components/members/MemberList";
 import ApplicationList from "../admin/components/farm_apply/AdminFarmApplyList";
 import FarmList from "../admin/components/farm/AdminFarmList";
+import AdminFarmDetail from "../admin/components/farm/AdminFarmDetail";
 import CropList from "../admin/components/crops/AdminCropsList";
 
 //user
@@ -22,6 +23,7 @@ import HumidityPage from "../humidity/pages/HumidityPage";
 import SunshinePage from "../sunshine/pages/SunshinePage";
 import SoilPage from "../soil/pages/SoilPage";
 import CoTwo from "../Cotwo/pages/CoTwo";
+
 
 export const routesLink = [
   // web
@@ -38,6 +40,7 @@ export const routesLink = [
   { layout: "admin", path: "members", title: "회원 목록", element: <AdminMemberList /> },
   { layout: "admin", path: "applications", title: "신청 목록", element: <ApplicationList /> },
   { layout: "admin", path: "farms", title: "농장 목록", element: <FarmList /> },
+  { layout: "admin", path: "farmsDetail", title: "농장 상세", element: <AdminFarmDetail/> },
   { layout: "admin", path: "crops", title: "작물 목록", element: <CropList /> },
 
   // user

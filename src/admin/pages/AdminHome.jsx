@@ -75,14 +75,16 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow p-6">
-        <h2 className="text-lg font-semibold mb-4">작물 등록 순위</h2>
-        <Bar data={cropBarData} options={{ responsive: true }} />
-      </div>
+      <div className="flex">
+        <div className="w-[50%] bg-white rounded-xl shadow p-6">
+          <h2 className="text-lg font-semibold mb-4">작물 등록 순위</h2>
+          <Bar data={cropBarData} options={{ responsive: true }} />
+        </div>
 
-      <div className="bg-white rounded-xl shadow p-6">
-        <h2 className="text-lg font-semibold mb-4">최근 7일 신청자 추이</h2>
-        <Line data={applicationLineData} options={{ responsive: true }} />
+        <div className="w-[50%] bg-white rounded-xl shadow p-6">
+          <h2 className="text-lg font-semibold mb-4">최근 7일 신청자 추이</h2>
+          <Line data={applicationLineData} options={{ responsive: true }} />
+        </div>
       </div>
     </div>
   );
