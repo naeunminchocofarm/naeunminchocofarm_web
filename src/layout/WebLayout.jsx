@@ -1,13 +1,15 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import WebHeader from '../header/WebHeader'
+import WebFooter from '../header/WebFooter'
 
 const WebLayout = () => {
   return (
     <>
-      <div className="min-h-screen bg-gray-50 pt-18 flex justify-center items-start">
+      <div className="min-h-screen pt-18 flex flex-col">
         <WebHeader />
         <Outlet/>
+        <WebFooter />
       </div>
     </>
   )

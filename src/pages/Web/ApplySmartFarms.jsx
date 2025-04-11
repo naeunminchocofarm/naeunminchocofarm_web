@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import WebHeader from "../../header/WebHeader";
 
 const ApplySmartFarm = () => {
   const [form, setForm] = useState({

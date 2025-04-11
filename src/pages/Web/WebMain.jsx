@@ -1,10 +1,9 @@
 import React from "react";
-import WebHeader from "../../header/WebHeader";
 
 const WebMain = () => {
   return (
     <>
-      <div className="text-gray-800 w-full">
+      <div className="w-full">
         
         {/* Hero Section */}
         <section className="bg-green-100 py-16">
@@ -85,10 +84,7 @@ const WebMain = () => {
           </div>
         </div>
       </section>
-
-        <footer className="bg-gray-100 text-center text-sm text-gray-500 py-6">
-          &copy; 나은민초코팜
-        </footer>
+      
       </div>
     </>
   );

@@ -1,53 +1,111 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { routesLink } from '../routes/routesLink';
+import { BsMenuButton } from 'react-icons/bs';
 
 const WebHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
+  // 웹용 메뉴 
+  // 절대 경로 생성 함수>2depth를쓸거니깐
+  const getWebAbsolutePath = (path) => {
+    return path.startsWith("/web") ? path : `/web/${path}`;
+  };
+
+  // 웹 메뉴용 링크 필터링
+  const webMenuLinks = routesLink
+    .filter(
+      (route) =>
+        route.layout === "web" &&
+        !route.path.includes("login") &&
+        !route.path.includes("signup") &&
+        route.title !== "home" &&
+        route.title !== "-"
+    )
+    .map((route) => ({
+      title: route.title,
+      path: getWebAbsolutePath(route.path),
+    }));
+
+  // 로그인, 회원가입 링크
+  const loginLink = getWebAbsolutePath(
+    routesLink.find((r) => r.path.includes("login"))?.path || "/web/login"
+  );
+  const signupLink = getWebAbsolutePath(
+    routesLink.find((r) => r.path.includes("signup"))?.path || "/web/signup"
+  );
 
   return (
     <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         <h1 className="text-xl font-bold text-green-600">
-          <Link to="/web">나은민초코팜</Link>
+          <NavLink to="/web">나은민초코팜</NavLink>
         </h1>
 
-        {/* Desktop Menu */}
+        {/* Desktop 메뉴 */}
         <nav className="hidden md:flex space-x-6">
-          <Link to="/company" className="hover:text-green-600">회사소개</Link>
-          <Link to="/aboutFarms" className="hover:text-green-600">스마트팜이란?</Link>
-          <Link to="/business" className="hover:text-green-600">사업소개</Link>
-          <Link to="/applySmartFarm" className="hover:text-green-600">스마트팜신청</Link>
+          {webMenuLinks.map(({ path, title }) => (
+            <NavLink
+              key={path}
+              to={path}
+              className={({ isActive }) =>
+                isActive ? "text-green-600 font-semibold" : "hover:text-green-600"
+              }
+            >
+              {title}
+            </NavLink>
+          ))}
         </nav>
 
-        {/* 로그인/회원가입 */}
+        {/* 로그인/회원가입 버튼 */}
         <div className="hidden md:flex items-center space-x-3">
-          <Link to="/login">
-            <button className="bg-green-500 text-white px-4 py-2 rounded-xl hover:bg-green-600">
+          <NavLink to={loginLink?.path || "/web/login"}>
+            <button className="bg-green-500 text-white px-4 py-2 rounded-xl hover:bg-green-600 flex items-center gap-1">
+              
               로그인
             </button>
-          </Link>
-          <Link to="/signup" className="text-gray-500 hover:text-green-600 text-sm">
+          </NavLink>
+          <NavLink
+            to={signupLink?.path || "/web/signup"}
+            className="text-gray-500 hover:text-green-600 text-sm flex items-center gap-1"
+          >
+            
             회원가입
-          </Link>
+          </NavLink>
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* 모바일 메뉴 토글 */}
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-          <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-          </svg>
+          <BsMenuButton/>
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* 모바일 메뉴 */}
       {isOpen && (
         <nav className="md:hidden px-4 pb-4 space-y-2 bg-white border-t">
-          <Link to="/company" className="block hover:text-green-600">회사소개</Link>
-          <Link to="/aboutFarms" className="block hover:text-green-600">스마트팜이란?</Link>
-          <Link to="/business" className="block hover:text-green-600">사업소개</Link>
-          <Link to="/applySmartFarm" className="block hover:text-green-600">스마트팜신청</Link>
-          <Link to="/login" className="block text-green-600 font-semibold">로그인</Link>
-          <Link to="/signup" className="block text-gray-500 hover:text-green-600">회원가입</Link>
+          {webMenuLinks.map(({ path, title }) => (
+            <NavLink
+              key={path}
+              to={path}
+              className="block hover:text-green-600"
+              onClick={() => setIsOpen(false)}
+            >
+              {title}
+            </NavLink>
+          ))}
+          <NavLink
+            to={loginLink?.path || "/web/login"}
+            className="block text-green-600 font-semibold"
+            onClick={() => setIsOpen(false)}
+          >
+            로그인
+          </NavLink>
+          <NavLink
+            to={signupLink?.path || "/web/signup"}
+            className="block text-gray-500 hover:text-green-600"
+            onClick={() => setIsOpen(false)}
+          >
+            회원가입
+          </NavLink>
         </nav>
       )}
     </header>
