@@ -5,7 +5,7 @@ import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
 import AdminLayout from "../layout/AdminLayout";
 import AppLayout from "../layout/AppLayout";
 import WebLayout from "../layout/WebLayout";
-import { routesLink } from "./routesLink";
+import { routesLink } from "../routes/RoutesLink";
 import WebMain from "../pages/Web/WebMain";
 import Home from "../pages/Dashboard/Home";
 import AdminDashboard from "../admin/pages/AdminHome";
@@ -31,15 +31,15 @@ export default function Router() {
 
         {/* 컨텐츠들 */}
         <Route path="/web/*" element={<WebLayout />}>
-          <Route index element={<WebMain/>}/>
+          <Route index element={<WebMain />} />
           {layoutRoutes.web}
         </Route>
         <Route path="/admin/*" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard/>}/>
+          <Route index element={<AdminDashboard />} />
           {layoutRoutes.admin}
         </Route>
         <Route path="/user/*" element={<AppLayout />}>
-          <Route index element={<Home/>}/>
+          <Route index element={<Home />} />
           {layoutRoutes.user}
         </Route>
 
