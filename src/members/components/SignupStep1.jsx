@@ -1,9 +1,9 @@
 import React from "react";
 
-const SignupStep1 = ({ userData, setUserData, nextStep, buttonStyle }) => {
+const SignupStep1 = ({ memberData, setMemberData, nextStep, buttonStyle }) => {
   const agreeChange = (e) => {
-    setUserData({
-      ...userData,
+    setMemberData({
+      ...memberData,
       privacyPolicy: e.target.checked,
     });
   };
@@ -16,13 +16,15 @@ const SignupStep1 = ({ userData, setUserData, nextStep, buttonStyle }) => {
         <input
           type="checkbox"
           id="agree"
-          checked={userData.privacyPolicy}
+          checked={memberData.privacyPolicy}
           onChange={agreeChange}
         />
         <label htmlFor="agree" className="text-sm">이용약관에 동의합니다.</label>
       </div>
       <div className="flex justify-end">
-        <button onClick={nextStep} className={buttonStyle}>
+        <button onClick={()=>{
+          console.log(memberData.privacyPolicy);
+          nextStep()}} className={buttonStyle}>
           다음
         </button>
       </div>

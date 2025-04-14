@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import memberApi from '../../../members/api/member_api';
+import memberApi from '../../../members/apis/member_api';
+
 
 const MemberList = () => {
-  const [selected, setSelected] = useState([]);
   const [memberList, setMemberList] = useState([]);
 
   const fetchMembers = async () => {
@@ -17,20 +17,6 @@ const MemberList = () => {
   useEffect(() => {
     fetchMembers();
   }, []);
-
-  const toggleSelectAll = () => {
-    if (selected.length === memberList.length) {
-      setSelected([]);
-    } else {
-      setSelected(memberList.map((u) => u.id));
-    }
-  };
-
-  const toggleSelect = (id) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
-    );
-  };
 
   return (
     <div className="p-6 space-y-6">
@@ -55,7 +41,7 @@ const MemberList = () => {
           <thead className="bg-green-100 text-sm">
             <tr className="text-left">
               <th className="px-4 py-2 border-b">
-                <input type="checkbox" checked={()=>{toggleSelectAll()}}/>
+                <input type="checkbox"/>
               </th>
               <th className="px-4 py-2 border-b">권한</th>
               <th className="px-4 py-2 border-b">이름</th>
@@ -72,9 +58,9 @@ const MemberList = () => {
             {
               memberList.length > 0 ?
               memberList.map((member, idx) => (
-                <tr key={idx} className="bg-white text-sm hover:bg-gray-50">
+              <tr key={idx} className="bg-white text-sm hover:bg-gray-50">
                 <td className="px-4 py-3 border-b">
-                  <input type="checkbox" checked={()=>{toggleSelect()}}/>
+                  <input type="checkbox"/>
                 </td>
                 <td className="px-4 py-3 border-b">{member.role}</td>
                 <td className="px-4 py-3 border-b">{member.name}</td>
@@ -90,7 +76,9 @@ const MemberList = () => {
               </tr>
               ))
               :
-              <td className="bg-white text-sm p-4 text-center" colSpan={11}>등록된 회원이 없습니다.</td>
+              <tr>
+                <td className="bg-white text-sm p-4 text-center" colSpan={11}>등록된 회원이 없습니다.</td>
+              </tr>
             }
           </tbody>
         </table>
