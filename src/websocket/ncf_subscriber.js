@@ -9,6 +9,7 @@ function NcfSubscriber(webSocketPath, destination) {
   this.socket = undefined;
   this.onOpen = _ => {};
   this.onMessage = _ => {};
+  this.onJson = _ => {};
   this.onSubscribeFaild = _ => {};
   this.onSubscribeSuccess = _ => {};
   this.onClose = _ => {};
@@ -36,6 +37,16 @@ NcfSubscriber.prototype.connect = function() {
 
     switch (frame.command) {
       case 'MESSAGE':
+        switch (frame.headers['content-type']) {
+          case 'text':
+            this.onMessage(frame);
+            break;
+          case 'json':
+            this.onJson(frame);
+            break;
+          default:
+            break;
+        }
         this.onMessage(frame);
         break;
       case 'SUBSCRIBE_SUCCESS':
@@ -73,6 +84,12 @@ NcfSubscriber.prototype.unsubscribe = function() {
 NcfSubscriber.prototype.send = function(message = '', headers = {}) {
   headers['destination'] = this.destination;
   _send(this.socket, NcfFrame.createSend(headers, message).toString());
+}
+
+NcfSubscriber.prototype.sendJson = function(dict = {}, headers = {}) {
+  headers['destination'] = this.destination;
+  headers['content-type'] = 'json';
+  _send(this.socket, NcfFrame.createSend(headers, JSON.stringify(dict)).toString());
 }
 
 NcfSubscriber.prototype.close = function() {
