@@ -1,13 +1,54 @@
-import React from "react";
-import WebHeader from "../../header/WebHeader";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginReducer } from "../../redux/authSlice";
+import memberApi from "../apis/member_api";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+
+  const [loginInfo, setLoginInfo] = useState({
+    loginId: "",
+    password: "",
+  });
+
+  const changeLoginInfo = (e) => {
+    setLoginInfo({
+      ...loginInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  //로그인 요청 함수
+  const login = () => {
+    memberApi.login
+      .then((res) => {
+        alert("로그인 성공");
+
+        //응답 헤더 중 'authorization' 값을 가져옴. 이때 소문자를 사용.
+        console.log(res.headers["authorization"]);
+
+        //전달받은 jwt 토큰을 store에 저장
+        const accessToken = res.headers["authorization"];
+        dispatch(loginReducer(accessToken));
+        nav("/");
+      })
+      .catch((e) => {
+        //로그인 검증 실패 시 서버에서 401 상태코드를 응답
+        if (e.status === 401) {
+          alert("로그인 실패");
+        } else {
+          console.log(e);
+        }
+      });
+  };
+  const loginWhiteBox =
+    "flex flex-col md:flex-row bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl max-w-4xl w-full overflow-hidden";
   return (
     <>
       <div className="w-full h-80vh flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]">
-        <div className="flex flex-col md:flex-row bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl max-w-4xl w-full overflow-hidden">
-          {/* 왼쪽: 로그인 폼 */}
+        <div className={loginWhiteBox}>
           <div className="w-full md:w-1/2 p-10">
             <h2 className="text-2xl font-semibold text-green-700 mb-2">
               스마트한 농장의 시작,
@@ -25,6 +66,7 @@ const Login = () => {
                   type="text"
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
                   placeholder="아이디를 입력하세요"
+                  onChange={changeLoginInfo}
                 />
               </div>
 
@@ -34,6 +76,7 @@ const Login = () => {
                   type="password"
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
                   placeholder="비밀번호를 입력하세요"
+                  onChange={changeLoginInfo}
                 />
               </div>
 
@@ -51,29 +94,18 @@ const Login = () => {
                 <button
                   type="submit"
                   className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+                  onClick={login}
                 >
                   로그인
                 </button>
                 <Link
-                  to="/signup"
+                  to="/web/signup"
                   className="w-full text-center border border-green-500 text-green-600 py-2 rounded-lg hover:bg-green-50 transition"
                 >
                   회원가입
                 </Link>
               </div>
             </form>
-
-            <p className="text-xs text-gray-400 mt-4 text-center">
-              로그인 시{" "}
-              <a href="#" className="underline text-green-500">
-                이용약관
-              </a>{" "}
-              및{" "}
-              <a href="#" className="underline text-green-500">
-                개인정보 처리방침
-              </a>
-              에 동의하는 것으로 간주됩니다.
-            </p>
           </div>
 
           {/* 오른쪽: 배경 이미지 */}

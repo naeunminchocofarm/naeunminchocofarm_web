@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import SignUpInput from "../../common_components/SignUpInput";
 
-const SignupStep2 = ({ buttonStyle, disabledButtonStyle, isVerified, setIsVerified, nextStep }) => {
+const SignupStep2 = ({
+  memberData,
+  setMemberData,
+  buttonStyle,
+  disabledButtonStyle,
+  isVerified,
+  setIsVerified,
+  nextStep,
+}) => {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [sentCode, setSentCode] = useState("");
@@ -9,6 +17,13 @@ const SignupStep2 = ({ buttonStyle, disabledButtonStyle, isVerified, setIsVerifi
   const sendVerificationCode = () => {
     setSentCode("0912");
     alert("인증번호가 이메일로 전송되었습니다.");
+  };
+
+  const addEmail = () => {
+    setMemberData({
+      ...memberData,
+      email: email,
+    });
   };
 
   const verifyCode = () => {
@@ -26,7 +41,9 @@ const SignupStep2 = ({ buttonStyle, disabledButtonStyle, isVerified, setIsVerifi
         type="email"
         placeholder="이메일 입력"
         value={email}
+        name="email"
         onChange={(e) => setEmail(e.target.value)}
+        disabled={isVerified}
         className="w-full px-4 py-2 border rounded-lg"
       />
       <button onClick={sendVerificationCode} className={buttonStyle}>
@@ -48,7 +65,10 @@ const SignupStep2 = ({ buttonStyle, disabledButtonStyle, isVerified, setIsVerifi
       )}
       <div className="flex justify-end mt-2">
         <button
-          onClick={nextStep}
+          onClick={() => {
+            addEmail();
+            nextStep();
+          }}
           disabled={!isVerified}
           className={!isVerified ? disabledButtonStyle : buttonStyle}
         >
