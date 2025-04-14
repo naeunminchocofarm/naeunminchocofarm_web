@@ -1,24 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import memberApi from '../../../members/api/member_api';
 
 const MemberList = () => {
   const [selected, setSelected] = useState([]);
-  const users = [
-    {
-      id: 1,
-      name: "홍길동",
-      username: "hong123",
-      email: "hong@example.com",
-      phone: "010-1234-5678",
-      hasSmartFarm: true,
-      joinedAt: "2024.01.01",
-      leftAt: null,
-    },
-    // ... 더미 데이터 반복
-  ];
+  const [memberList, setMemberList] = useState([]);
+
+  const fetchMembers = async () => {
+    try {
+      const res = await memberApi.getMemList(); // () 호출!
+      setMemberList(res.data); // 예: Axios 응답 구조에 따라 조정
+    } catch (error) {
+      console.error("멤버 리스트 가져오기 실패:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMembers();
+  }, []);
 
   const toggleSelectAll = () => {
-    if (selected.length === MemberList.length) setSelected([]);
-    else setSelected(users.map((u) => u.id));
+    if (selected.length === memberList.length) {
+      setSelected([]);
+    } else {
+      setSelected(memberList.map((u) => u.id));
+    }
   };
 
   const toggleSelect = (id) => {
@@ -36,7 +41,7 @@ const MemberList = () => {
 
       {/* SECTION TABLE-INFO */}
       <div className="flex justify-between items-center">
-        <div className="text-sm font-semibold">총 회원 수: {users.length}명</div>
+        <div className="text-sm font-semibold">총 회원 수: {memberList.length}명</div>
         <input
           type="text"
           placeholder="이름, 아이디 검색"
@@ -64,24 +69,29 @@ const MemberList = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, idx) => (
-              <tr key={idx} className="bg-white text-sm hover:bg-gray-50">
+            {
+              memberList.length > 0 ?
+              memberList.map((member, idx) => (
+                <tr key={idx} className="bg-white text-sm hover:bg-gray-50">
                 <td className="px-4 py-3 border-b">
                   <input type="checkbox" checked={()=>{toggleSelect()}}/>
                 </td>
-                <td className="px-4 py-3 border-b">{user.role}</td>
-                <td className="px-4 py-3 border-b">{user.name}</td>
-                <td className="px-4 py-3 border-b">{user.username}</td>
-                <td className="px-4 py-3 border-b">{user.email}</td>
-                <td className="px-4 py-3 border-b">{user.phone}</td>
-                <td className="px-4 py-3 border-b">{user.smartFarm ? "운영중" : "미운영"}</td>
-                <td className="px-4 py-3 border-b">{user.joinedAt}</td>
-                <td className="px-4 py-3 border-b">{user.leftAt || "-"}</td>
+                <td className="px-4 py-3 border-b">{member.role}</td>
+                <td className="px-4 py-3 border-b">{member.name}</td>
+                <td className="px-4 py-3 border-b">{member.loginId}</td>
+                <td className="px-4 py-3 border-b">{member.email}</td>
+                <td className="px-4 py-3 border-b">{member.tell}</td>
+                <td className="px-4 py-3 border-b">운영중{/*members.smartFarm ? "운영중" : "미운영"*/}</td>
+                <td className="px-4 py-3 border-b">{member.createAt}</td>
+                <td className="px-4 py-3 border-b">{member.deleteAt || "-"}</td>
                 <td className="px-4 py-3 border-b">
                   <button className="text-blue-600 hover:underline">보기</button>
                 </td>
               </tr>
-            ))}
+              ))
+              :
+              <td className="bg-white text-sm p-4 text-center" colSpan={11}>등록된 회원이 없습니다.</td>
+            }
           </tbody>
         </table>
 
@@ -89,7 +99,7 @@ const MemberList = () => {
 
       {/* SECTION TABLE-SETTING */}
       <div className="flex justify-end gap-2">
-        <button className="bg-gray-200 hover:bg-gray-300 px-4 py-1 rounded">
+        <button className="bg-green-200 hover:bg-gray-300 px-4 py-1 rounded">
           생성
         </button>
         <button className="bg-yellow-300 hover:bg-yellow-400 px-4 py-1 rounded">
