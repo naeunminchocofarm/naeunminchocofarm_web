@@ -1,6 +1,7 @@
 function NcfFrame(command, headers = {}, body = "") {
   this.command = command;
   headers['content-length'] = body.length;
+  if (!headers['content-type']) headers['content-type'] = 'text'
   this.headers = headers;
   this.body = body;
 }
@@ -9,7 +10,6 @@ NcfFrame.prototype.toString = function() {
   const rawHeaders = Object.entries(this.headers)
     .map(([key, value]) => `${key}:${value}`)
     .join('\n');
-  
   return [this.command, rawHeaders, '', this.body].join('\n');
 }
 
