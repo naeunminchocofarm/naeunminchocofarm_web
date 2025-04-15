@@ -1,6 +1,21 @@
 import ToggleButton from "../../common_components/ToggleButton";
 import Card from "../../common_components/Card";
 
+function ControlCard({type = '', settings, onChangeSettings}) {
+  switch (type) {
+    case 'air_temp':
+      return <AirTempControlCard settings={settings} onChangeSettings={onChangeSettings} />;
+    case 'humidity':
+      return <HumidControlCard settings={settings} onChangeSettings={onChangeSettings} />;
+    case 'ldr':
+      return <LdrControlCard settings={settings} onChangeSettings={onChangeSettings} />;
+    case 'soil_moisture':
+      return <SoilMoistureControlCard settings={settings} onChangeSettings={onChangeSettings} />;
+    default:
+      return undefined;
+  }
+}
+
 function SensorControlCard({settings, onChangeSettings, fields, toggleKey}) {
   const cardCss = "min-w-100 border border-gray-200";
   const textCss = "font-bold text-2xl";
@@ -33,10 +48,10 @@ function AirTempControlCard({settings, onChangeSettings}) {
       settings={settings}
       onChangeSettings={onChangeSettings}
       fields={[
-        {label: '최저 기온(℃)', key: 'min_air_temp', parser: parseFloat},
-        {label: '최고 기온(℃)', key: 'max_air_temp', parser: parseFloat}
+        {label: '최저 기온(℃)', key: 'min', parser: parseFloat},
+        {label: '최고 기온(℃)', key: 'max', parser: parseFloat}
       ]}
-      toggleKey={"enable_air_temp"}
+      toggleKey={"enable"}
     />
   );
 }
@@ -47,10 +62,10 @@ function HumidControlCard({settings, onChangeSettings}) {
       settings={settings}
       onChangeSettings={onChangeSettings}
       fields={[
-        {label: '최저 습도(%)', key: 'min_humidity', parser: parseFloat},
-        {label: '최고 습도(%)', key: 'max_humidity', parser: parseFloat}
+        {label: '최저 습도(%)', key: 'min', parser: parseFloat},
+        {label: '최고 습도(%)', key: 'max', parser: parseFloat}
       ]}
-      toggleKey={"enable_humidity"}
+      toggleKey={"enable"}
     />
   );
 }
@@ -61,10 +76,10 @@ function LdrControlCard({settings, onChangeSettings}) {
       settings={settings}
       onChangeSettings={onChangeSettings}
       fields={[
-        {label: '최저 조도', key: 'min_ldr', parser: parseInt},
-        {label: '최고 조도', key: 'max_ldr', parser: parseInt}
+        {label: '최저 조도', key: 'min', parser: parseInt},
+        {label: '최고 조도', key: 'max', parser: parseInt}
       ]}
-      toggleKey={"enable_ldr"}
+      toggleKey={"enable"}
     />
   );
 }
@@ -75,17 +90,18 @@ function SoilMoistureControlCard({settings, onChangeSettings}) {
       settings={settings}
       onChangeSettings={onChangeSettings}
       fields={[
-        {label: '최저 토양습도', key: 'min_soil_moisture', parser: parseInt},
-        {label: '최고 토양습도', key: 'max_soil_moisture', parser: parseInt}
+        {label: '최저 토양습도', key: 'min', parser: parseInt},
+        {label: '최고 토양습도', key: 'max', parser: parseInt}
       ]}
-      toggleKey={"enable_soil_moisture"}
+      toggleKey={"enable"}
     />
   );
 }
 
 export {
-  AirTempControlCard,
-  HumidControlCard,
-  SoilMoistureControlCard,
-  LdrControlCard
+  ControlCard,
+  // AirTempControlCard,
+  // HumidControlCard,
+  // SoilMoistureControlCard,
+  // LdrControlCard
 }

@@ -1,52 +1,29 @@
 import { useEffect, useRef, useState } from "react";
-import NcfSubscriber from "../../websocket/ncf_subscriber";
-import { subscribePaths, webSocketPaths } from "../../websocket/wobsocket_paths";
-import { AirTempControlCard, HumidControlCard, LdrControlCard, SoilMoistureControlCard } from "../components/SensorControlCard";
+import { ControlCard } from "../components/SensorControlCard";
 import FarmMonitor from "../components/FarmMonitor";
+import {subscribeFarmSettings, subscribeFarmStatus} from "../setting_manager";
 
 export default function TestControllerPage() {
   const [settings, setSettings] = useState(undefined);
   const [currentStatus, setCurrentStatus] = useState(undefined);
-  const webSocketClient = useRef(undefined);
+  const updateSettings = useRef(() => {});
 
   useEffect(init, []);
   
   function init() {
-    const subscriber = new NcfSubscriber(webSocketPaths.production, subscribePaths.testUserFarmUuid)
-    subscriber.onOpen = e => {
-      subscriber.subscribe();
-      subscriber.sendJson({'method': 'get-status'});
-      subscriber.sendJson({'method': 'get-settings'});
-    }
+    const [unsubscribeSettings, _updateSettings] = subscribeFarmSettings("0bbd8aa9-02af-4dc6-af0e-c1c5aaa45790", settings => setSettings(settings));
+    const unsubscribeStatus = subscribeFarmStatus("0bbd8aa9-02af-4dc6-af0e-c1c5aaa45790", status => setCurrentStatus(status));
 
-    subscriber.onJson = frame => {
-      const data = JSON.parse(frame.body)
-      switch (data['method']) {
-        case 'current-settings':
-          setSettings(data['settings']);
-          break;
-        case 'current-status':
-          setCurrentStatus(data['status']);
-          break;
-        default:
-          break;
-      }
-    }
-
-    subscriber.connect();
-    webSocketClient.current = subscriber;
+    updateSettings.current = _updateSettings;
 
     return () => {
-      if (webSocketClient.current) {
-        webSocketClient.current.unsubscribe();
-        webSocketClient.current.close();
-        webSocketClient.current = undefined;
-      }
+      unsubscribeSettings();
+      unsubscribeStatus();
     }
   }
 
   function updateFarmSettings(settings) {
-    webSocketClient.current?.sendJson({'method': 'update-settings', 'settings': settings});
+    updateSettings.current(settings);
   }
 
   const titleCss = "text-4xl font-bold";
@@ -58,14 +35,11 @@ export default function TestControllerPage() {
       {
         settings
         ?
-        <>
-          <div className="flex flex-col gap-5">
-            <AirTempControlCard settings={settings} onChangeSettings={s => updateFarmSettings(s)} />
-            <HumidControlCard settings={settings} onChangeSettings={s => updateFarmSettings(s)} />
-            <LdrControlCard settings={settings} onChangeSettings={s => updateFarmSettings(s)} />
-            <SoilMoistureControlCard settings={settings} onChangeSettings={s => updateFarmSettings(s)} />
-          </div>
-        </>
+        <div className="flex flex-col gap-5">
+          {
+            Object.entries(settings).map(([k, v], i) => <ControlCard key={i} type={k} settings={v} onChangeSettings={s => updateFarmSettings({...settings, [k]: s})} />)
+          }
+        </div>
         :
         <p>제어 데이터를 불러오지 못함!!!!</p>
       }
