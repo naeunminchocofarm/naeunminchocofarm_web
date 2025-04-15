@@ -15,6 +15,7 @@ import ApplicationList from "../admin/components/farm_apply/AdminFarmApplyList";
 import FarmList from "../admin/components/farm/AdminFarmList";
 import AdminFarmDetail from "../admin/components/farm/AdminFarmDetail";
 import CropList from "../admin/components/crops/AdminCropsList";
+import AdminFarmCreate from "../admin/components/farm/AdminFarmCreate";
 
 //user
 import Home from "../pages/Dashboard/Home";
@@ -37,11 +38,13 @@ export const routesLink = [
   { layout: "web", path: "applySmartFarm", title: "스마트팜신청", element: <ApplySmartFarms />, depth: 1, hidden: false },
 
   // admin
+
   { layout: "admin", path: "home", title: "관리자 홈", element: <Admin />, depth: 1, hidden: false },
   { layout: "admin", path: "members", title: "회원 목록", element: <AdminMemberList />, depth: 1, hidden: false },
   { layout: "admin", path: "applications", title: "신청 목록", element: <ApplicationList />, depth: 1, hidden: false },
   { layout: "admin", path: "farms", title: "농장 목록", element: <FarmList />, depth: 1, hidden: false },
-  { layout: "admin", path: "farmsDetail", title: "농장 상세", element: <AdminFarmDetail />, depth: 2, hidden: true },
+  { layout: "admin", path: "farms/create", title: "농장 등록", element: <AdminFarmCreate />, depth: 2, hidden: true  },
+  { layout: "admin", path: "farmsDetail/:id", title: "농장 상세", element: <AdminFarmDetail />, depth: 2, hidden: true },
   { layout: "admin", path: "crops", title: "작물 목록", element: <CropList />, depth: 1, hidden: false },
 
   // user
