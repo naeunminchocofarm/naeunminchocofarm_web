@@ -3,7 +3,7 @@ import { Navigate } from "react-router";
 import { useSelector } from "react-redux";
 import { isAuthenticated } from "../apis/authCheck";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children }) => { 
   const token = useSelector((state) => state.auth.token);
   const [isAccessible, setIsAccessible] = useState(null);
 
@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }) => {
     } else {
       setIsAccessible(true);
     }
-  }, []);
+  }, [token]);
 
   if (isAccessible === null) return null;
   return isAccessible ? children : <Navigate to={"/web/home"} />;

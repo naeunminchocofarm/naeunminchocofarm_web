@@ -14,7 +14,7 @@ const ProtectedAdminRoute = ({ children }) => {
     } else {
       setIsAccessible(true);
     }
-  }, []);
+  }, [token]);
 
   if (isAccessible === null) return null;
   return isAccessible ? children : <Navigate to={"/web/home"} />;

@@ -9,6 +9,8 @@ import { routesLink } from "../routes/RoutesLink";
 import WebMain from "../pages/Web/WebMain";
 import Home from "../pages/Dashboard/Home";
 import AdminDashboard from "../admin/pages/AdminHome";
+import ProtectedAdminRoute from "../members/components/ProtectedAdminRoute";
+import ProtectedRoute from "../members/components/ProtectedRoute";
 
 export default function Router() {
   const layoutRoutes = {
@@ -34,12 +36,26 @@ export default function Router() {
           <Route index element={<WebMain />} />
           {layoutRoutes.web}
         </Route>
-        <Route path="/admin/*" element={<AdminLayout />}>
+
+        <Route
+          path="/admin/*"
+          element={
+            <ProtectedAdminRoute>
+              <AdminLayout />
+            </ProtectedAdminRoute>
+          }
+        >
           <Route index element={<AdminDashboard />} />
           {layoutRoutes.admin}
         </Route>
-        <Route path="/user/*" element={<AppLayout />}>
-          <Route index element={<Home />} />
+
+        <Route path="/user/*"
+              element={<AppLayout />}>
+          <Route index element={
+             <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+            } />
           {layoutRoutes.user}
         </Route>
 

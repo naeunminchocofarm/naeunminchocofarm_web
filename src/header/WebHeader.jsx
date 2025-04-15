@@ -1,39 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
-import { jwtDecode } from "jwt-decode";
-import { logoutReducer } from "../redux/authSlice";
 import { webMenu } from "../routes/MenuByLayout";
+import { useAuthInfo } from "../hooks/AuthInfo";
 
 const WebHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
-  const nav = useNavigate();
-
-  const token = useSelector((state) => state.auth.token);
-  const isLogin = !!token;
-  var roleName = null;
-
-  const logout = () => {
-    dispatch(logoutReducer());
-    nav("/web/home");
-  };
+  const { isLogin, roleName, logout } = useAuthInfo();
 
   useEffect(() => {
     console.log("🔁 WebHeader 리렌더링");
-    console.log("Redux 토큰 상태:", token);
-
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        console.log("디코딩 결과:", decoded);
-        roleName = decoded.roleName;
-      } catch (e) {
-        console.error("JWT 디코드 실패:", e);
-      }
-    }
-  }, [token]);
+    console.log("권한:", roleName);
+  }, [roleName]);
 
   const headerCss = "bg-white shadow-sm fixed top-0 left-0 right-0 z-50";
 
@@ -65,12 +43,12 @@ const WebHeader = () => {
         <div className="hidden md:flex items-center space-x-3">
           {isLogin ? (
             <>
-              {roleName === "FAMMER" && (
+              {roleName === "ROLE_FAMMER" && (
                 <NavLink to="/user/home" className="text-sm text-green-600">
                   마이팜
                 </NavLink>
               )}
-              {roleName === "ADMIN" && (
+              {roleName === "ROLE_ADMIN" && (
                 <NavLink to="/admin" className="text-sm text-green-600">
                   관리자페이지 바로가기
                 </NavLink>
@@ -124,12 +102,12 @@ const WebHeader = () => {
 
           {isLogin ? (
             <>
-              {roleName === "FAMMER" && (
+              {roleName === "ROLE_FAMMER" && (
                 <NavLink to="/user/home" onClick={() => setIsOpen(false)}>
                   마이팜
                 </NavLink>
               )}
-              {roleName === "ADMIN" && (
+              {roleName === "ROLE_ADMIN" && (
                 <NavLink to="/admin" onClick={() => setIsOpen(false)}>
                   관리자페이지
                 </NavLink>
