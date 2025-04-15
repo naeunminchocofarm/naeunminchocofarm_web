@@ -9,7 +9,8 @@ const subscribePaths = {
   testSubject: "test-subject",
   motionDetecting: "motion-detecting",
   awning: "awning",
-  heatLamp: "heat-lamp"
+  heatLamp: "heat-lamp",
+  testUserFarmUuid: "0bbd8aa9-02af-4dc6-af0e-c1c5aaa45790"
 };
 
 export { webSocketPaths, subscribePaths };
