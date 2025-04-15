@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import signupSlice from "./countSlice";
+import authSlice from "./authSlice";
 
 export const store = configureStore({
-  reducer:{
-    //오류나서 불러온 임시 reducer
-    signup:signupSlice.reducer,
-  }
+  reducer: {
+    signup: signupSlice.reducer,
+    auth: authSlice.reducer
+  },
 });
-
-
-

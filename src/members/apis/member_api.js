@@ -14,8 +14,8 @@ const memberApi = {
     const response = axios.post("/api/web/signup", memberInfo);
     return response;
   },
-  login: function (loginCheck) {
-    const response = axios.post("/api/web/login", loginCheck);
+  login: function (loginInfo) {
+    const response = axios.post("/api/web/login", loginInfo);
     return response;
   },
 };
