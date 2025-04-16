@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../../members/apis/axiosInstance";
 
-
 // 공통 스타일
 const tdStyle = "px-4 py-3 border-b";
 const thStyle = "px-4 py-2 border-b";
@@ -14,9 +13,10 @@ const ServiceApplyList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosInstance.get("/api/service/list")
-      .then(res => setApplyList(res.data))
-      .catch(err => console.error("서비스 신청 목록 조회 실패:", err));
+    axiosInstance
+      .get("/admin/list")
+      .then((res) => setApplyList(res.data))
+      .catch((err) => console.error("서비스 신청 목록 조회 실패:", err));
   }, []);
 
   return (
@@ -28,7 +28,9 @@ const ServiceApplyList = () => {
 
       {/* 상단 요약 */}
       <div className="flex justify-between items-center">
-        <div className="text-sm font-semibold">총 신청 수: {applyList.length}건</div>
+        <div className="text-sm font-semibold">
+          총 신청 수: {applyList.length}건
+        </div>
         <input
           type="text"
           placeholder="이름, 이메일 검색"
@@ -54,29 +56,37 @@ const ServiceApplyList = () => {
             </tr>
           </thead>
           <tbody>
-            {applyList.length > 0 ? applyList.map((item) => (
-              <tr key={item.id} className={tableRowStyle + " text-center"}>
-                <td className={tdStyle}>
-                  <input type="checkbox" />
-                </td>
-                <td className={tdStyle}>{item.id}</td>
-                <td className={tdStyle}>{item.memberName}</td>
-                <td className={tdStyle}>{item.memberEmail}</td>
-                <td className={tdStyle}>{item.type}</td>
-                <td className={tdStyle}>{item.isOperating === "yes" ? "예" : "아니오"}</td>
-                <td className={tdStyle}>{item.applicationDate?.slice(0, 10)}</td>
-                <td className={tdStyle}>
-                  <button
-                    onClick={() => navigate(`/admin/service/${item.id}`)}
-                    className="text-blue-600 hover:underline"
-                  >
-                    보기
-                  </button>
-                </td>
-              </tr>
-            )) : (
+            {applyList.length > 0 ? (
+              applyList.map((item) => (
+                <tr key={item.id} className={tableRowStyle + " text-center"}>
+                  <td className={tdStyle}>
+                    <input type="checkbox" />
+                  </td>
+                  <td className={tdStyle}>{item.id}</td>
+                  <td className={tdStyle}>{item.memberName}</td>
+                  <td className={tdStyle}>{item.memberEmail}</td>
+                  <td className={tdStyle}>{item.type}</td>
+                  <td className={tdStyle}>
+                    {item.isOperating === "yes" ? "예" : "아니오"}
+                  </td>
+                  <td className={tdStyle}>
+                    {item.applicationDate?.slice(0, 10)}
+                  </td>
+                  <td className={tdStyle}>
+                    <button
+                      onClick={() => navigate(`/admin/service/${item.id}`)}
+                      className="text-blue-600 hover:underline"
+                    >
+                      보기
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
               <tr>
-                <td colSpan={8} className={noDataStyle}>등록된 신청이 없습니다.</td>
+                <td colSpan={8} className={noDataStyle}>
+                  등록된 신청이 없습니다.
+                </td>
               </tr>
             )}
           </tbody>

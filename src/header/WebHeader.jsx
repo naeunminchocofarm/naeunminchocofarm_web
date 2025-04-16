@@ -50,10 +50,10 @@ const WebHeader = () => {
               )}
               {roleName === "ROLE_ADMIN" && (
                 <NavLink to="/admin" className="text-sm text-green-600">
-                  관리자페이지 바로가기
+                  관리자페이지 
                 </NavLink>
               )}
-              <NavLink to="/mypage" className="text-sm text-green-600">
+              <NavLink to="/member/mypage" className="text-sm text-green-600">
                 마이페이지
               </NavLink>
               <button
@@ -65,13 +65,13 @@ const WebHeader = () => {
             </>
           ) : (
             <>
-              <NavLink to="/web/login">
+              <NavLink to="/member/login">
                 <button className="bg-green-500 text-white px-4 py-2 rounded-xl hover:bg-green-600">
                   로그인
                 </button>
               </NavLink>
               <NavLink
-                to="/web/signUp"
+                to="/member/signUp"
                 className="text-gray-500 hover:text-green-600 text-sm"
               >
                 회원가입
@@ -112,7 +112,7 @@ const WebHeader = () => {
                   관리자페이지
                 </NavLink>
               )}
-              <NavLink to="/mypage" onClick={() => setIsOpen(false)}>
+              <NavLink to="/member/mypage" onClick={() => setIsOpen(false)}>
                 마이페이지
               </NavLink>
               <button onClick={logout} className="text-red-500">
@@ -121,10 +121,10 @@ const WebHeader = () => {
             </>
           ) : (
             <>
-              <NavLink to="/web/login" onClick={() => setIsOpen(false)}>
+              <NavLink to="/member/login" onClick={() => setIsOpen(false)}>
                 로그인
               </NavLink>
-              <NavLink to="/web/signUp" onClick={() => setIsOpen(false)}>
+              <NavLink to="/member/signUp" onClick={() => setIsOpen(false)}>
                 회원가입
               </NavLink>
             </>

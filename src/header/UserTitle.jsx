@@ -27,7 +27,7 @@ const UserTitle = ({ pageTitle }) => {
                 <BsBellFill />
               </button>
             </span>
-            <Link to="/mypage" className="p-2 text-lg inlinkblock">
+            <Link to="/member/mypage" className="p-2 text-lg inlinkblock">
               <BsPersonFill />
             </Link>
           </div>

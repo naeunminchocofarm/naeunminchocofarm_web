@@ -1,7 +1,7 @@
 // src/layouts/UserDashboardLayout.jsx
 import React, { useState } from "react";
 import { BiMenu } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 
 const navItems = [
@@ -45,7 +45,7 @@ const UserLayout = ({ children }) => {
 
         {/* Page Content */}
         <main className="flex-1 overflow-auto p-6">
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>

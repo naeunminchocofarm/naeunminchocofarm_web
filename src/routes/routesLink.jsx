@@ -10,12 +10,14 @@ import Web from "../pages/Web/WebMain";
 import Company from "../pages/Web/Company";
 import AboutFarms from "../pages/Web/AboutFarms";
 import Business from "../pages/Web/Business";
-import ServiceApply from "../pages/Web/ServiceApply";
+import ServiceApply from "../service_apply/page/ServiceApply";
 
 //admin
 import Admin from "../admin/pages/AdminHome";
 import AdminMemberList from "../admin/components/members/MemberList";
-import ApplicationList from "../admin/components/farm_apply/AdminFarmApplyList";
+import ServiceApplyList from "../admin/pages/Service/ServiceApplyList";
+import ServiceApplyDetail from "../admin/pages/Service/ServiceApplyDetail";
+import ServiceApplyWrite from "../admin/pages/Service/ServiceApplyWrite";
 import FarmList from "../admin/components/farm/AdminFarmList";
 import AdminFarmDetail from "../admin/components/farm/AdminFarmDetail";
 import CropList from "../admin/components/crops/AdminCropsList";
@@ -29,10 +31,8 @@ import SunshinePage from "../sunshine/pages/SunshinePage";
 import SoilPage from "../soil/pages/SoilPage";
 import CoTwo from "../Cotwo/pages/CoTwo";
 import Privacy from "../pages/Web/Privacy";
-import ServiceApplyList from "../admin/pages/Service/ServiceApplyList";
-import ServiceApplyDetail from "../admin/pages/Service/ServiceApplyDetail";
-import ServiceApplyWrite from "../admin/pages/Service/ServiceApplyWrite";
 import UserMain from "../pages/Dashboard/UserMain";
+import MyApply from "../members/pages/MyApply";
 
 
 export const routesLink = [
@@ -40,7 +40,7 @@ export const routesLink = [
   { layout: "member", path: "login", title: "로그인", element: <Login />, depth: 1, hidden: true },
   { layout: "member", path: "signup", title: "회원가입", element: <Signup />, depth: 1, hidden: true },
   { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: true },
-  //{ layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 2, hidden: true },
+  { layout: "member", path: "myapply", title: "마이신청", element: <MyApply/>, depth: 2, hidden: true },
 
   // web
   { layout: "web", path: "home", title: "home", element: <Web />, depth: 1, hidden: true },
@@ -63,10 +63,10 @@ export const routesLink = [
 
   // user
   { layout: "user", path: "home", title: "사용자 홈", element: <Home />, depth: 1, hidden: false }, // 버튼 용
+  { layout: "user", path: "home2", title: "사용자 홈", element: <UserMain />, depth: 1, hidden: false },
   { layout: "user", path: "temp", title: "온도", element: <TemperaturePage />, depth: 2, hidden: false },
   { layout: "user", path: "hume", title: "습도", element: <HumidityPage />, depth: 2, hidden: false },
   { layout: "user", path: "sunshine", title: "일조량", element: <SunshinePage />, depth: 2, hidden: false },
   { layout: "user", path: "soil", title: "토양", element: <SoilPage />, depth: 2, hidden: false },
   { layout: "user", path: "cotwo", title: "이산화탄소", element: <CoTwo />, depth: 2, hidden: false },
-  { layout: "user", path: "home2", title: "사용자 홈", element: <UserMain />, depth: 1, hidden: false },
 ];
