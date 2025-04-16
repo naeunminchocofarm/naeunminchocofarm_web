@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "../../../members/apis/axiosInstance";
+import serviceApi from "../apis/service_api";
 
 // 공통 스타일
 const tdStyle = "px-4 py-3 border-b";
@@ -10,14 +10,22 @@ const noDataStyle = "bg-white text-sm p-4 text-center";
 
 const ServiceApplyList = () => {
   const [applyList, setApplyList] = useState([]);
-  const navigate = useNavigate();
+  const nav = useNavigate();
+
+  const fetchServiceApply = async () => {
+    try {
+      const res = await serviceApi.getServiceApplyList();
+      setApplyList(res.data);
+    } catch (error) {
+      console.error("서비스 신청 목록 조회 실패:", error);
+    }
+  };
 
   useEffect(() => {
-    axiosInstance
-      .get("/admin/list")
-      .then((res) => setApplyList(res.data))
-      .catch((err) => console.error("서비스 신청 목록 조회 실패:", err));
+    fetchServiceApply();
   }, []);
+
+  console.log(applyList);
 
   return (
     <div className="p-6 space-y-6">
@@ -74,7 +82,7 @@ const ServiceApplyList = () => {
                   </td>
                   <td className={tdStyle}>
                     <button
-                      onClick={() => navigate(`/admin/service/${item.id}`)}
+                      onClick={() => nav(`/admin/service/${item.id}`)}
                       className="text-blue-600 hover:underline"
                     >
                       보기
