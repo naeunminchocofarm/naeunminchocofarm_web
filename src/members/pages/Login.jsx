@@ -99,7 +99,7 @@ const Login = () => {
                   로그인
                 </button>
                 <Link
-                  to="/web/signup"
+                  to="/member/signup"
                   className="w-full text-center border border-green-500 text-green-600 py-2 rounded-lg hover:bg-green-50 transition"
                 >
                   회원가입

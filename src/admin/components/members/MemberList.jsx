@@ -23,6 +23,14 @@ const MemberList = () => {
     fetchMembers();
   }, []);
 
+  const changeRoleToStr = (id) => {
+    if(id === 1) return '사용자'
+    else if (id === 2) return '농장주'
+    else return '관리자'
+  }
+
+  console.log(memberList);
+
   return (
     <div className="p-6 space-y-6">
       {/* 안내 */}
@@ -61,7 +69,7 @@ const MemberList = () => {
             {memberList.length > 0 ? memberList.map((member, idx) => (
               <tr key={idx} className={tableRowStyle}>
                 <td className={tdStyle}><input type="checkbox" /></td>
-                <td className={tdStyle}>{member.role}</td>
+                <td className={tdStyle}>{changeRoleToStr(member.role.roleFlag)}</td>
                 <td className={tdStyle}>{member.name}</td>
                 <td className={tdStyle}>{member.loginId}</td>
                 <td className={tdStyle}>{member.email}</td>

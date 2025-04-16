@@ -20,6 +20,17 @@ export const isAuthenticated = (token) => {
 };
 
 //토큰 존재 + 만료되지 않음 + 관리자권한 => 리턴 true
+export const isFammer = (token) => {
+  if (!token) return false;
+  try {
+    const decoded = jwtDecode(token);
+    return decoded.roleName === "ROLE_FAMMER"; // 이거 정확히 일치해야 함!
+  } catch {
+    return false;
+  }
+};
+
+//토큰 존재 + 만료되지 않음 + 관리자권한 => 리턴 true
 export const isAdmin = (token) => {
   if (!token) return false;
   try {

@@ -11,7 +11,7 @@ const ServiceApplyDetail = () => {
   const [detail, setDetail] = useState(null);
 
   useEffect(() => {
-    axiosInstance.get(`/api/service/admin/detail/${id}`)
+    axiosInstance.get(`/service/admin/detail/${id}`)
       .then((res) => setDetail(res.data))
       .catch((err) => console.error("상세 조회 실패:", err));
   }, [id]);

@@ -19,7 +19,7 @@ const WebHeader = () => {
     <header className={headerCss}>
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         <h1 className="text-xl font-bold text-green-600">
-          <NavLink to="/web">나은민초코팜</NavLink>
+          <NavLink to="/">나은민초코팜</NavLink>
         </h1>
 
         {/* PC 메뉴 */}
@@ -50,10 +50,10 @@ const WebHeader = () => {
               )}
               {roleName === "ROLE_ADMIN" && (
                 <NavLink to="/admin" className="text-sm text-green-600">
-                  관리자페이지 바로가기
+                  관리자페이지 
                 </NavLink>
               )}
-              <NavLink to="/mypage" className="text-sm text-green-600">
+              <NavLink to="/member/mypage" className="text-sm text-green-600">
                 마이페이지
               </NavLink>
               <button
@@ -112,7 +112,7 @@ const WebHeader = () => {
                   관리자페이지
                 </NavLink>
               )}
-              <NavLink to="/mypage" onClick={() => setIsOpen(false)}>
+              <NavLink to="/member/mypage" onClick={() => setIsOpen(false)}>
                 마이페이지
               </NavLink>
               <button onClick={logout} className="text-red-500">
@@ -121,10 +121,10 @@ const WebHeader = () => {
             </>
           ) : (
             <>
-              <NavLink to="/web/login" onClick={() => setIsOpen(false)}>
+              <NavLink to="/user/login" onClick={() => setIsOpen(false)}>
                 로그인
               </NavLink>
-              <NavLink to="/web/signUp" onClick={() => setIsOpen(false)}>
+              <NavLink to="/user/signUp" onClick={() => setIsOpen(false)}>
                 회원가입
               </NavLink>
             </>
