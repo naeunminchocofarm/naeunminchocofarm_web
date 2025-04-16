@@ -62,7 +62,7 @@ const MemberList = () => {
                 <td className="px-4 py-3 border-b">
                   <input type="checkbox"/>
                 </td>
-                <td className="px-4 py-3 border-b">{member.role}</td>
+                <td className="px-4 py-3 border-b">{member.memberRole.role}</td>
                 <td className="px-4 py-3 border-b">{member.name}</td>
                 <td className="px-4 py-3 border-b">{member.loginId}</td>
                 <td className="px-4 py-3 border-b">{member.email}</td>
