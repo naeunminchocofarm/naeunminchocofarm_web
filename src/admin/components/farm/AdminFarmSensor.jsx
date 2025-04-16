@@ -141,8 +141,8 @@ const AdminFarmSensor = ({ sectionId }) => {
                     }
                   />
                 </th>
-                <th className="px-4 py-2 border-b">ID</th>
-                <th className="px-4 py-2 border-b">이름</th>
+                <th className="px-4 py-2 border-b">센서 ID</th>
+                <th className="px-4 py-2 border-b">센서 이름</th>
                 <th className="px-4 py-2 border-b">UUID</th>
                 <th className="px-4 py-2 border-b">센서 타입</th>
               </tr>
