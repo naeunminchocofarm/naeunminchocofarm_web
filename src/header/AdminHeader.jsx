@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
 import { adminMenu } from "../routes/MenuByLayout";
-
+import { useAuthInfo } from "../hooks/AuthInfo";
 
 const AdminHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isLogin, roleName, logout } = useAuthInfo();
 
- //style
-  const headerCss="bg-white shadow-sm fixed top-0 left-0 right-0 z-50"
+  useEffect(() => {
+    console.log("권한:", roleName);
+  }, [roleName]);
+
+  const headerCss = "bg-white shadow-sm fixed top-0 left-0 right-0 z-50";
 
   return (
     <header className={headerCss}>
@@ -18,7 +22,7 @@ const AdminHeader = () => {
         </h1>
 
         {/* PC 메뉴 */}
-        <nav className="hidden md:flex space-x-6">
+        <nav className="hidden md:flex space-x-6 items-center">
           {adminMenu.map(({ path, title }) => (
             <NavLink
               key={path}
@@ -32,9 +36,22 @@ const AdminHeader = () => {
               {title}
             </NavLink>
           ))}
-          <NavLink to="/logout" className="hover:text-red-500">
-            로그아웃
-          </NavLink>
+
+          {isLogin && roleName === "ROLE_ADMIN" ? (
+            <button
+              onClick={logout}
+              className="text-red-500 hover:text-red-600 ml-4"
+            >
+              로그아웃
+            </button>
+          ) : (
+            <NavLink
+              to="/web/login"
+              className="text-green-600 hover:underline ml-4"
+            >
+              로그인
+            </NavLink>
+          )}
         </nav>
 
         {/* 모바일 토글 */}
@@ -56,13 +73,26 @@ const AdminHeader = () => {
               {title}
             </NavLink>
           ))}
-          <NavLink
-            to="/logout"
-            className="block text-red-500 hover:text-red-600"
-            onClick={() => setIsOpen(false)}
-          >
-            로그아웃
-          </NavLink>
+
+          {isLogin && roleName === "ROLE_ADMIN" ? (
+            <button
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+              }}
+              className="block text-red-500 hover:text-red-600 w-full text-left"
+            >
+              로그아웃
+            </button>
+          ) : (
+            <NavLink
+              to="/web/login"
+              className="block text-green-600 hover:underline"
+              onClick={() => setIsOpen(false)}
+            >
+              로그인
+            </NavLink>
+          )}
         </nav>
       )}
     </header>

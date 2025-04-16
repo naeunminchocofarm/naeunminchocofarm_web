@@ -12,15 +12,15 @@ const SignUpInput = ({ label, name, type, value, onChange, validate }) => {
     
     return (
         <div className="space-y-1">
-        <label className="text-sm">{label}</label>
-        <input
-            name={name}
-            type={type}
-            value={value}
-            onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg ${error ? "border-red-400" : "border-gray-300"}`}
-        />
-        {error && <p className="text-xs text-red-500">{error}</p>}
+            <label className="text-sm">{label}</label>
+            <input
+                name={name}
+                type={type}
+                value={value}
+                onChange={handleChange}
+                className={`w-full px-4 py-2 border rounded-lg ${error ? "border-red-400" : "border-gray-300"}`}
+            />
+            {error && <p className="text-xs text-red-500">{error}</p>}
         </div>
     );
     };

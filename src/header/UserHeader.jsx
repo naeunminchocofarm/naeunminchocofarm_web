@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BsChevronDown,
   BsClipboardData,
@@ -9,9 +9,17 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/images/layouts/h1-logo.png";
 import UserTitle from "./UserTitle";
 import { userMenu } from "../routes/MenuByLayout";
+import { useAuthInfo } from "../hooks/AuthInfo";
 
 const UserHeader = () => {
   const [activeMenu, setActiveMenu] = useState(null);
+  const { roleName } = useAuthInfo();
+  
+    useEffect(() => {
+      console.log("🔁 WebHeader 리렌더링");
+      console.log("권한:", roleName);
+    }, [roleName]);
+
   const location = useLocation();
 
   // 메뉴 토글 함수

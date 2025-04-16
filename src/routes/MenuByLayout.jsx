@@ -1,6 +1,5 @@
 import { routesLink } from "../routes/RoutesLink";
 
-// 메뉴 필터링 + 정제
 const getMenuByLayout = (layout, options = {}) => {
   const { depth = 1, includeHidden = false } = options;
 
