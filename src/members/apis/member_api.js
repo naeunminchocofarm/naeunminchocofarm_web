@@ -19,5 +19,13 @@ const memberApi = {
     const response = axios.post("/api/web/login", loginInfo);
     return response;
   },
+  getMemInfo: function () {
+    const response = axios.get("/api/member/memberInfo", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response;
+  }
 };
 export default memberApi;

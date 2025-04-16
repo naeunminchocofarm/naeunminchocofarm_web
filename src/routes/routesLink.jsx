@@ -1,12 +1,16 @@
 // src/routes/routesMeta.jsx
-// web
+
+//member
 import Login from "../members/pages/Login";
 import Signup from "../members/pages/Signup";
+import MyPage from "../members/pages/Mypage";
+
+// web
 import Web from "../pages/Web/WebMain";
 import Company from "../pages/Web/Company";
 import AboutFarms from "../pages/Web/AboutFarms";
 import Business from "../pages/Web/Business";
-import ApplySmartFarms from "../pages/Web/ApplySmartFarms";
+import ServiceApply from "../pages/Web/ServiceApply";
 
 //admin
 import Admin from "../admin/pages/AdminHome";
@@ -24,24 +28,34 @@ import HumidityPage from "../humidity/pages/HumidityPage";
 import SunshinePage from "../sunshine/pages/SunshinePage";
 import SoilPage from "../soil/pages/SoilPage";
 import CoTwo from "../Cotwo/pages/CoTwo";
+import Privacy from "../pages/Web/Privacy";
+import ServiceApplyList from "../admin/pages/Service/ServiceApplyList";
+import ServiceApplyDetail from "../admin/pages/Service/ServiceApplyDetail";
+import ServiceApplyWrite from "../admin/pages/Service/ServiceApplyWrite";
+import UserMain from "../pages/Dashboard/UserMain";
 
 
 export const routesLink = [
+  // member
+  { layout: "member", path: "login", title: "로그인", element: <Login />, depth: 1, hidden: true },
+  { layout: "member", path: "signup", title: "회원가입", element: <Signup />, depth: 1, hidden: true },
+  { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: true },
+  //{ layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 2, hidden: true },
+
   // web
   { layout: "web", path: "home", title: "home", element: <Web />, depth: 1, hidden: true },
-  { layout: "web", path: "login", title: "로그인", element: <Login />, depth: 1, hidden: true },
-  { layout: "web", path: "signup", title: "회원가입", element: <Signup />, depth: 1, hidden: true },
-//  { layout: "web", path: "privacy", title: "개인정보처리방침", element: <Signup />, depth: 1, hidden: true },
+  { layout: "web", path: "privacy", title: "개인정보처리방침", element: <Privacy />, depth: 1, hidden: true },
   { layout: "web", path: "company", title: "회사소개", element: <Company />, depth: 1, hidden: false },
   { layout: "web", path: "aboutFarms", title: "스마트팜소개", element: <AboutFarms />, depth: 1, hidden: false },
   { layout: "web", path: "business", title: "비즈니스", element: <Business />, depth: 1, hidden: false },
-  { layout: "web", path: "applySmartFarm", title: "스마트팜신청", element: <ApplySmartFarms />, depth: 1, hidden: false },
+  { layout: "web", path: "serviceApply", title: "스마트팜신청", element: <ServiceApply />, depth: 1, hidden: false },
 
   // admin
-
   { layout: "admin", path: "home", title: "관리자 홈", element: <Admin />, depth: 1, hidden: false },
   { layout: "admin", path: "members", title: "회원 목록", element: <AdminMemberList />, depth: 1, hidden: false },
-  { layout: "admin", path: "applications", title: "신청 목록", element: <ApplicationList />, depth: 1, hidden: false },
+  { layout: "admin", path: "serviceApply", title: "신청 목록", element: <ServiceApplyList />, depth: 1, hidden: false },
+  { layout: "admin", path: "serviceApplyDetail/:id", title: "신청 상세", element: <ServiceApplyDetail />, depth: 2, hidden: false },
+  { layout: "admin", path: "serviceApplyWrite/:id", title: "신청 수정", element: <ServiceApplyWrite />, depth: 2, hidden: false },
   { layout: "admin", path: "farms", title: "농장 목록", element: <FarmList />, depth: 1, hidden: false },
   { layout: "admin", path: "farms/create", title: "농장 등록", element: <AdminFarmCreate />, depth: 2, hidden: true  },
   { layout: "admin", path: "farmsDetail/:id", title: "농장 상세", element: <AdminFarmDetail />, depth: 2, hidden: true },
@@ -54,4 +68,5 @@ export const routesLink = [
   { layout: "user", path: "sunshine", title: "일조량", element: <SunshinePage />, depth: 2, hidden: false },
   { layout: "user", path: "soil", title: "토양", element: <SoilPage />, depth: 2, hidden: false },
   { layout: "user", path: "cotwo", title: "이산화탄소", element: <CoTwo />, depth: 2, hidden: false },
+  { layout: "user", path: "home2", title: "사용자 홈", element: <UserMain />, depth: 1, hidden: false },
 ];

@@ -19,6 +19,7 @@ export default function Router() {
     web: [],
     admin: [],
     user: [],
+    member: [],
   };
 
   routesLink.forEach(({ layout, path, element }) => {
@@ -35,6 +36,10 @@ export default function Router() {
         <Route path="/test/controller" element={<TestControllerPage />} />
 
         {/* 컨텐츠들 */}
+        <Route path="/member/*" element={<WebLayout />}>
+          <Route index element={<Home />} />
+          {layoutRoutes.web}
+        </Route>
         <Route path="/web/*" element={<WebLayout />}>
           <Route index element={<WebMain />} />
           {layoutRoutes.web}
