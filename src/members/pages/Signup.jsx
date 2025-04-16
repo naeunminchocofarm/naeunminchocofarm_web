@@ -117,7 +117,7 @@ const Signup = () => {
             <button
               className={buttonStyle}
               onClick={() => {
-                nav("/member/login");
+                nav("/web/login");
               }}
             >
               로그인 하러가기

@@ -11,7 +11,7 @@ const navItems = [
   { label: "마이페이지", path: "/user/mypage" },
 ];
 
-const UserLayout = ({ children }) => {
+const UserLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

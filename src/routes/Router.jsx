@@ -3,18 +3,15 @@ import NotFound from "../pages/NotFound";
 import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
 
 import AdminLayout from "../layout/AdminLayout";
-import AppLayout from "../layout/AppLayout";
 import WebLayout from "../layout/WebLayout";
 import UserLayout from "../layout/UserLayout";
 import { routesLink } from "../routes/RoutesLink";
 import WebMain from "../pages/Web/WebMain";
-import Home from "../pages/Dashboard/Home";
 import AdminDashboard from "../admin/pages/AdminHome";
 import ProtectedAdminRoute from "../members/components/ProtectedAdminRoute";
 import ProtectedRoute from "../members/components/ProtectedRoute";
 import TestControllerPage from "../smart_farm/pages/TestControllerPage";
 import UserMain from "../pages/Dashboard/UserMain";
-import Login from "../members/pages/Login";
 
 export default function Router() {
   const layoutRoutes = {
@@ -32,16 +29,12 @@ export default function Router() {
 
   return (
     <>
-      <Routes>
+      <Routes >
+        {/* 루트링크있어야함 */}
+
         {/* 소켓 */}
         <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
         <Route path="/test/controller" element={<TestControllerPage />} />
-
-        {/* 컨텐츠들 */}
-        <Route path="/member/*" element={<WebLayout />}>
-          <Route index element={<Login />} />
-          {layoutRoutes.member}
-        </Route>
 
         <Route path="/web/*" element={<WebLayout />}>
           <Route index element={<WebMain />} />
@@ -68,7 +61,7 @@ export default function Router() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<UserMain/>} />
+          <Route index element={<UserMain />} />
           {layoutRoutes.user}
         </Route>
 

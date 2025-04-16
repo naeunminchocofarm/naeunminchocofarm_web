@@ -19,7 +19,7 @@ const WebHeader = () => {
     <header className={headerCss}>
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         <h1 className="text-xl font-bold text-green-600">
-          <NavLink to="/web">나은민초코팜</NavLink>
+          <NavLink to="/">나은민초코팜</NavLink>
         </h1>
 
         {/* PC 메뉴 */}
@@ -65,13 +65,13 @@ const WebHeader = () => {
             </>
           ) : (
             <>
-              <NavLink to="/member/login">
+              <NavLink to="/web/login">
                 <button className="bg-green-500 text-white px-4 py-2 rounded-xl hover:bg-green-600">
                   로그인
                 </button>
               </NavLink>
               <NavLink
-                to="/member/signUp"
+                to="/web/signUp"
                 className="text-gray-500 hover:text-green-600 text-sm"
               >
                 회원가입
@@ -121,10 +121,10 @@ const WebHeader = () => {
             </>
           ) : (
             <>
-              <NavLink to="/member/login" onClick={() => setIsOpen(false)}>
+              <NavLink to="/user/login" onClick={() => setIsOpen(false)}>
                 로그인
               </NavLink>
-              <NavLink to="/member/signUp" onClick={() => setIsOpen(false)}>
+              <NavLink to="/user/signUp" onClick={() => setIsOpen(false)}>
                 회원가입
               </NavLink>
             </>

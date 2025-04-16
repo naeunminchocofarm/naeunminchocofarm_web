@@ -46,7 +46,7 @@ const AdminHeader = () => {
             </button>
           ) : (
             <NavLink
-              to="/member/login"
+              to="/web/login"
               className="text-green-600 hover:underline ml-4"
             >
               로그인
@@ -86,7 +86,7 @@ const AdminHeader = () => {
             </button>
           ) : (
             <NavLink
-              to="/member/login"
+              to="/web/login"
               className="block text-green-600 hover:underline"
               onClick={() => setIsOpen(false)}
             >
