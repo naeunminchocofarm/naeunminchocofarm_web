@@ -3,6 +3,7 @@ import adminApi from "../../apis/admin_api";
 
 const AdminFarmSensor = ({ sectionId }) => {
   const [sensors, setSensors] = useState([]);
+  const [selectedSensorIds, setSelectedSensorIds] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newSensorName, setNewSensorName] = useState("");
   const [newSensorType, setNewSensorType] = useState("");
@@ -12,7 +13,10 @@ const AdminFarmSensor = ({ sectionId }) => {
     if (!sectionId) return;
     adminApi
       .getSensorBySectionId(sectionId)
-      .then((res) => setSensors(res.data))
+      .then((res) => {
+        setSensors(res.data);
+        setSelectedSensorIds([]);
+      })
       .catch((err) => {
         console.error("센서 조회 실패:", err);
       });
@@ -49,18 +53,41 @@ const AdminFarmSensor = ({ sectionId }) => {
       });
   };
 
+  // 센서 삭제
+  const handleDeleteSensors = async () => {
+    if (selectedSensorIds.length === 0) {
+      alert("삭제할 센서를 선택해주세요.");
+      return;
+    }
+    if (window.confirm("선택한 센서를 삭제하시겠습니까?")) {
+      await Promise.all(
+        selectedSensorIds.map((id) => adminApi.deleteSensor(id))
+      );
+      fetchSensors();
+    }
+  };
+
   return (
     <div className="space-y-4">
-      {/* 센서 등록 버튼 */}
-      <div className="flex justify-end">
+      {/* 상단 버튼 영역 */}
+      <div className="flex justify-end gap-2">
         {!isAdding ? (
-          <button
-            type="button"
-            className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded shadow"
-            onClick={() => setIsAdding(true)}
-          >
-            + 센서 등록
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              className="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded shadow"
+              onClick={() => setIsAdding(true)}
+            >
+              + 센서 등록
+            </button>
+            <button
+              type="button"
+              className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded shadow"
+              onClick={handleDeleteSensors}
+            >
+              삭제
+            </button>
+          </div>
         ) : (
           <div className="flex gap-2 items-center">
             <input
@@ -103,6 +130,17 @@ const AdminFarmSensor = ({ sectionId }) => {
           <table className="w-full border text-sm bg-white rounded-md overflow-hidden shadow">
             <thead className="bg-green-100 text-left">
               <tr>
+                <th className="px-4 py-2 border-b">
+                  <input
+                    type="checkbox"
+                    checked={selectedSensorIds.length === sensors.length}
+                    onChange={(e) =>
+                      setSelectedSensorIds(
+                        e.target.checked ? sensors.map((s) => s.id) : []
+                      )
+                    }
+                  />
+                </th>
                 <th className="px-4 py-2 border-b">ID</th>
                 <th className="px-4 py-2 border-b">이름</th>
                 <th className="px-4 py-2 border-b">UUID</th>
@@ -112,9 +150,22 @@ const AdminFarmSensor = ({ sectionId }) => {
             <tbody>
               {sensors.map((sensor) => (
                 <tr key={sensor.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 border-b">
+                    <input
+                      type="checkbox"
+                      checked={selectedSensorIds.includes(sensor.id)}
+                      onChange={() =>
+                        setSelectedSensorIds((prev) =>
+                          prev.includes(sensor.id)
+                            ? prev.filter((id) => id !== sensor.id)
+                            : [...prev, sensor.id]
+                        )
+                      }
+                    />
+                  </td>
                   <td className="px-4 py-2 border-b">{sensor.id}</td>
                   <td className="px-4 py-2 border-b">{sensor.name}</td>
-                  <td className="px-4 py-2 border-b">{sensor.uuidId}</td>
+                  <td className="px-4 py-2 border-b">{sensor.uuid}</td>
                   <td className="px-4 py-2 border-b">{sensor.sensorType}</td>
                 </tr>
               ))}

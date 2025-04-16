@@ -6,6 +6,8 @@ const AdminFarmList = () => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [farms, setFarms] = useState([]);
   const [filteredFarms, setFilteredFarms] = useState([]);
+  const [editingFarmId, setEditingFarmId] = useState(null);
+  const [editedFarmData, setEditedFarmData] = useState({});
 
   const [searchField, setSearchField] = useState("loginId");
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -70,10 +72,34 @@ const AdminFarmList = () => {
     setFilteredFarms(filtered);
   };
 
+  // const handleEditClick = (farm) => {
+  //   setEditingFarmId(farm.id);
+  //   setEditedFarmData({
+  //     farmName: farm.farmName,
+  //     farmAddr: farm.farmAddr,
+  //     useDate: farm.useDate?.slice(0, 10) || "",
+  //     status: farm.status,
+  //   });
+  // };
+
+  // const handleUpdate = async (id) => {
+  //   const original = farms.find(f => f.id === id);
+  //   if (!original) return;
+  //   const updated = {
+  //     ...original,
+  //     ...editedFarmData,
+  //     member: original.member,
+  //     uuidId: original.uuidId,
+  //     uuid: original.uuid,
+  //   };
+  //   await adminApi.updateFarm(id, updated);
+  //   setEditingFarmId(null);
+  //   fetchFarms();
+  // };
+
   return (
     <div className="p-6 space-y-6">
       <section className="flex justify-between items-center text-sm text-gray-500">
-        {/* 검색창 */}
         <div className="flex items-center space-x-2">
           <select
             value={searchField}
@@ -102,16 +128,45 @@ const AdminFarmList = () => {
           </button>
         </div>
 
-        {/* 등록 버튼 */}
-        <button
-          onClick={openCreateWindow}
-          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-sm shadow"
-        >
-          + 스마트팜 등록
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={openCreateWindow}
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-sm shadow"
+          >
+            + 스마트팜 등록
+          </button>
+          {/* <button
+            onClick={() => {
+              if (selectedIds.length !== 1) {
+                alert("수정할 스마트팜을 선택해주세요.");
+                return;
+              }
+              const target = farms.find(f => f.id === selectedIds[0]);
+              if (target) handleEditClick(target);
+            }}
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded text-sm shadow"
+          >
+            수정
+          </button> */}
+          <button
+            onClick={async () => {
+              if (selectedIds.length === 0) {
+                alert("삭제할 스마트팜을 선택해주세요.");
+                return;
+              }
+              if (window.confirm("선택한 스마트팜을 삭제하시겠습니까?")) {
+                await Promise.all(selectedIds.map(id => adminApi.deleteFarm(id)));
+                fetchFarms();
+                setSelectedIds([]);
+              }
+            }}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm shadow"
+          >
+            삭제
+          </button>
+        </div>
       </section>
 
-      {/* 테이블 */}
       <div className="overflow-x-auto">
         <table className="w-full border-collapse rounded-xl overflow-hidden shadow-sm">
           <thead className="bg-green-100 text-sm">
@@ -153,26 +208,79 @@ const AdminFarmList = () => {
                     }
                   />
                 </td>
-                <td className="px-4 py-3 border-b">{farm.uuidId}</td>
                 <td className="px-4 py-3 border-b">{farm.id}</td>
+                <td className="px-4 py-3 border-b">{farm.uuid}</td>
                 <td className="px-4 py-3 border-b">
                   {farm.member?.loginId} ({farm.member?.name})
                 </td>
-                <td className="px-4 py-3 border-b">{farm.farmName}</td>
-                <td className="px-4 py-3 border-b">{farm.farmAddr}</td>
                 <td className="px-4 py-3 border-b">
-                  {farm.useDate ? farm.useDate.slice(0, 10) : "-"}
+                  {editingFarmId === farm.id ? (
+                    <input
+                      className="border rounded px-2 py-1"
+                      value={editedFarmData.farmName}
+                      onChange={(e) =>
+                        setEditedFarmData({ ...editedFarmData, farmName: e.target.value })
+                      }
+                    />
+                  ) : (
+                    farm.farmName
+                  )}
                 </td>
-                <td
-                  className={`px-4 py-3 border-b ${getStatusColor(
-                    farm.status
-                  )}`}
-                >
-                  {farm.status || "-"}
-                </td>
-
                 <td className="px-4 py-3 border-b">
-                  <Link to={`/admin/farmsDetail/${farm.id}`}>관리</Link>
+                  {editingFarmId === farm.id ? (
+                    <input
+                      className="border rounded px-2 py-1"
+                      value={editedFarmData.farmAddr}
+                      onChange={(e) =>
+                        setEditedFarmData({ ...editedFarmData, farmAddr: e.target.value })
+                      }
+                    />
+                  ) : (
+                    farm.farmAddr
+                  )}
+                </td>
+                <td className="px-4 py-3 border-b">
+                  {editingFarmId === farm.id ? (
+                    <input
+                      type="date"
+                      className="border rounded px-2 py-1"
+                      value={editedFarmData.useDate}
+                      onChange={(e) =>
+                        setEditedFarmData({ ...editedFarmData, useDate: e.target.value })
+                      }
+                    />
+                  ) : (
+                    farm.useDate ? farm.useDate.slice(0, 10) : "-"
+                  )}
+                </td>
+                <td className={`px-4 py-3 border-b ${getStatusColor(farm.status)}`}>
+                  {editingFarmId === farm.id ? (
+                    <select
+                      className="border rounded px-2 py-1"
+                      value={editedFarmData.status}
+                      onChange={(e) =>
+                        setEditedFarmData({ ...editedFarmData, status: e.target.value })
+                      }
+                    >
+                      <option value="운영중">운영중</option>
+                      <option value="점검중">점검중</option>
+                      <option value="운영종료">운영종료</option>
+                    </select>
+                  ) : (
+                    farm.status || "-"
+                  )}
+                </td>
+                <td className="px-4 py-3 border-b">
+                  {editingFarmId === farm.id ? (
+                    <button
+                      onClick={() => handleUpdate(farm.id)}
+                      className="text-blue-600 hover:underline"
+                    >
+                      수정 완료
+                    </button>
+                  ) : (
+                    <Link to={`/admin/farmsDetail/${farm.id}`}>관리</Link>
+                  )}
                 </td>
               </tr>
             ))}

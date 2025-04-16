@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const adminApi = {
-  // 스마트팜팜 api
+  // 스마트팜 api
   // 스마트팜 목록 조회
   getFarmsWithMember: function () {
     return axios.get("/api/farms/with-member");
@@ -41,6 +41,19 @@ const adminApi = {
     });
   },
 
+  // 구역 수정
+  updateSection: function (id, name) {
+    return axios.put(`/api/sections/${id}`, {
+      name,
+    });
+  },
+  
+  // 구역 삭제
+  deleteSection: function (id) {
+    return axios.delete(`/api/sections/${id}`);
+  },
+
+
 
   // 센서 api
   // 특정 section의 센서 목록 조회
@@ -54,8 +67,21 @@ const adminApi = {
       name,
       sensorType
     });
-  }
+  },
 
+  // 센서 수정
+  updateSensor: function (id, name, sensorType) {
+    return axios.put(`/api/sensors/${id}`, {
+      name,
+      sensorType,
+    });
+  },
+
+  // 센서 삭제
+  deleteSensor: function (id) {
+    return axios.delete(`/api/sensors/${id}`);
+  },
 };
+
 
 export default adminApi;
