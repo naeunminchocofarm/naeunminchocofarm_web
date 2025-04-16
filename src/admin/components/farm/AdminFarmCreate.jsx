@@ -7,7 +7,7 @@ const AdminFarmCreate = () => {
     farmAddr: "",
     useDate: "",      // 선택 가능 (null 허용)
     crop: "",
-    memberId: "",
+    loginId: "",
     status: "운영중", // 기본값 설정
   });
 
@@ -24,8 +24,8 @@ const AdminFarmCreate = () => {
       return;
     }
 
-    if (!form.memberId.trim()) {
-      alert("회원 ID는 필수입니다.");
+    if (!form.loginId.trim()) {
+      alert("회원 ID는 필수 입력 항목입니다.");
       return;
     }
 
@@ -37,15 +37,15 @@ const AdminFarmCreate = () => {
     const payload = {
       farmName: form.farmName,
       farmAddr: form.farmAddr,
-      useDate: form.useDate ? form.useDate + "T00:00:00Z" : null, // ✅ useDate 없으면 null
+      useDate: form.useDate ? form.useDate + "T00:00:00Z" : null, // 
       crop: form.crop,
       status: form.status,
       member: {
-        id: Number(form.memberId),
+        loginId: form.loginId,
       },
     };
 
-    console.log("📦 보내는 payload:", payload);
+    console.log(payload);
 
     try {
       await adminApi.insertFarm(payload);
@@ -68,6 +68,18 @@ const AdminFarmCreate = () => {
             type="text"
             name="farmName"
             value={form.farmName}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">회원 ID</label>
+          <input
+            type="text"
+            name="loginId"
+            value={form.loginId}
             onChange={handleChange}
             className="w-full border px-3 py-2 rounded"
             required
@@ -106,18 +118,6 @@ const AdminFarmCreate = () => {
             value={form.crop}
             onChange={handleChange}
             className="w-full border px-3 py-2 rounded"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 font-medium">회원 ID</label>
-          <input
-            type="number"
-            name="memberId"
-            value={form.memberId}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-            required
           />
         </div>
 
