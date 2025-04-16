@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
 
@@ -12,6 +12,7 @@ import ProtectedAdminRoute from "../members/components/ProtectedAdminRoute";
 import ProtectedRoute from "../members/components/ProtectedRoute";
 import TestControllerPage from "../smart_farm/pages/TestControllerPage";
 import UserMain from "../pages/Dashboard/UserMain";
+import FullPageSpinner from "../pages/FullPageSpinner";
 
 export default function Router() {
   const layoutRoutes = {
@@ -31,6 +32,7 @@ export default function Router() {
     <>
       <Routes >
         {/* 루트링크있어야함 */}
+        <Route path="/" element={<Navigate to="/web" />} />
 
         {/* 소켓 */}
         <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
@@ -41,13 +43,12 @@ export default function Router() {
           {layoutRoutes.web}
         </Route>
 
-        <Route
-          path="/admin/*"
-          element={
-            <ProtectedAdminRoute>
-              <AdminLayout />
-            </ProtectedAdminRoute>
-          }
+        <Route path="/admin/*"
+            element={
+              <ProtectedAdminRoute>
+                <AdminLayout />
+              </ProtectedAdminRoute>
+            }
         >
           <Route index element={<AdminDashboard />} />
           {layoutRoutes.admin}
@@ -67,6 +68,7 @@ export default function Router() {
 
         {/* 빈페이지 */}
         <Route path="*" element={<NotFound />} />
+        <Route path="/loading" element={<FullPageSpinner />} />
       </Routes>
     </>
   );
