@@ -12,6 +12,7 @@ import ProtectedAdminRoute from "../members/components/ProtectedAdminRoute";
 import ProtectedRoute from "../members/components/ProtectedRoute";
 import TestControllerPage from "../smart_farm/pages/TestControllerPage";
 import UserMain from "../pages/Dashboard/UserMain";
+import Home from "../pages/Dashboard/Home";
 
 export default function Router() {
   const layoutRoutes = {
@@ -35,6 +36,7 @@ export default function Router() {
         {/* 소켓 */}
         <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
         <Route path="/test/controller" element={<TestControllerPage />} />
+        <Route path="/r" element={<Home />} />
 
         <Route path="/web/*" element={<WebLayout />}>
           <Route index element={<WebMain />} />
