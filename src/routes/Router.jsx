@@ -10,6 +10,7 @@ import WebMain from "../pages/Web/WebMain";
 import Home from "../pages/Dashboard/Home";
 import AdminDashboard from "../admin/pages/AdminHome";
 import TestControllerPage from "../smart_farm/pages/TestControllerPage"
+import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 
 export default function Router() {
   const layoutRoutes = {
@@ -30,6 +31,7 @@ export default function Router() {
         {/* 소켓 */}
         <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
         <Route path="/test/controller" element={<TestControllerPage />} />
+        <Route path="/test/farms-detail" element={<FarmDetailPage />} />
 
         {/* 컨텐츠들 */}
         <Route path="/web/*" element={<WebLayout />}>

@@ -1,8 +1,8 @@
 import ToggleButton from "../../common_components/ToggleButton";
 import Card from "../../common_components/Card";
 
-function ControlCard({type = '', settings, onChangeSettings}) {
-  switch (type) {
+function ControlCard({dataName = '', settings, onChangeSettings}) {
+  switch (dataName) {
     case 'air_temp':
       return <AirTempControlCard settings={settings} onChangeSettings={onChangeSettings} />;
     case 'humidity':
@@ -11,6 +11,8 @@ function ControlCard({type = '', settings, onChangeSettings}) {
       return <LdrControlCard settings={settings} onChangeSettings={onChangeSettings} />;
     case 'soil_moisture':
       return <SoilMoistureControlCard settings={settings} onChangeSettings={onChangeSettings} />;
+    case 'motion':
+      return <MotionControlCard settings={settings} onChangeSettings={onChangeSettings} />
     default:
       return undefined;
   }
@@ -98,10 +100,17 @@ function SoilMoistureControlCard({settings, onChangeSettings}) {
   );
 }
 
+function MotionControlCard({settings, onChangeSettings}) {
+  return (
+    <SensorControlCard
+      settings={settings}
+      onChangeSettings={onChangeSettings}
+      fields={[]}
+      toggleKey={"enable"}
+    />
+  );
+}
+
 export {
-  ControlCard,
-  // AirTempControlCard,
-  // HumidControlCard,
-  // SoilMoistureControlCard,
-  // LdrControlCard
+  ControlCard
 }
