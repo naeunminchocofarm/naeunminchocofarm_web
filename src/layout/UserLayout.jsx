@@ -3,20 +3,11 @@ import React, { useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import { Link, Outlet } from "react-router-dom";
 
-
-const navItems = [
-  { label: "홈", path: "/user/home" },
-  { label: "내 농장", path: "/user/farm" },
-  { label: "설치 요청", path: "/user/apply" },
-  { label: "마이페이지", path: "/user/mypage" },
-];
-
 const UserLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen bg-gray-50">
-      {/* Sidebar */}
       <aside className={`fixed z-20 top-0 left-0 h-full w-64 bg-white shadow transition-transform duration-300 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative md:flex-shrink-0`}>
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <div className="text-xl font-bold text-green-700">ChocoFarm</div>
@@ -37,7 +28,11 @@ const UserLayout = () => {
       <div className="flex-1 flex flex-col">
         {/* TopBar for mobile */}
         <header className="md:hidden flex items-center justify-between px-4 py-3 bg-white shadow">
-          <div className="text-xl font-bold text-green-700">ChocoFarm</div>
+          <h1 className="text-xl font-bold text-green-600">
+            <NavLink to="/user">
+              <img src={logo} alt="나은민초코팜 로고" className="h-10" />
+            </NavLink>
+          </h1>
           <button onClick={() => setSidebarOpen(true)}>
             <BiMenu/>
           </button>

@@ -3,7 +3,7 @@ const dummyData = [
   { id: 1, date: "2025-04-10", status: "상담대기", content: "하우스 설치 문의입니다." },
   { id: 2, date: "2025-04-12", status: "상담중", content: "센서 연동 가능 여부를 알고싶습니다." },
 ];
-const MyApply = () => {
+const MyApplyList = () => {
   const [openId, setOpenId] = useState(null);
 
   const toggleDetail = (id) => {
@@ -51,4 +51,4 @@ const MyApply = () => {
   )
 };
 
-export default MyApply;
+export default MyApplyList;

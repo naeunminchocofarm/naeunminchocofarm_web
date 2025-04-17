@@ -7,7 +7,7 @@ import AdminLayout from "../layout/AdminLayout";
 import WebLayout from "../layout/WebLayout";
 import UserLayout from "../layout/UserLayout";
 
-import WebMain from "../pages/Web/WebMain";
+import WebMain from "../pages/web/WebMain";
 import UserMain from "../pages/Dashboard/UserMain";
 import AdminMain from "../admin/pages/AdminMain";
 import Home from "../pages/Dashboard/Home";
@@ -58,9 +58,9 @@ export default function Router() {
 
         {/* 사용자 */}
         <Route path="/user/*" element={
-            <ProtectedRoute>
+            
               <UserLayout />
-            </ProtectedRoute>
+           
           }>
           <Route index element={<UserMain />} />
           {layoutRoutes.user}
