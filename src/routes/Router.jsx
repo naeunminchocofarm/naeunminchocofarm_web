@@ -12,11 +12,9 @@ import ProtectedAdminRoute from "../members/components/ProtectedAdminRoute";
 import ProtectedRoute from "../members/components/ProtectedRoute";
 import TestControllerPage from "../smart_farm/pages/TestControllerPage";
 import UserMain from "../pages/Dashboard/UserMain";
-<<<<<<< HEAD
 import Home from "../pages/Dashboard/Home";
-=======
 import FullPageSpinner from "../pages/FullPageSpinner";
->>>>>>> dev
+
 
 export default function Router() {
   const layoutRoutes = {
