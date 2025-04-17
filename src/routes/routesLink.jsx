@@ -107,7 +107,7 @@ export const routesLink = [
     title: "관리자 홈",
     element: <Admin />,
     depth: 1,
-    hidden: false,
+    hidden: true,
   },
   {
     layout: "admin",
@@ -171,7 +171,7 @@ export const routesLink = [
     title: "작물 목록",
     element: <CropList />,
     depth: 1,
-    hidden: false,
+    hidden: true,
   },
 
   // member

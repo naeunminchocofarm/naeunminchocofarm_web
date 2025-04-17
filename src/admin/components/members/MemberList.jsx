@@ -74,7 +74,8 @@ const MemberList = () => {
                 <td className={tdStyle}>{member.loginId}</td>
                 <td className={tdStyle}>{member.email}</td>
                 <td className={tdStyle}>{member.tell}</td>
-                <td className={tdStyle}>운영중</td>
+                {/* 농장목록에 MEMID값이 있으면 운영중 아니면 운영아님 */}
+                <td className={tdStyle}>운영중</td> 
                 <td className={tdStyle}>{member.createAt}</td>
                 <td className={tdStyle}>{member.deleteAt || "-"}</td>
                 <td className={tdStyle}>

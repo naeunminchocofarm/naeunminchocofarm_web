@@ -26,11 +26,6 @@ const WebMain = () => {
               </button>
             </div>
           </div>
-          <img
-            src="/smartfarm-image.png" // 실제 이미지 경로로 교체하세요
-            alt="스마트팜 설명"
-            className="w-full max-w-md mx-auto"
-          />
         </div>
       </section>
 

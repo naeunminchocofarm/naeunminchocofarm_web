@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-// import { useParams } from "react-router-dom";
-// import { axiosInstance } from "../../members/apis/axiosInstance";
+import { useNavigate, useParams } from "react-router-dom";
+import serviceApi from "../apis/service_api";
 
-// ✅ 공통 스타일 상단 정의
+
 const sectionStyle = "bg-white rounded-xl shadow p-6";
 const tableStyle = "w-full text-sm";
 const thStyle = "text-left py-1 w-32";
@@ -12,27 +11,21 @@ const titleStyle = "text-base font-semibold mb-4 border-b pb-1";
 
 const ServiceApplyDetail = () => {
   const navigate = useNavigate();
-  // const { id } = useParams();
+  const { id } = useParams();
   const [detail, setDetail] = useState(null);
 
+  const fetchServiceApply = async () => {
+    try {
+      const res = await serviceApi.getServiceApplyDetail();
+      setDetail(res.data);
+    } catch (error) {
+      console.error("서비스 신청 목록 조회 실패:", error);
+    }
+  };
+
   useEffect(() => {
-    setDetail({
-      id: 1,
-      member: {
-        id: "hong123",
-        name: "홍길동",
-        email: "hong@example.com",
-        tell: "010-1234-5678",
-      },
-      type: "개인사업자",
-      isOperating: "yes",
-      contactTell: "010-4321-9876",
-      applicationDate: "2025-04-15T10:30:00",
-      serviceStatus: { id: 0, status: "상담대기" },
-      memo: "관리자 확인 완료 후 상담 진행 예정입니다.",
-      content: "스마트팜 장비 설치 문의 - 경기도 성남시",
-    });
-  }, []);
+    fetchServiceApply();
+  }, [id]);
 
   if (!detail) return <p className="p-4">로딩 중...</p>;
 
@@ -41,12 +34,7 @@ const ServiceApplyDetail = () => {
       {/* 🔵 상태 설명 박스 */}
       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm">
         <p className="font-semibold mb-2">📌 상태 코드 안내</p>
-        <ul className="list-disc pl-6 text-gray-700 space-y-1">
-          <li><strong>0</strong> - 상담대기</li>
-          <li><strong>1</strong> - 상담중</li>
-          <li><strong>2</strong> - 상담완료</li>
-          <li><strong>3</strong> - 상담취소</li>
-        </ul>
+
       </div>
 
       {/* 👤 회원 및 기본 정보 */}
@@ -84,8 +72,6 @@ const ServiceApplyDetail = () => {
             <tr>
               <th className={thStyle}>신청자 유형</th>
               <td className={tdStyle}>{detail.type}</td>
-              <th className={thStyle}>운영 여부</th>
-              <td className={tdStyle}>{detail.isOperating === "yes" ? "예" : "아니오"}</td>
             </tr>
             <tr>
               <th className={thStyle}>실무자 연락처</th>
