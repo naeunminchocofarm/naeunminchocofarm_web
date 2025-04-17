@@ -8,6 +8,8 @@ import UserLayout from "../layout/UserLayout";
 import { routesLink } from "../routes/RoutesLink";
 import WebMain from "../pages/Web/WebMain";
 import AdminDashboard from "../admin/pages/AdminHome";
+import TestControllerPage from "../smart_farm/pages/TestControllerPage"
+import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 import ProtectedAdminRoute from "../members/components/ProtectedAdminRoute";
 import ProtectedRoute from "../members/components/ProtectedRoute";
 import TestControllerPage from "../smart_farm/pages/TestControllerPage";
@@ -39,6 +41,7 @@ export default function Router() {
         {/* 소켓 */}
         <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
         <Route path="/test/controller" element={<TestControllerPage />} />
+        <Route path="/test/farms-detail" element={<FarmDetailPage />} />
         <Route path="/r" element={<Home />} />
 
         <Route path="/web/*" element={<WebLayout />}>
