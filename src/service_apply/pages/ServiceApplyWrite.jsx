@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import serviceApi from "../apis/service_api";
 // import axiosInstance from "@/utils/axiosInstance";
 
 const ServiceApplyWrite = () => {
@@ -15,18 +16,17 @@ const ServiceApplyWrite = () => {
     memo: "",
   });
 
-  // ❗ 추후 백엔드 연동되면 API로 불러올 부분
+  const fetchServiceApply = async () => {
+    try {
+      const res = await serviceApi.getServiceApplyDetail();
+      setForm(res.data);
+    } catch (error) {
+      console.error("서비스 신청 목록 조회 실패:", error);
+    }
+  };
+
   useEffect(() => {
-    // axiosInstance.get(`/api/service/admin/detail/${id}`).then((res) => setForm(...))
-    // 더미로 먼저 세팅
-    setForm({
-      statusId: 1,
-      type: "법인",
-      isOperating: "no",
-      contactTell: "010-0000-0000",
-      content: "지역: 대전\n기기 견적 요청",
-      memo: "상담 진행 중",
-    });
+    fetchServiceApply();
   }, [id]);
 
   const handleChange = (e) => {
