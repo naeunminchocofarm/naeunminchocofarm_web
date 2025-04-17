@@ -28,7 +28,11 @@ const Login = () => {
         alert("로그인 성공");
         console.log(res.headers["authorization"]); //authorization
         const accessToken = res.headers["authorization"]; //전달받은 jwt 토큰
-        dispatch(loginReducer(accessToken));
+        if (res.data) {
+          dispatch(loginReducer({ token: accessToken, loginInfo: res.data }));
+        } else {
+          console.error("로그인 응답에 유저 정보 없음:", res);
+        }
         nav("/web/home");
       })
       .catch((e) => {
