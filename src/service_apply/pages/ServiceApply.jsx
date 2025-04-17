@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "../../members/apis/axiosInstance";
 import { isAuthenticated } from "../../members/apis/authCheck";
+import serviceApi from "../apis/service_api";
 
 const ServiceApply = () => {
   const nav = useNavigate();
@@ -34,9 +34,9 @@ const ServiceApply = () => {
   const applySubmit = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.post("/api/service/apply", form);
+      await serviceApi.serviceApplyWrite(form);
       alert("신청이 완료되었습니다.");
-      nav("/user");
+      nav("/web/myapply");
     } catch (err) {
       console.error("신청 실패:", err);
       alert("신청에 실패했습니다.");
@@ -58,14 +58,18 @@ const ServiceApply = () => {
               <tr>
                 <th className="text-left w-28 py-1">이름</th>
                 <td className="py-1">{userInfo.name}</td>
+              </tr>
+              <tr>
                 <th className="text-left w-28 py-1">아이디</th>
                 <td className="py-1">{userInfo.loginId}</td>
               </tr>
               <tr>
                 <th className="text-left py-1">이메일</th>
                 <td className="py-1">{userInfo.email}</td>
-                <th className="text-left py-1">전화번호</th>
-                <td className="py-1">{userInfo.tell}</td>
+              </tr>
+              <tr>
+              <th className="text-left py-1">전화번호</th>
+              <td className="py-1">{userInfo.tell}</td>
               </tr>
             </tbody>
           </table>

@@ -11,6 +11,7 @@ import UserTitle from "./UserTitle";
 import { userMenu } from "../routes/MenuByLayout";
 import { useAuthInfo } from "../hooks/AuthInfo";
 
+
 const UserHeader = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const { roleName } = useAuthInfo();
@@ -71,10 +72,10 @@ const UserHeader = () => {
   return (
     <>
       <header className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform transform sm:translate-x-0 translate-x-full">
-        <h1 className="w-full p-4 pb-0">
-          <Link to={"/home"}>
-            <img src={logo} alt="logo" className="w-full" />
-          </Link>
+        <h1 className="text-xl font-bold text-green-600">
+          <NavLink to="/user">
+            <img src={logo} alt="나은민초코팜 로고" className="h-10" />
+          </NavLink>
         </h1>
         <aside id="sidebar-multi-level-sidebar" aria-label="Sidebar">
           <div className="h-full px-3 py-4 overflow-y-auto bg-white">

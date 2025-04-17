@@ -24,7 +24,7 @@ export const isFammer = (token) => {
   if (!token) return false;
   try {
     const decoded = jwtDecode(token);
-    return decoded.roleName === "ROLE_FAMMER"; // 이거 정확히 일치해야 함!
+    return decoded.roleName === "ROLE_FAMMER" ; // 이거 정확히 일치해야 함!
   } catch {
     return false;
   }
