@@ -40,3 +40,13 @@ export const isAdmin = (token) => {
     return false;
   }
 };
+
+export const getLoginId = (token) => {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.id;
+  } catch (e) {
+    console.error("getLoginId - 토큰 파싱 실패:", e);
+    return null;
+  }
+};

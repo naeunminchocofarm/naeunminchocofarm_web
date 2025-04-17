@@ -92,19 +92,6 @@ const ServiceApplyWrite = () => {
               </td>
             </tr>
             <tr>
-              <th className="text-left py-1">운영 여부</th>
-              <td className="py-1">
-                <label className="mr-4">
-                  <input type="radio" name="isOperating" value="yes"
-                    checked={form.isOperating === "yes"} onChange={handleChange} />
-                  <span className="ml-1">예</span>
-                </label>
-                <label>
-                  <input type="radio" name="isOperating" value="no"
-                    checked={form.isOperating === "no"} onChange={handleChange} />
-                  <span className="ml-1">아니오</span>
-                </label>
-              </td>
               <th className="text-left py-1">담당자 연락처</th>
               <td className="py-1">
                 <input

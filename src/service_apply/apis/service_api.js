@@ -7,5 +7,9 @@ const serviceApi = {
     const response = axiosInstance.get("/admin/list", {});
     return response;
   },
+  serviceApplyWrite: function(){
+    const response = axiosInstance.post("/service/apply",{});
+    return response;
+  }
 };
 export default serviceApi;
