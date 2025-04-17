@@ -43,10 +43,8 @@ const adminApi = {
   },
 
   // 구역 수정
-  updateSection: function (id, name) {
-    return axiosInstance.put(`sections/${id}`, {
-      name,
-    });
+  updateSection: function (id, data) {
+    return axiosInstance.put(`sections/${id}`, data);
   },
   
   // 구역 삭제
