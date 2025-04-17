@@ -26,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
-const AdminDashboard = () => {
+const AdminMain = () => {
   const stats = {
     users: 128,
     applications: 87,
@@ -90,4 +90,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AdminMain;

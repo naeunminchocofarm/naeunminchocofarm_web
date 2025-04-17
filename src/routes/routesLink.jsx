@@ -14,7 +14,7 @@ import Login from "../members/pages/Login";
 import Signup from "../members/pages/Signup";
 
 //admin
-import Admin from "../admin/pages/AdminHome";
+import Admin from "../admin/pages/AdminMain";
 import AdminMemberList from "../admin/components/members/MemberList";
 import ServiceApplyList from "../service_apply/pages/ServiceApplyList";
 import ServiceApplyDetail from "../service_apply/pages/ServiceApplyDetail";
