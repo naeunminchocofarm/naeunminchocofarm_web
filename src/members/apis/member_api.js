@@ -1,21 +1,22 @@
-import axios from "axios";
+import { axiosInstance } from "./axiosInstance";
 
 const memberApi = {
   getMemList: function () {
     const token = localStorage.getItem("accessToken");
-    const response = axios.get("/api/admin/members", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    console.log("회원목록불러와봐" + token);
+    const response = axiosInstance.get("/admin/members", { });
     return response;
   },
   signUp: function (memberInfo) {
-    const response = axios.post("/api/web/signup", memberInfo);
+    const response = axiosInstance.post("/member/signup", memberInfo);
     return response;
   },
-  login: function (loginCheck) {
-    const response = axios.post("/api/web/login", loginCheck);
+  login: function (loginInfo) {
+    const response = axiosInstance.post("/member/login", loginInfo);
+    return response;
+  },
+  getMemInfo: function () {
+    const response = axiosInstance.get("/member/memberInfo", { });
     return response;
   },
 };

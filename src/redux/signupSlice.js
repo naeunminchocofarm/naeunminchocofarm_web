@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
   currentStep: 0, // 현재 회원가입 단계
   isVerified: false, // 이메일 인증 여부
