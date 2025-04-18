@@ -288,9 +288,9 @@ const AdminFarmSensor = ({ sectionId }) => {
       )}
 
       {/* 차트 영역 */}
-      <div className="bg-gray-100 rounded-md h-32 mt-4 flex items-center justify-center text-gray-500 text-sm">
+      {/* <div className="bg-gray-100 rounded-md h-32 mt-4 flex items-center justify-center text-gray-500 text-sm">
         [ 차트 영역 – 센서 데이터 시각화 예정 ]
-      </div>
+      </div> */}
     </div>
   );
 };
