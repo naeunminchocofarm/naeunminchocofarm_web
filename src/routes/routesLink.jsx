@@ -52,81 +52,6 @@ export const routesLink = [
   { layout: "web", path: "business", title: "비즈니스", element: <Business />, depth: 1, hidden: false },
   { layout: "web", path: "serviceApply", title: "스마트팜신청", element: <ServiceApply />, depth: 1, hidden: false },
 
-<<<<<<< HEAD
-  // admin
-  {
-    layout: "admin",
-    path: "home",
-    title: "관리자 홈",
-    element: <Admin />,
-    depth: 1,
-    hidden: true,
-  },
-  {
-    layout: "admin",
-    path: "members",
-    title: "회원 목록",
-    element: <AdminMemberList />,
-    depth: 1,
-    hidden: false,
-  },
-  {
-    layout: "admin",
-    path: "serviceApply",
-    title: "신청 목록",
-    element: <ServiceApplyList />,
-    depth: 1,
-    hidden: false,
-  },
-  {
-    layout: "admin",
-    path: "serviceApplyDetail/:id",
-    title: "신청 상세",
-    element: <ServiceApplyDetail />,
-    depth: 2,
-    hidden: false,
-  },
-  {
-    layout: "admin",
-    path: "serviceApplyWrite/:id",
-    title: "신청 수정",
-    element: <ServiceApplyWrite />,
-    depth: 2,
-    hidden: false,
-  },
-  {
-    layout: "admin",
-    path: "farms",
-    title: "농장 목록",
-    element: <FarmList />,
-    depth: 1,
-    hidden: false,
-  },
-  {
-    layout: "admin",
-    path: "farms/create",
-    title: "농장 등록",
-    element: <AdminFarmCreate />,
-    depth: 2,
-    hidden: true,
-  },
-  {
-    layout: "admin",
-    path: "farmsDetail/:id",
-    title: "농장 상세",
-    element: <AdminFarmDetail />,
-    depth: 2,
-    hidden: true,
-  },
-  {
-    layout: "admin",
-    path: "crops",
-    title: "작물 목록",
-    element: <CropList />,
-    depth: 1,
-    hidden: true,
-  },
-=======
   { layout: "admin", path: "home", title: "관리자 홈", element: <Admin />, depth: 1, hidden: false },
   { layout: "admin", path: "members", title: "회원 목록", element: <AdminMemberList />, depth: 1, hidden: false },
   { layout: "admin", path: "serviceApply", title: "신청 목록", element: <ServiceApplyList />, depth: 1, hidden: false },
@@ -136,7 +61,7 @@ export const routesLink = [
   { layout: "admin", path: "farms/create", title: "농장 등록", element: <AdminFarmCreate />, depth: 2, hidden: true },
   { layout: "admin", path: "farmsDetail/:id", title: "농장 상세", element: <AdminFarmDetail />, depth: 2, hidden: true },
   { layout: "admin", path: "crops", title: "작물 목록", element: <CropList />, depth: 1, hidden: false },
->>>>>>> dev
+
 
   { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: true },
   { layout: "member", path: "mypage/edit", title: "내 정보 수정", element: <MyInfoEdit />, depth: 1, hidden: true },
