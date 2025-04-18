@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import RadioPannel from "../components/RadioPannel";
-import { subscribeFarmSettings, subscribeFarmStatus } from "../setting_manager";
+import { subscribeFarmSettings, subscribeFarmStatus } from "../farm_subscribe_manager";
 import { ControlCard } from "../components/ControlCard";
-import { FarmSensorMonitor, FarmSensorMonitorV2 } from "../components/FarmMonitor";
+import { FarmSensorMonitor } from "../components/FarmMonitor";
 
 function FarmDetailPage() {
   const [dataName, setDataName] = useState('soil_moisture');
@@ -46,7 +46,7 @@ function FarmDetailPage() {
       <h1 className={titleCss}>스마트팜 상세 페이지</h1>
       <RadioPannel name={"data_name"} fields={fields} value={dataName} onChange={setDataName} />
       <ControlCard dataName={dataName} settings={sensorSettings} onChangeSettings={s => updateSettings.current?.({...settings, [dataName]: s})}/>
-      <FarmSensorMonitorV2 farmStatus={status} dataName={dataName} />
+      <FarmSensorMonitor farmStatus={status} dataName={dataName} />
     </>
   );
 }
