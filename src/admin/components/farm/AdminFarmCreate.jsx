@@ -37,7 +37,7 @@ const AdminFarmCreate = () => {
     const payload = {
       farmName: form.farmName,
       farmAddr: form.farmAddr,
-      useDate: form.useDate ? form.useDate + "T00:00:00Z" : null, // 
+      useDate: form.useDate ? form.useDate + "T00:00:00Z" : null, 
       crop: form.crop,
       status: form.status,
       member: {
