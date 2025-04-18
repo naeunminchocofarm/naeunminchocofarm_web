@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import serviceApi from "../apis/service_api";
-
+import FullPageSpinner from "../../pages/FullPageSpinner";
 
 const sectionStyle = "bg-white rounded-xl shadow p-6";
 const tableStyle = "w-full text-sm";
@@ -14,9 +14,9 @@ const ServiceApplyDetail = () => {
   const { id } = useParams();
   const [detail, setDetail] = useState(null);
 
-  const fetchServiceApply = async () => {
+  const fetchServiceApply = async (id) => {
     try {
-      const res = await serviceApi.getServiceApplyDetail();
+      const res = await serviceApi.getServiceApplyDetail(id);
       setDetail(res.data);
     } catch (error) {
       console.error("서비스 신청 목록 조회 실패:", error);
@@ -24,17 +24,15 @@ const ServiceApplyDetail = () => {
   };
 
   useEffect(() => {
-    fetchServiceApply();
+    fetchServiceApply(id);
   }, [id]);
 
-  if (!detail) return <p className="p-4">로딩 중...</p>;
+  if (!detail) return <FullPageSpinner />;
 
   return (
     <div className="p-6 space-y-8">
-      {/* 🔵 상태 설명 박스 */}
       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm">
         <p className="font-semibold mb-2">📌 상태 코드 안내</p>
-
       </div>
 
       {/* 👤 회원 및 기본 정보 */}
@@ -46,7 +44,9 @@ const ServiceApplyDetail = () => {
               <th className={thStyle}>신청 상태</th>
               <td className={tdStyle}>{detail.serviceStatus?.status}</td>
               <th className={thStyle}>신청일</th>
-              <td className={tdStyle}>{detail.applicationDate?.slice(0, 10)}</td>
+              <td className={tdStyle}>
+                {detail.applicationDate?.slice(0, 10)}
+              </td>
             </tr>
             <tr>
               <th className={thStyle}>이름</th>
@@ -75,7 +75,9 @@ const ServiceApplyDetail = () => {
             </tr>
             <tr>
               <th className={thStyle}>실무자 연락처</th>
-              <td className={tdStyle} colSpan={3}>{detail.contactTell}</td>
+              <td className={tdStyle} colSpan={3}>
+                {detail.contactTell}
+              </td>
             </tr>
             <tr>
               <th className={`${thStyle} align-top`}>상담 내용</th>

@@ -36,7 +36,7 @@ const ServiceApply = () => {
     try {
       await serviceApi.serviceApplyWrite(form);
       alert("신청이 완료되었습니다.");
-      nav("/web/myapply");
+      nav("/web");
     } catch (err) {
       console.error("신청 실패:", err);
       alert("신청에 실패했습니다.");

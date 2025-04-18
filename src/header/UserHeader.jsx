@@ -1,68 +1,62 @@
-import React, { useEffect, useState } from "react";
-import {
-  BsChevronDown,
-  BsClipboardData,
-  BsFlower3,
-  BsPlusLg,
-} from "react-icons/bs";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/images/layouts/h1-logo.png";
-import UserTitle from "./UserTitle";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { userMenu } from "../routes/MenuByLayout";
-import { useAuthInfo } from "../hooks/AuthInfo";
-
+import logo from "../assets/images/layouts/h1-logo.png";
 
 const UserHeader = () => {
-  const [activeMenu, setActiveMenu] = useState(null);
-  const { roleName } = useAuthInfo();
-  
-    useEffect(() => {
-      console.log("🔁 WebHeader 리렌더링");
-      console.log("권한:", roleName);
-    }, [roleName]);
+  const [openMenus, setOpenMenus] = useState({});
 
-  const location = useLocation();
-
-  // 메뉴 토글 함수
-  const toggleMenu = (menu) => {
-    setActiveMenu(activeMenu === menu ? null : menu); // 동일한 
+  const toggleMenu = (path) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [path]: !prev[path],
+    }));
   };
 
-  let pageTitle = "HOME";
-  menuItems.forEach((item) => {
-    const subMenuItem = item.subMenu.find(
-      (sub) => sub.link === location.pathname
-    );
-    if (subMenuItem) {
-      pageTitle = subMenuItem.name;
-    }
-  });
+  console.log(userMenu.map((m) => [m.title, m.depth]));
 
   return (
     <>
-      <header className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform transform sm:translate-x-0 translate-x-full">
-        <h1 className="text-xl font-bold text-green-600">
-          <NavLink to="/user">
-            <img src={logo} alt="나은민초코팜 로고" className="h-10" />
-          </NavLink>
-        </h1>
-        <aside className={`fixed z-20 top-0 left-0 h-full w-64 bg-white shadow transition-transform duration-300 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative md:flex-shrink-0`}>
-          <div className="flex items-center justify-between px-6 py-4 border-b">
-            <div className="text-xl font-bold text-green-700">ChocoFarm</div>
-            <button className="md:hidden" onClick={() => setSidebarOpen(false)}>
-              x
-            </button>
+      <aside className="hidden md:flex flex-col justify-between w-80 min-h-screen bg-white shadow-xl">
+        <div>
+          <div className="p-4 ">
+            <NavLink to="/user" className="flex justify-center">
+              <img src={logo} alt="로고" className="h-10" />
+            </NavLink>
           </div>
-          <nav className="px-4 py-6 space-y-2">
-            {navItems.map((item, idx) => (
-              <Link key={idx} to={item.path} className="block px-3 py-2 rounded hover:bg-green-100">
-                {item.label}
-              </Link>
+
+          <nav className="p-4 space-y-1">
+            {userMenu.map(({ path, title, depth }) => (
+              <NavLink
+                key={path}
+                to={path}
+                className={({ isActive }) => {
+                  if (depth === 1) {
+                    return `block px-3 py-2 text-2xl font-semibold ${
+                      isActive
+                        ? "text-green-600"
+                        : "text-gray-800 hover:text-green-600"
+                    }`;
+                  } else {
+                    return `block px-4 py-1 text-xl ${
+                      isActive
+                        ? "bg-gray-100 text-green-600 font-medium rounded-lg"
+                        : "text-gray-600 hover:text-green-500"
+                    }`;
+                  }
+                }}
+              >
+                {title}
+              </NavLink>
             ))}
           </nav>
-        </aside>
-      </header>
-      <UserTitle pageTitle={pageTitle} menuItems={menuItems} />
+        </div>
+
+        {/* 하단 푸터 */}
+        <footer className="text-xs text-center text-gray-400 p-4">
+          ⓒ 나은민초코팜
+        </footer>
+      </aside>
     </>
   );
 };

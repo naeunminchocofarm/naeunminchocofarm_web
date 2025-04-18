@@ -14,7 +14,7 @@ const serviceApi = {
 
   // 3. 서비스 신청 상세 보기
   getServiceApplyDetail: function (id) {
-    return axiosInstance.get(`/service/detail/${id}`);
+    return axiosInstance.get(`/service/${id}`);
   },
 
   // 4. 나의 서비스 신청 리스트 보기

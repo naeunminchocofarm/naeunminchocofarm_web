@@ -52,7 +52,7 @@ export const routesLink = [
   { layout: "web", path: "business", title: "비즈니스", element: <Business />, depth: 1, hidden: false },
   { layout: "web", path: "serviceApply", title: "스마트팜신청", element: <ServiceApply />, depth: 1, hidden: false },
 
-  { layout: "admin", path: "home", title: "관리자 홈", element: <Admin />, depth: 1, hidden: false },
+  { layout: "admin", path: "home", title: "관리자 홈", element: <Admin />, depth: 1, hidden: true },
   { layout: "admin", path: "members", title: "회원 목록", element: <AdminMemberList />, depth: 1, hidden: false },
   { layout: "admin", path: "serviceApply", title: "신청 목록", element: <ServiceApplyList />, depth: 1, hidden: false },
   { layout: "admin", path: "serviceApplyDetail/:id", title: "신청 상세", element: <ServiceApplyDetail />, depth: 2, hidden: false },
@@ -60,7 +60,7 @@ export const routesLink = [
   { layout: "admin", path: "farms", title: "농장 목록", element: <FarmList />, depth: 1, hidden: false },
   { layout: "admin", path: "farms/create", title: "농장 등록", element: <AdminFarmCreate />, depth: 2, hidden: true },
   { layout: "admin", path: "farmsDetail/:id", title: "농장 상세", element: <AdminFarmDetail />, depth: 2, hidden: true },
-  { layout: "admin", path: "crops", title: "작물 목록", element: <CropList />, depth: 1, hidden: false },
+  { layout: "admin", path: "crops", title: "작물 목록", element: <CropList />, depth: 1, hidden: true },
 
 
   { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: true },
@@ -68,13 +68,11 @@ export const routesLink = [
   { layout: "member", path: "myapply", title: "마이서비스", element: <MyApplyList />, depth: 2, hidden: true },
 
   { layout: "user", path: "home", title: "홈", element: <UserMain />, depth: 1, hidden: false },
-  { layout: "user", path: "farms", title: "내 스마트팜", element: <UserFarmList />, depth: 1, hidden: false },
+  { layout: "user", path: "myfarms", title: "내 스마트팜", element: <UserFarmList />, depth: 1, hidden: false },
   { layout: "user", path: "farms/:farmId", title: "스마트팜 상세", element: <UserFarmDetail />, depth: 2, hidden: false },
-  { layout: "user", path: "farms/:farmId/zone/:zoneId", title: "구역 상세", element: <UserZoneDetail />, depth: 2, hidden: false },
-  { layout: "user", path: "farms/:farmId/zone/:zoneId/control", title: "구역 제어", element: <UserZoneControl />, depth: 2, hidden: false },
   { layout: "user", path: "farms/:farmId/sensor-overview", title: "센서 전체보기", element: <UserSensorOverview />, depth: 2, hidden: false },
-  { layout: "user", path: "apply", title: "서비스 신청", element: <ServiceApply />, depth: 1, hidden: false },
-  { layout: "user", path: "apply/list", title: "신청 내역", element: <MyApplyList />, depth: 2, hidden: false },
+  { layout: "user", path: "apply/list", title: "서비스 관리", element: <MyApplyList />, depth: 1, hidden: false },
+  { layout: "user", path: "apply", title: "서비스 신청", element: <ServiceApply />, depth: 2, hidden: false },
   { layout: "user", path: "alarm", title: "알림", element: <UserAlarmList />, depth: 1, hidden: false },
   { layout: "user", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: false },
   { layout: "user", path: "mypage/edit", title: "내 정보 수정", element: <MyInfoEdit />, depth: 2, hidden: false },

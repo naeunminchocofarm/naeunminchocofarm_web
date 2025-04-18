@@ -10,7 +10,6 @@ const WebHeader = () => {
   const { isLogin, roleName, logout } = useAuthInfo();
 
   useEffect(() => {
-    console.log("🔁 WebHeader 리렌더링");
     console.log("권한:", roleName);
   }, [roleName]);
 
@@ -25,7 +24,6 @@ const WebHeader = () => {
           </NavLink>
         </h1>
 
-        {/* PC 메뉴 */}
         <nav className="hidden md:flex space-x-6">
           {webMenu.map(({ path, title }) => (
             <NavLink
@@ -56,9 +54,11 @@ const WebHeader = () => {
                   관리자페이지 
                 </NavLink>
               )}
-              <NavLink to="/member/mypage" className="text-sm text-green-600">
+              {roleName === "ROLE_USER" && (
+                <NavLink to="/member/mypage" className="text-sm text-green-600">
                 마이페이지
-              </NavLink>
+                </NavLink>
+              )}
               <button
                 onClick={logout}
                 className="text-sm text-red-500 hover:underline"
