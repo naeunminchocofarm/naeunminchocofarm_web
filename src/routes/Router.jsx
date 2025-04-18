@@ -17,7 +17,6 @@ import FullPageSpinner from "../pages/FullPageSpinner";
 
 import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
-import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 
 export default function Router() {
   const layoutRoutes = {
