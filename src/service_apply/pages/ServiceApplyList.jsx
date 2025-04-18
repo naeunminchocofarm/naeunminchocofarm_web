@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import serviceApi from "../apis/service_api";
 
 // 공통 스타일
@@ -24,8 +24,6 @@ const ServiceApplyList = () => {
   useEffect(() => {
     fetchServiceApply();
   }, []);
-
-  console.log(applyList);
 
   return (
     <div className="p-6 space-y-6">
@@ -54,10 +52,12 @@ const ServiceApplyList = () => {
               <th className={thStyle}>
                 <input type="checkbox" />
               </th>
-              <th className={thStyle}>신청 ID</th>
+              <th className={thStyle}>NO</th>
+              <th className={thStyle}>신청자ID</th>
               <th className={thStyle}>회원명</th>
               <th className={thStyle}>이메일</th>
-              <th className={thStyle}>신청자 유형</th>
+              <th className={thStyle}>전화번호</th>
+              <th className={thStyle}>유형</th>
               <th className={thStyle}>상태</th>
               <th className={thStyle}>신청일</th>
               <th className={thStyle}>상세</th>
@@ -65,34 +65,32 @@ const ServiceApplyList = () => {
           </thead>
           <tbody>
             {applyList.length > 0 ? (
-              applyList.map((item) => (
-                <tr key={item.id} className={tableRowStyle + " text-center"}>
+              applyList.map((apply,i) => (
+                <tr key={apply.id} className={tableRowStyle + " text-center"}>
                   <td className={tdStyle}>
                     <input type="checkbox" />
                   </td>
-                  <td className={tdStyle}>{item.id}</td>
-                  <td className={tdStyle}>{item.memberName}</td>
-                  <td className={tdStyle}>{item.memberEmail}</td>
-                  <td className={tdStyle}>{item.type}</td>
+                  <td className={tdStyle}>{i+1}</td> 
+                  <td className={tdStyle}>{apply.loginInfo.loginId}</td> 
+                  <td className={tdStyle}>{apply.loginInfo.name}</td> 
+                  <td className={tdStyle}>{apply.loginInfo.email}</td>
+                  <td className={tdStyle}>{apply.loginInfo.tell}</td> 
+                  <td className={tdStyle}>{apply.type}</td> 
+                  <td className={tdStyle}>{apply.serviceStatus.serviceStatus}</td> 
+                  <td className={tdStyle}>{apply.applicationAt}</td>
                   <td className={tdStyle}>
-                    {item.isOperating === "yes" ? "예" : "아니오"}
-                  </td>
-                  <td className={tdStyle}>
-                    {item.applicationDate?.slice(0, 10)}
-                  </td>
-                  <td className={tdStyle}>
-                    <button
-                      onClick={() => nav(`/admin/service/${item.id}`)}
-                      className="text-blue-600 hover:underline"
-                    >
-                      보기
-                    </button>
+                  <button
+                    onClick={() => nav(`/admin/serviceApplyDetail/${apply.id}`)}
+                    className="px-4 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600 transition"
+                  >
+                    관리
+                  </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={8} className={noDataStyle}>
+                <td colSpan={10} className={noDataStyle}>
                   등록된 신청이 없습니다.
                 </td>
               </tr>
