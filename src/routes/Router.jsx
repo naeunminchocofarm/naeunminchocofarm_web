@@ -53,6 +53,7 @@ export default function Router() {
             </ProtectedAdminRoute>
           }
         >
+          <Route index element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
           <Route index element={<AdminMain />} />
           {layoutRoutes.admin}
         </Route>
