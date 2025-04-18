@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { useSelector } from "react-redux";
 import { isAdmin } from "../apis/authCheck";
+import FullPageSpinner from "../../pages/FullPageSpinner";
 
 const ProtectedAdminRoute = ({ children }) => {
   const token = useSelector((state) => state.auth.token);
@@ -16,8 +17,10 @@ const ProtectedAdminRoute = ({ children }) => {
     }
   }, [token]);
 
-  if (isAccessible === null) return null;
-  return isAccessible ? children : <Navigate to={"/web/home"} />;
+  if (isAccessible === null) return <FullPageSpinner />;
+  if (!isAccessible) return <Navigate to="/web/home" replace />;
+  return children;
+  
 };
 
 export default ProtectedAdminRoute;

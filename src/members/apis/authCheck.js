@@ -24,7 +24,7 @@ export const isFammer = (token) => {
   if (!token) return false;
   try {
     const decoded = jwtDecode(token);
-    return decoded.roleName === "ROLE_FAMMER"; // 이거 정확히 일치해야 함!
+    return decoded.roleName === "ROLE_FAMMER" ; // 이거 정확히 일치해야 함!
   } catch {
     return false;
   }
@@ -38,5 +38,15 @@ export const isAdmin = (token) => {
     return decoded.roleName === "ROLE_ADMIN"; // 이거 정확히 일치해야 함!
   } catch {
     return false;
+  }
+};
+
+export const getLoginId = (token) => {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.id;
+  } catch (e) {
+    console.error("getLoginId - 토큰 파싱 실패:", e);
+    return null;
   }
 };

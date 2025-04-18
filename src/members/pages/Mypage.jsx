@@ -1,7 +1,16 @@
-import React from "react";
+// src/pages/mypage/MyPage.jsx
+import React, { useState } from "react";
+import MyPageCompo from "../components/MyPageCompo";
 
-const Mypage = () => {
-  return <div>Mypage</div>;
+const MyPage = () => {
+  const [tab, setTab] = useState("info");
+
+  return (
+      <>
+        <MyTap/>
+        <MyPageCompo/>
+      </>
+  );
 };
 
-export default Mypage;
+export default MyPage;

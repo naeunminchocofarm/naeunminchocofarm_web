@@ -1,9 +1,10 @@
 import React from "react";
 import Card from "../../common_components/Card";
+import profileImage from "../../assets/images/layouts/mem-farmer.png";
 
 // ✅ 공통 스타일 정의
-const profileImageStyle = "w-12 h-12 rounded-full border object-cover";
-const badgeStyle = "absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow";
+// const profileImageStyle = "w-12 h-12 rounded-full border object-cover";
+// const badgeStyle = "absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow";
 const buttonStyle = "w-full py-1 rounded text-sm";
 const mypageBtnStyle = `${buttonStyle} bg-green-500 hover:bg-green-600 text-white`;
 const logoutBtnStyle = `${buttonStyle} bg-gray-200 hover:bg-gray-300 text-gray-800`;
@@ -11,19 +12,9 @@ const logoutBtnStyle = `${buttonStyle} bg-gray-200 hover:bg-gray-300 text-gray-8
 const UserProfileBox = ({ user, onLogout }) => {
   return (
     <Card className="bg-white rounded-xl shadow p-4 space-y-3 text-sm">
-      {/* 프로필 */}
       <div className="flex items-center gap-3">
         <div className="relative">
-          <img
-            src={user?.profileImage || "/default-farmer1.png"}
-            alt="프로필"
-            className={profileImageStyle}
-          />
-          {user?.alarmCount > 0 && (
-            <span className={badgeStyle}>
-              {user.alarmCount}
-            </span>
-          )}
+          <img src={profileImage} alt="스마트팜" className="h-10" />
         </div>
         <div>
           <div className="font-semibold text-base">김이름{/*user.name*/}</div>
