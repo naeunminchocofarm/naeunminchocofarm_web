@@ -8,6 +8,8 @@ const AdminFarmSection = ({ farmId }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newSectionName, setNewSectionName] = useState("");
   const [selectedSectionIds, setSelectedSectionIds] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [editedData, setEditedData] = useState({});
 
   const toggleSection = (id) => {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -21,6 +23,7 @@ const AdminFarmSection = ({ farmId }) => {
         setIsAdding(false);
         setNewSectionName("");
         setSelectedSectionIds([]);
+        setEditingId(null);
       })
       .catch((err) => {
         console.error("구역 목록 조회 실패:", err);
@@ -48,14 +51,69 @@ const AdminFarmSection = ({ farmId }) => {
       });
   };
 
-  const handleDeleteSelected = async () => {
+  const handleChange = (e) => {
+    setEditedData({
+      ...editedData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEditClick = () => {
+    if (selectedSectionIds.length !== 1) {
+      alert("하나의 구역만 선택해주세요.");
+      return;
+    }
+
+    const targetId = selectedSectionIds[0];
+    const target = sections.find((s) => s.id === targetId);
+    setEditingId(targetId);
+    setEditedData({ name: target.name });
+  };
+
+  const handleSave = () => {
+    if (!editingId) return;
+  
+    const targetSection = sections.find((s) => s.id === editingId);
+    if (!targetSection) {
+      alert("수정할 구역을 찾을 수 없습니다.");
+      return;
+    }
+  
+    const dataToSend = {
+      id: editingId,
+      name: editedData.name,
+      farmId: targetSection.farmId,
+      uuidId: targetSection.uuidId,
+      uuid: targetSection.uuid,
+    };
+  
+    adminApi
+      .updateSection(editingId, dataToSend)
+      .then(() => {
+        setEditingId(null);
+        fetchSections();
+      })
+      .catch((err) => {
+        console.error("수정 실패", err);
+        alert("수정에 실패했습니다.");
+      });
+  };
+
+  const handleCancel = () => {
+    setEditedData({});
+    setEditingId(null);
+  };
+
+  const handleDelete = async () => {
     if (selectedSectionIds.length === 0) {
       alert("삭제할 구역을 선택해주세요.");
       return;
     }
     if (!window.confirm("선택한 구역을 삭제하시겠습니까?")) return;
     try {
-      await Promise.all(selectedSectionIds.map((id) => adminApi.deleteSection(id)));
+      await Promise.all(
+        selectedSectionIds.map((id) => adminApi.deleteSection(id))
+      );
       fetchSections();
     } catch (err) {
       console.error("구역 삭제 실패:", err);
@@ -102,8 +160,24 @@ const AdminFarmSection = ({ farmId }) => {
               </button>
             </div>
           )}
+
           <button
-            onClick={handleDeleteSelected}
+            type="button"
+            onClick={() => {
+              if (selectedSectionIds.length !== 1) {
+                alert("수정할 구역을 하나만 선택해주세요.");
+                return;
+              }
+              handleEditClick();
+            }}
+            className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded shadow"
+          >
+            수정
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDelete}
             className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded shadow"
           >
             삭제
@@ -150,17 +224,58 @@ const AdminFarmSection = ({ farmId }) => {
                     />
                   </td>
                   <td className="px-4 py-3 border-b">{section.id}</td>
-                  <td className="px-4 py-3 border-b">{section.name}</td>
+                  <td className="px-4 py-3 border-b">
+                    {editingId === section.id ? (
+                      <input
+                        type="text"
+                        name="name"
+                          value={editedData.name || ""}
+                        onChange={handleChange}
+                        className="border px-2 py-1 rounded w-full"
+                      />
+                    ) : (
+                      section.name
+                    )}
+                  </td>
                   <td className="px-4 py-3 border-b">{section.uuid}</td>
                   <td className="px-4 py-3 border-b">
-                    <button
-                      onClick={() => toggleSection(section.id)}
-                      className="text-sm text-blue-600 hover:underline"
-                    >
-                      센서 정보
-                    </button>
+                    {expandedId === section.id ? (
+                      <button
+                        onClick={() => toggleSection(section.id)}
+                        className="text-blue-600 hover:underline"
+                      >
+                        닫기
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => toggleSection(section.id)}
+                        className="text-blue-600 hover:underline"
+                      >
+                        센서 정보
+                      </button>
+                    )}
                   </td>
                 </tr>
+                {editingId === section.id && (
+                  <tr>
+                    <td colSpan={5} className="px-4 py-3 bg-gray-50 border-b">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleSave}
+                          className="px-4 py-1 bg-green-500 text-white rounded text-sm"
+                        >
+                          저장
+                        </button>
+                        <button
+                          onClick={handleCancel}
+                          className="px-4 py-1 bg-gray-400 text-white rounded text-sm"
+                        >
+                          취소
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
                 {expandedId === section.id && (
                   <tr>
                     <td colSpan={5} className="px-4 py-4 bg-gray-50 border-b">

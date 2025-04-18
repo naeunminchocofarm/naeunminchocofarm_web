@@ -43,10 +43,8 @@ const adminApi = {
   },
 
   // 구역 수정
-  updateSection: function (id, name) {
-    return axiosInstance.put(`sections/${id}`, {
-      name,
-    });
+  updateSection: function (id, data) {
+    return axiosInstance.put(`sections/${id}`, data);
   },
   
   // 구역 삭제
@@ -71,11 +69,8 @@ const adminApi = {
   },
 
   // 센서 수정
-  updateSensor: function (id, name, sensorType) {
-    return axiosInstance.put(`sensors/${id}`, {
-      name,
-      sensorType,
-    });
+  updateSensor: function (id, data) {
+    return axiosInstance.put(`sensors/${id}`, data);
   },
 
   // 센서 삭제

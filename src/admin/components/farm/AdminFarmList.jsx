@@ -72,31 +72,6 @@ const AdminFarmList = () => {
     setFilteredFarms(filtered);
   };
 
-  // const handleEditClick = (farm) => {
-  //   setEditingFarmId(farm.id);
-  //   setEditedFarmData({
-  //     farmName: farm.farmName,
-  //     farmAddr: farm.farmAddr,
-  //     useDate: farm.useDate?.slice(0, 10) || "",
-  //     status: farm.status,
-  //   });
-  // };
-
-  // const handleUpdate = async (id) => {
-  //   const original = farms.find(f => f.id === id);
-  //   if (!original) return;
-  //   const updated = {
-  //     ...original,
-  //     ...editedFarmData,
-  //     member: original.member,
-  //     uuidId: original.uuidId,
-  //     uuid: original.uuid,
-  //   };
-  //   await adminApi.updateFarm(id, updated);
-  //   setEditingFarmId(null);
-  //   fetchFarms();
-  // };
-
   return (
     <div className="p-6 space-y-6">
       <section className="flex justify-between items-center text-sm text-gray-500">
@@ -135,19 +110,6 @@ const AdminFarmList = () => {
           >
             + 스마트팜 등록
           </button>
-          {/* <button
-            onClick={() => {
-              if (selectedIds.length !== 1) {
-                alert("수정할 스마트팜을 선택해주세요.");
-                return;
-              }
-              const target = farms.find(f => f.id === selectedIds[0]);
-              if (target) handleEditClick(target);
-            }}
-            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded text-sm shadow"
-          >
-            수정
-          </button> */}
           <button
             onClick={async () => {
               if (selectedIds.length === 0) {
