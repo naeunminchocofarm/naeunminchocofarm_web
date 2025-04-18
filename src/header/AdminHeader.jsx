@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
 import { adminMenu } from "../routes/MenuByLayout";
 import { useAuthInfo } from "../hooks/AuthInfo";
+import logo from "../assets/images/layouts/h1-logo.png";
 
 const AdminHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,9 @@ const AdminHeader = () => {
     <header className={headerCss}>
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         <h1 className="text-xl font-bold text-green-600">
-          <NavLink to="/admin">나은민초코팜 관리자</NavLink>
+          <NavLink to="/admin">
+            <img src={logo} alt="나은민초코팜 로고" className="h-10" />
+          </NavLink>
         </h1>
 
         {/* PC 메뉴 */}
