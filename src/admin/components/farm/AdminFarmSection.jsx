@@ -229,7 +229,7 @@ const AdminFarmSection = ({ farmId }) => {
                       <input
                         type="text"
                         name="name"
-                        value={editedData.name || ""}
+                          value={editedData.name || ""}
                         onChange={handleChange}
                         className="border px-2 py-1 rounded w-full"
                       />

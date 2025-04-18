@@ -69,11 +69,8 @@ const adminApi = {
   },
 
   // 센서 수정
-  updateSensor: function (id, name, sensorType) {
-    return axiosInstance.put(`sensors/${id}`, {
-      name,
-      sensorType,
-    });
+  updateSensor: function (id, data) {
+    return axiosInstance.put(`sensors/${id}`, data);
   },
 
   // 센서 삭제
