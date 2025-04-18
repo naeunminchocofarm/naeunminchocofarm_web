@@ -62,6 +62,7 @@ export const routesLink = [
   { layout: "admin", path: "farmsDetail/:id", title: "농장 상세", element: <AdminFarmDetail />, depth: 2, hidden: true },
   { layout: "admin", path: "crops", title: "작물 목록", element: <CropList />, depth: 1, hidden: true },
 
+
   { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: true },
   { layout: "member", path: "mypage/edit", title: "내 정보 수정", element: <MyInfoEdit />, depth: 1, hidden: true },
   { layout: "member", path: "myapply", title: "마이서비스", element: <MyApplyList />, depth: 2, hidden: true },
