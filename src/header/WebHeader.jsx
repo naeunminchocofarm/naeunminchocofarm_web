@@ -3,13 +3,13 @@ import { NavLink } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
 import { webMenu } from "../routes/MenuByLayout";
 import { useAuthInfo } from "../hooks/AuthInfo";
+import logo from "../assets/images/layouts/h1-logo.png";
 
 const WebHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLogin, roleName, logout } = useAuthInfo();
 
   useEffect(() => {
-    console.log("🔁 WebHeader 리렌더링");
     console.log("권한:", roleName);
   }, [roleName]);
 
@@ -19,10 +19,11 @@ const WebHeader = () => {
     <header className={headerCss}>
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         <h1 className="text-xl font-bold text-green-600">
-          <NavLink to="/">나은민초코팜</NavLink>
+          <NavLink to="/">
+            <img src={logo} alt="나은민초코팜 로고" className="h-10" />
+          </NavLink>
         </h1>
 
-        {/* PC 메뉴 */}
         <nav className="hidden md:flex space-x-6">
           {webMenu.map(({ path, title }) => (
             <NavLink
@@ -53,9 +54,11 @@ const WebHeader = () => {
                   관리자페이지 
                 </NavLink>
               )}
-              <NavLink to="/member/mypage" className="text-sm text-green-600">
+              {roleName === "ROLE_USER" && (
+                <NavLink to="/member/mypage" className="text-sm text-green-600">
                 마이페이지
-              </NavLink>
+                </NavLink>
+              )}
               <button
                 onClick={logout}
                 className="text-sm text-red-500 hover:underline"

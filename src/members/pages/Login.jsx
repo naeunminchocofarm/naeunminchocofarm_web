@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import memberApi from "../apis/member_api";
 import { loginReducer } from "../../redux/authSlice";
+import loginImg from "../../assets/images/contents/img-login.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,11 @@ const Login = () => {
         alert("로그인 성공");
         console.log(res.headers["authorization"]); //authorization
         const accessToken = res.headers["authorization"]; //전달받은 jwt 토큰
-        dispatch(loginReducer(accessToken));
+        if (res.data) {
+          dispatch(loginReducer({ token: accessToken, loginInfo: res.data }));
+        } else {
+          console.error("로그인 응답에 유저 정보 없음:", res);
+        }
         nav("/web/home");
       })
       .catch((e) => {
@@ -39,11 +44,13 @@ const Login = () => {
         }
       });
   };
-  const loginWhiteBox =
-    "flex flex-col md:flex-row bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl max-w-4xl w-full overflow-hidden";
+
+  const loginContianer =  "w-full min-h-[calc(100vh-140px)] flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]";
+  const loginWhiteBox =   "flex flex-col md:flex-row bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl max-w-4xl w-full overflow-hidden";
+  const loginInput = "w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
   return (
     <>
-      <div className="w-full h-80vh flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]">
+      <div className={loginContianer}>
         <div className={loginWhiteBox}>
           <div className="w-full md:w-1/2 p-10">
             <h3 className="text-2xl font-semibold text-green-700 mb-2">
@@ -62,7 +69,7 @@ const Login = () => {
                   type="text"
                   name="loginId"
                   value={loginInfo.loginId}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+                  className={loginInput}
                   placeholder="아이디를 입력하세요"
                   onChange={changeLoginInfo}
                 />
@@ -99,7 +106,7 @@ const Login = () => {
                   로그인
                 </button>
                 <Link
-                  to="/member/signup"
+                  to="/web/signup"
                   className="w-full text-center border border-green-500 text-green-600 py-2 rounded-lg hover:bg-green-50 transition"
                 >
                   회원가입
@@ -108,8 +115,9 @@ const Login = () => {
             </form>
           </div>
 
-          {/* 오른쪽: 배경 이미지 */}
-          <div className="hidden md:block w-1/2 bg-[url('/login-graphic.png')] bg-cover bg-center" />
+          <div className="hidden md:block w-1/2 bg-cover bg-center" >
+            <img src={loginImg} alt="스마트팜로그인" />
+          </div>
         </div>
       </div>
     </>

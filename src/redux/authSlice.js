@@ -3,35 +3,55 @@ import { jwtDecode } from "jwt-decode";
 
 const getToken = () => {
   const token = localStorage.getItem("accessToken");
-
-  if (token === null) return null;
-
-  //복호화된 토큰
-  const decodedToken = jwtDecode(token);
-
-  //현재날짜및시간
-  const currentTime = Date.now() / 1000;
-
-  //토큰의 만료기간이 지났으면
-  if (decodedToken.exp < currentTime) {
+  if (!token || !token.includes(".")) {
     localStorage.removeItem("accessToken");
     return null;
-  } else {
+  }
+
+  try {
+    const decoded = jwtDecode(token);
+    const now = Date.now() / 1000;
+    if (decoded.exp < now) {
+      localStorage.removeItem("accessToken");
+      return null;
+    }
     return token;
+  } catch (e) {
+    console.error("유효하지 않은 토큰:", e);
+    localStorage.removeItem("accessToken");
+    return null;
   }
 };
 
+let parsedLoginInfo = null;
+try {
+  const stored = localStorage.getItem("loginInfo");
+  parsedLoginInfo = stored && stored !== "undefined" ? JSON.parse(stored) : null;
+} catch (e) {
+  console.error("⚠️ loginInfo 파싱 실패:", e);
+  localStorage.removeItem("loginInfo");
+}
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: { token: getToken() },
+  initialState: {
+    token: getToken(),
+    loginInfo: parsedLoginInfo,
+  },
   reducers: {
     loginReducer: (state, action) => {
-      state.token = action.payload;
-      localStorage.setItem("accessToken", action.payload);
+      const { token, loginInfo } = action.payload;
+      state.token = token;
+      state.loginInfo = loginInfo;
+
+      localStorage.setItem("accessToken", token);
+      localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
     },
     logoutReducer: (state) => {
       state.token = null;
+      state.loginInfo = null;
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("loginInfo");
     },
   },
 });

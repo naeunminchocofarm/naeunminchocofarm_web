@@ -52,7 +52,7 @@ const Signup = () => {
   };
 
   const loginContianer =
-    "w-full h-screen flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]";
+  "w-full min-h-[calc(100vh-140px)] flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]";
   const buttonStyle =
     "bg-green-500 text-white px-6 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-300 cursor-pointer transition";
   const disabledButtonStyle =

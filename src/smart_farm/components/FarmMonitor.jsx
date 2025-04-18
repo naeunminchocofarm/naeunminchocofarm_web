@@ -1,106 +1,44 @@
-function FarmMonitor({status}){
+import SensorData from "./SensorData";
+
+function FarmSensorMonitor({farmStatus, dataName}) {
+  if (!farmStatus) {
+    return <p>스마트팜 정보를 불러오지 못했습니다</p>;
+  }
+
+  const farmBoxCss = "";
+  const controllerBoxCss = "grid gap-1 grid-cols-[repeat(auto-fill,minmax(200px,auto))]";
+  const controllerCardCss = "border rounded-lg p-4 mt-3 shadow-md border-gray-200 font-bold text-2xl";
+
   return (
     <>
-      {/* <p>type: {status?.['type']}</p> */}
-      {/* <p>uuid: {status?.['uuid']}</p> */}
-      <h2 className="text-xl font-bold mt-5">컨트롤러들</h2>
-      <ul>
+      <div className={farmBoxCss}>
+        <div className={controllerBoxCss}>
+          {
+            farmStatus.controllers?.map((x, i) => 
+              <div key={i} className={controllerCardCss}>
+                <ControllerSensorMonitor status={x} dataName={dataName} />
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </>
+  );
+}
+
+function ControllerSensorMonitor({status, dataName}) {
+  const list = status?.sensor_datas?.filter(x => x.name === dataName) ?? [];
+  return (
+    <div>
       {
-        status?.['controllers'].map((x, i) => <li key={i}>
-          <ControllerMonitor status={x} />
-        </li>)
+        list.map(({name, value}, i) =>
+          <SensorData key={i} name={name} value={value} />
+        )
       }
-      </ul>
-    </>
+    </div>
   );
 }
 
-function ControllerMonitor({status}) {
-  return (
-    <>
-      {/* <p>type: {status?.['type']}</p> */}
-      {/* <p>uuid: {status?.['uuid']}</p> */}
-      <h2 className="text-lg font-bold mt-2">센서들</h2>
-      <ul>
-        {
-          status?.['sensors'].map((x, i) => <li key={i}>
-            <SensorMonitor status={x} />
-          </li>)
-        }
-      </ul>
-      <h2 className="text-lg font-bold mt-2">액추에이터들</h2>
-      <ul>
-        {
-          status?.['actuators'].map((x, i) => <li key={i}>
-            <ActuatorMonitor status={x} />
-          </li>)
-        }
-      </ul>
-    </>
-  );
-}
-
-function SensorMonitor({status}) {
-  const type = status?.['type'];
-  return (
-    <>
-      {
-        type == 'air_temp_humid' ? <AirTempHumidSensorMonitor status={status} />
-        : type == 'adc' ? <AdcSensorMonitor status={status} />
-        : type == 'pir' ? <PirSensorMonitor status={status} />
-        : null
-      }
-    </>
-  );
-}
-
-function AirTempHumidSensorMonitor({status}) {
-  return (
-    <>
-      {/* <p>uuid: {status?.['uuid']}</p> */}
-      <p>현재 기온: {status?.['air_temp']}'C</p>
-      <p>현재 습도: {status?.['humidity']}%</p>
-    </>
-  );
-}
-
-function AdcSensorMonitor({status}) {
-  return (
-    <>
-      {/* <p>uuid: {status?.['uuid']}</p> */}
-      <p>현재 조도: {status?.['ldr']}</p>
-      <p>현재 토양습도: {status?.['soil_moisture']}</p>
-    </>
-  );
-}
-
-function PirSensorMonitor({status}) {
-  return (
-    <>
-      {/* <p>uuid: {status?.['uuid']}</p> */}
-      <p>움직임: {status?.['motion'] == 'detected' ? '감지됨!!!!!!' : ''}</p>
-    </>
-  );
-}
-
-function ActuatorMonitor({status}) {
-  return (
-    <>
-      {
-        status?.['type'] == 'led' ? <LedActuatorMonitor status={status} />
-        : null
-      }
-    </>
-  );
-}
-
-function LedActuatorMonitor({status}) {
-  return (
-    <>
-      {/* <p>uuid: {status?.['uuid']}</p> */}
-      <p>led: {status?.['power'] == 'on' ? '켜짐!!!!!!!!' : '꺼짐'}</p>
-    </>
-  );
-}
-
-export default FarmMonitor;
+export {
+  FarmSensorMonitor
+};
