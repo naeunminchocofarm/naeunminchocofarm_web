@@ -1,14 +1,11 @@
-import { routesLink } from "../routes/RoutesLink";
+import { routesLink } from "./RoutesLink";
 
 const getMenuByLayout = (layout, options = {}) => {
-  const { depth = 1, includeHidden = false } = options;
+  const { includeHidden = false } = options;
 
   return routesLink
     .filter(
-      (route) =>
-        route.layout === layout &&
-        route.depth === depth &&
-        (includeHidden || !route.hidden)
+      (route) => route.layout === layout && (includeHidden || !route.hidden)
     )
     .map((route) => ({
       ...route,
