@@ -11,7 +11,7 @@ const Login = () => {
 
   const [loginInfo, setLoginInfo] = useState({
     loginId: "",
-    encryptedLoginPw: "",
+    password: "",
   });
 
   const changeLoginInfo = (e) => {
