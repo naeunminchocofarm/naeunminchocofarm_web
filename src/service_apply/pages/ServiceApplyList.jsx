@@ -25,8 +25,6 @@ const ServiceApplyList = () => {
     fetchServiceApply();
   }, []);
 
-  console.log(applyList);
-
   return (
     <div className="p-6 space-y-6">
       {/* 안내 */}
@@ -81,9 +79,12 @@ const ServiceApplyList = () => {
                   <td className={tdStyle}>{apply.serviceStatus.serviceStatus}</td> 
                   <td className={tdStyle}>{apply.applicationAt}</td>
                   <td className={tdStyle}>
-                    <button onClick={()=>{}} className="text-blue-500 hover:underline">
-                      관리 
-                    </button>
+                  <button
+                    onClick={() => nav(`/admin/serviceApplyDetail/${apply.id}`)}
+                    className="px-4 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600 transition"
+                  >
+                    관리
+                  </button>
                   </td>
                 </tr>
               ))
