@@ -7,9 +7,7 @@ import AdminLayout from "../layout/AdminLayout";
 import WebLayout from "../layout/WebLayout";
 import UserLayout from "../layout/UserLayout";
 
-import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 import WebMain from "../pages/web/WebMain";
-
 import UserMain from "../pages/Dashboard/UserMain";
 import AdminMain from "../admin/pages/AdminMain";
 import Home from "../pages/Dashboard/Home";
@@ -19,6 +17,7 @@ import FullPageSpinner from "../pages/FullPageSpinner";
 
 import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
+import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 
 export default function Router() {
   const layoutRoutes = {
