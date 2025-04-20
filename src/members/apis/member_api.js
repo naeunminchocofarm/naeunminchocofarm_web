@@ -23,5 +23,10 @@ const memberApi = {
    
     return response;
   },
+  checkEmailDuplicate: (email) => {
+    return axiosInstance.get("/member/check-email", {
+      params: { email }
+    });
+  }
 };
 export default memberApi;

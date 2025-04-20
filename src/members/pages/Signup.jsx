@@ -60,9 +60,9 @@ const Signup = () => {
   return (
     <div className={loginContianer}>
       <div className="flex flex-col bg-white shadow-2xl rounded-3xl p-10 max-w-lg w-full overflow-hidden">
-        <h2 className="text-2xl font-semibold text-green-700 mb-4">
+        <h3 className="text-2xl font-semibold text-green-700 mb-4">
           나은민초코팜 회원가입
-        </h2>
+        </h3>
         <p className="text-sm text-gray-600 mb-6">
           회원가입을 통해 나만의 스마트팜을 관리하세요.
         </p>

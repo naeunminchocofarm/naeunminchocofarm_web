@@ -15,7 +15,7 @@ import Home from "../pages/Dashboard/Home";
 import NotFound from "../pages/NotFound";
 import FullPageSpinner from "../pages/FullPageSpinner";
 
-import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
+// import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
 
 export default function Router() {
@@ -44,6 +44,12 @@ export default function Router() {
           {layoutRoutes.web}
         </Route>
 
+        {/* 웹 */}
+        <Route path="/member/*" element={<ProtectedRoute><WebLayout /></ProtectedRoute>}>
+          <Route index element={<ProtectedRoute><WebMain /></ProtectedRoute>} />
+          {layoutRoutes.member}
+        </Route>
+
         {/* 어드민 */}
         <Route
           path="/admin/*"
@@ -53,7 +59,6 @@ export default function Router() {
             </ProtectedAdminRoute>
           }
         >
-          <Route index element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
           <Route index element={<AdminMain />} />
           {layoutRoutes.admin}
         </Route>
@@ -62,9 +67,7 @@ export default function Router() {
         <Route
           path="/user/*"
           element={
-            <ProtectedRoute>
               <UserLayout />
-            </ProtectedRoute>
           }
         >
           <Route index element={<UserMain />} />
@@ -77,7 +80,7 @@ export default function Router() {
 
         {/* 소켓&테스트 */}
         <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
-        <Route path="/test/farms-detail" element={<FarmDetailPage />} />
+        {/* <Route path="/test/farms-detail" element={<FarmDetailPage />} /> */}
         <Route path="/homebackup" element={<Home />} />
       </Routes>
     </>
