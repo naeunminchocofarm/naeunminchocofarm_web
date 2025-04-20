@@ -5,35 +5,21 @@ import CurrentDate from "../common_components/Dayjs";
 
 const UserTitle = ({ pageTitle }) => {
   return (
-    <>
-      <div className="title-area mb-4">
-        <div className="lg:flex lg:justify-between">
-          <div className="min-w-0 flex-1">
-            <div className="mt-1 sm:mt-0 sm:space-x-6">
-              <div className="mt-2 mb-2 flex items-center text-sm text-gray-500">
-                HOME <BsChevronRight /> {pageTitle}
-              </div>
-              <h2 className="text-2xl/7 font-black text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                {pageTitle}
-              </h2>
-              <div className="mt-2 flex items-center text-sm text-gray-500">
-                현재시각 : <CurrentDate />
-              </div>
-            </div>
-          </div>
-          <div className="flex lg:mt-0 lg:ml-4">
-            <span className="sm:block">
-              <button type="button" className="p-2 text-lg">
-                <BsBellFill />
-              </button>
-            </span>
-            <Link to="/member/mypage" className="p-2 text-lg inlinkblock">
-              <BsPersonFill />
-            </Link>
-          </div>
+    <div className="flex justify-between items-center mb-6 pb-2 border-b">
+
+      <div>
+        <div className="flex items-center text-sm text-gray-500 mb-1">
+          HOME <BsChevronRight className="mx-1" /> {pageTitle}
         </div>
+        <h3 className="text-2xl font-bold text-gray-800">ㅇㅇㅇ{pageTitle}</h3>
+        <p className="text-sm text-gray-500 mt-1">
+          총 운영 상태 및 데이터를 한눈에 확인하세요
+        </p>
       </div>
-    </>
+      <div className="flex items-center space-x-3 text-sm text-gray-500">
+        <span>마지막 갱신: <CurrentDate format="YYYY.MM.DD HH:mm" /></span>
+      </div>
+    </div>
   );
 };
 

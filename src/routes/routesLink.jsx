@@ -1,10 +1,10 @@
 // src/routes/routesMeta.jsx
 
 //member
+import MyTab from "../members/pages/MyTab";
 import MyPage from "../members/pages/Mypage";
-import MyApply from "../members/pages/MyApplyList";
-import MyApplyList from "../members/pages/MyApplyList";
-import MyInfoEdit from "../members/pages/MyInfoEdit";
+import MyApply from "../members/pages/MyApply";
+import MyPassword from "../members/pages/MyPassword";
 
 // web
 import Web from "../pages/web/WebMain";
@@ -42,6 +42,7 @@ import UserAlarmList from "../pages/user/UserAlarmList";
 import UserFarmDetail from "../pages/user/UserFarmDetail.JSX";
 
 
+
 export const routesLink = [
   { layout: "web", path: "login", title: "로그인", element: <Login />, depth: 1, hidden: true },
   { layout: "web", path: "signup", title: "회원가입", element: <Signup />, depth: 1, hidden: true },
@@ -62,20 +63,19 @@ export const routesLink = [
   { layout: "admin", path: "farmsDetail/:id", title: "농장 상세", element: <AdminFarmDetail />, depth: 2, hidden: true },
   { layout: "admin", path: "crops", title: "작물 목록", element: <CropList />, depth: 1, hidden: true },
 
-
-  { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: true },
-  { layout: "member", path: "mypage/edit", title: "내 정보 수정", element: <MyInfoEdit />, depth: 1, hidden: true },
-  { layout: "member", path: "myapply", title: "마이서비스", element: <MyApplyList />, depth: 2, hidden: true },
+  { layout: "member", path: "mytab", title: "계정관리", element: <MyTab />, depth: 1, hidden: true },
+  { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 2, hidden: true },,
+  { layout: "member", path: "myapply", title: "마이서비스", element: <MyApply />, depth: 2, hidden: true },
+  { layout: "member", path: "mypassword", title: "마이비밀번호", element: <MyPassword />, depth: 2, hidden: true },
 
   { layout: "user", path: "home", title: "홈", element: <UserMain />, depth: 1, hidden: false },
   { layout: "user", path: "myfarms", title: "내 스마트팜", element: <UserFarmList />, depth: 1, hidden: false },
   { layout: "user", path: "farms/:farmId", title: "스마트팜 상세", element: <UserFarmDetail />, depth: 2, hidden: false },
   { layout: "user", path: "farms/:farmId/sensor-overview", title: "센서 전체보기", element: <UserSensorOverview />, depth: 2, hidden: false },
-  { layout: "user", path: "apply/list", title: "서비스 관리", element: <MyApplyList />, depth: 1, hidden: false },
+  { layout: "user", path: "apply/list", title: "서비스 관리", element: <MyApply />, depth: 1, hidden: false },
   { layout: "user", path: "apply", title: "서비스 신청", element: <ServiceApply />, depth: 2, hidden: false },
   { layout: "user", path: "alarm", title: "알림", element: <UserAlarmList />, depth: 1, hidden: false },
   { layout: "user", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: false },
-  { layout: "user", path: "mypage/edit", title: "내 정보 수정", element: <MyInfoEdit />, depth: 2, hidden: false },
   
   // { layout: "user", path: "temp", title: "온도", element: <TemperaturePage />, depth: 2, hidden: false },
   // { layout: "user", path: "hume", title: "습도", element: <HumidityPage />, depth: 2, hidden: false },
