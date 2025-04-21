@@ -11,7 +11,7 @@ const Login = () => {
 
   const [loginInfo, setLoginInfo] = useState({
     loginId: "",
-    encryptedLoginPw: "",
+    password: "",
   });
 
   const changeLoginInfo = (e) => {
@@ -27,7 +27,7 @@ const Login = () => {
       .login(loginInfo)
       .then((res) => {
         alert("로그인 성공");
-        console.log(res.headers["authorization"]); //authorization
+        // console.log(res.headers["authorization"]); //authorization
         const accessToken = res.headers["authorization"]; //전달받은 jwt 토큰
         if (res.data) {
           dispatch(loginReducer({ token: accessToken, loginInfo: res.data }));
@@ -79,8 +79,8 @@ const Login = () => {
                 <label className="text-sm text-gray-700">비밀번호</label>
                 <input
                   type="password"
-                  name="encryptedLoginPw"
-                  value={loginInfo.encryptedLoginPw}
+                  name="password"
+                  value={loginInfo.password}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
                   placeholder="비밀번호를 입력하세요"
                   onChange={changeLoginInfo}
