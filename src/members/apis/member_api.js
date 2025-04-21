@@ -12,21 +12,27 @@ const memberApi = {
     return response;
   },
   login: function (loginData) {
-    return axiosInstance.post("/member/login", loginData)
-      .then(res => {return {token: res.headers['authorization'], loginInfo: res.data}});
+    return axiosInstance.post("/member/login", loginData).then((res) => {
+      return { token: res.headers["authorization"], loginInfo: res.data };
+    });
   },
   getMemInfo: function () {
-    const response = axiosInstance.get("/member/memberInfo", { });
+    const response = axiosInstance.get("/member/memberInfo", {});
 
     const token = localStorage.getItem("accessToken");
     console.log("회원정보불러와봐" + token);
-   
+
     return response;
   },
-  checkEmailDuplicate: (email) => {
+  checkEmail: (email) => {
     return axiosInstance.get("/member/check-email", {
-      params: { email }
+      params: { email },
     });
-  }
+  },
+  checkId: (loginId) => {
+    return axiosInstance.get("/member/check-id", {
+      params: { loginId },
+    });
+  },
 };
 export default memberApi;

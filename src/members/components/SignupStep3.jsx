@@ -1,5 +1,6 @@
 import React from "react";
 import SignUpInput from "../../common_components/SignUpInput";
+import memberApi from "../apis/member_api";
 
 const SignupStep3 = ({
   memberData,
@@ -12,8 +13,31 @@ const SignupStep3 = ({
   const SignupInsert = () => {
     const { loginId, password, confirmPw, name, tell } = memberData;
 
+    const checkSameId = async () => {
+      try {
+        const res = await memberApi.checkId(loginId);
+        if (res.data.duplicate) {
+          alert("이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
+          return;
+        }
+  
+        // 실제 서버에 인증 요청
+        await memberApi.checkId(loginId); // <-- 이게 실제 요청!
+  
+      } catch (error) {
+        if(error.response?.status === 409){
+          alert("이미 사용종인 아이디입니다");
+  
+        }else{
+          console.error("인증 요청 실패:", error);
+        }
+      }
+    };
+
     // 각 필드 유효성 검사
     if (!loginId.trim()) return alert("아이디를 입력해주세요.");
+
+    
     if (
       password.length < 8 ||
       !/^[A-Za-z\d!@#$%^&*]+$/.test(password) ||

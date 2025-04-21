@@ -1,17 +1,9 @@
-import { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { userMenu } from "../routes/MenuByLayout";
 import logo from "../assets/images/layouts/h1-logo.png";
 
 const UserHeader = () => {
-  const [openMenus, setOpenMenus] = useState({});
-
-  const toggleMenu = (path) => {
-    setOpenMenus((prev) => ({
-      ...prev,
-      [path]: !prev[path],
-    }));
-  };
 
   console.log(userMenu.map((m) => [m.title, m.depth]));
 
