@@ -13,7 +13,7 @@ const Signup = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [memberData, setMemberData] = useState({
     loginId: "",
-    encryptedLoginPw: "",
+    password: "",
     name: "",
     email: "",
     tell: "",

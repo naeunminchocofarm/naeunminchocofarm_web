@@ -79,8 +79,8 @@ const Login = () => {
                 <label className="text-sm text-gray-700">비밀번호</label>
                 <input
                   type="password"
-                  name="encryptedLoginPw"
-                  value={loginInfo.encryptedLoginPw}
+                  name="password"
+                  value={loginInfo.password}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
                   placeholder="비밀번호를 입력하세요"
                   onChange={changeLoginInfo}
