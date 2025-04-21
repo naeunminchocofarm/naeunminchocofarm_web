@@ -34,15 +34,6 @@ function getLoginInfo() {
   }
 }
 
-// let parsedLoginInfo = null;
-// try {
-//   const stored = localStorage.getItem("loginInfo");
-//   parsedLoginInfo = stored && stored !== "undefined" ? JSON.parse(stored) : null;
-// } catch (e) {
-//   console.error("⚠️ loginInfo 파싱 실패:", e);
-//   localStorage.removeItem("loginInfo");
-// }
-
 const authSlice = createSlice({
   name: "auth",
   initialState: {
