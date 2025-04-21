@@ -23,27 +23,37 @@ const getToken = () => {
   }
 };
 
-let parsedLoginInfo = null;
-try {
-  const stored = localStorage.getItem("loginInfo");
-  parsedLoginInfo = stored && stored !== "undefined" ? JSON.parse(stored) : null;
-} catch (e) {
-  console.error("⚠️ loginInfo 파싱 실패:", e);
-  localStorage.removeItem("loginInfo");
+function getLoginInfo() {
+  try {
+    const stored = localStorage.getItem("loginInfo");
+    return stored && stored !== "undefined" ? JSON.parse(stored) : null;
+  } catch (e) {
+    console.error("⚠️ loginInfo 파싱 실패:", e);
+    localStorage.removeItem("loginInfo");
+    return null;
+  }
 }
+
+// let parsedLoginInfo = null;
+// try {
+//   const stored = localStorage.getItem("loginInfo");
+//   parsedLoginInfo = stored && stored !== "undefined" ? JSON.parse(stored) : null;
+// } catch (e) {
+//   console.error("⚠️ loginInfo 파싱 실패:", e);
+//   localStorage.removeItem("loginInfo");
+// }
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     token: getToken(),
-    loginInfo: parsedLoginInfo,
+    loginInfo: getLoginInfo(),
   },
   reducers: {
     loginReducer: (state, action) => {
       const { token, loginInfo } = action.payload;
       state.token = token;
       state.loginInfo = loginInfo;
-
       localStorage.setItem("accessToken", token);
       localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
     },

@@ -25,15 +25,9 @@ const Login = () => {
   const loginCheck = () => {
     memberApi
       .login(loginInfo)
-      .then((res) => {
+      .then(({token, loginInfo}) => {
         alert("로그인 성공");
-        // console.log(res.headers["authorization"]); //authorization
-        const accessToken = res.headers["authorization"]; //전달받은 jwt 토큰
-        if (res.data) {
-          dispatch(loginReducer({ token: accessToken, loginInfo: res.data }));
-        } else {
-          console.error("로그인 응답에 유저 정보 없음:", res);
-        }
+        dispatch(loginReducer({ token, loginInfo }));
         nav("/web/home");
       })
       .catch((e) => {
