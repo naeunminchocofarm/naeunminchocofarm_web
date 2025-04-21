@@ -7,7 +7,6 @@ const MyPage = () => {
 
   return (
       <>
-        <MyTap/>
         <MyPageCompo/>
       </>
   );

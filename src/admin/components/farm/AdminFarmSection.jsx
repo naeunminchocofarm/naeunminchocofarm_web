@@ -128,7 +128,7 @@ const AdminFarmSection = ({ farmId }) => {
   return (
     <section className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold">구역 정보</h2>
+        <h3 className="text-lg font-semibold">구역 정보</h3>
         <div className="flex gap-2">
           {!isAdding ? (
             <button

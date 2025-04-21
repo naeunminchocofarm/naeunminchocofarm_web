@@ -1,27 +1,127 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import memberApi from '../apis/member_api';
 
 const MyPageCompo = () => {
-  return (
-    <>
-      <form className="space-y-4">
-        <div>
-          <label className="block font-semibold mb-1">이름</label>
-          <input className="w-full border rounded px-3 py-2" placeholder="이름" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">이메일</label>
-          <input className="w-full border rounded px-3 py-2" placeholder="이메일" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">전화번호</label>
-          <input className="w-full border rounded px-3 py-2" placeholder="전화번호" />
-        </div>
-        <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
-          수정하기
-        </button>
-    </form>
-    </>
-  )
-}
+  const [editMode, setEditMode] = useState(false);
+  const [myInfo, setMyInfo] = useState({
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+    emailVerified: false,
+  });
 
-export default MyPageCompo
+  useEffect(() => {
+    memberApi.getMemInfo().then(res => setMyInfo(res.data));
+  }, []);
+
+  const handleChange = e => {
+    setMyInfo(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log("수정 요청", myInfo);
+    setEditMode(false);
+  };
+
+  const labelStyle = "block font-semibold mb-2 text-gray-700";
+  const inputStyle = "w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-300";
+  const divStyle = "";
+  const buttonStyle = "bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600";
+  const cancelStyle = "text-red-500 border border-red-300 hover:bg-red-50 py-2 px-6 rounded";
+  const editButtonWrapperStyle = "flex justify-end mb-4";
+  const editButtonStyle = "bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600";
+  
+
+  return (
+    <div className='cont-area'>
+      {!editMode && (
+        <div className={editButtonWrapperStyle}>
+          <button
+            onClick={() => setEditMode(true)}
+            className={editButtonStyle}
+          >
+            수정하기
+          </button>
+        </div>
+      )}
+  
+      <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <label className={labelStyle}>아이디</label>
+        <div className={divStyle}>{myInfo.id}</div>
+      </div>
+
+      <div>
+        <label className={labelStyle}>이름</label>
+        {editMode ? (
+          <input
+            name="name"
+            value={myInfo.name}
+            onChange={handleChange}
+            className={inputStyle}
+          />
+        ) : (
+          <div className={divStyle}>{myInfo.name}</div>
+        )}
+      </div>
+
+      <div>
+        <label className={labelStyle}>이메일</label>
+        {editMode ? (
+          <div className="flex items-center space-x-2">
+            <input
+              name="email"
+              value={myInfo.email}
+              onChange={handleChange}
+              className={inputStyle}
+            />
+            <button
+              type="button"
+              className="border border-blue-500 text-blue-600 text-sm px-3 py-2 rounded hover:bg-blue-50 transition"
+              onClick={() => {
+                // TODO: 이메일 인증 요청 API 호출
+                console.log("이메일 인증 요청:", myInfo.email);
+              }}
+            >
+              이메일 인증
+            </button>
+          </div>
+        ) : (
+          <div className={divStyle}>{myInfo.email}</div>
+        )}
+      </div>
+
+      <div>
+        <label className={labelStyle}>전화번호</label>
+        {editMode ? (
+          <input
+            name="phone"
+            value={myInfo.phone}
+            onChange={handleChange}
+            className={inputStyle}
+          />
+        ) : (
+          <div className={divStyle}>{myInfo.phone}</div>
+        )}
+      </div>
+  
+        {editMode && (
+          <div className="flex justify-between pt-6">
+            <button type="button" onClick={() => setEditMode(false)} className={cancelStyle}>
+              취소하기
+            </button>
+            <button type="submit" className={buttonStyle}>
+              수정 완료
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+  
+};
+
+  
+  export default MyPageCompo;
