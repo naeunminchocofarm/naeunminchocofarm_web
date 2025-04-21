@@ -10,19 +10,19 @@ const SignupStep3 = ({
   signupData,
 }) => {
   const SignupInsert = () => {
-    const { loginId, encryptedLoginPw, confirmPw, name, tell } = memberData;
+    const { loginId, password, confirmPw, name, tell } = memberData;
 
     // 각 필드 유효성 검사
     if (!loginId.trim()) return alert("아이디를 입력해주세요.");
     if (
-      encryptedLoginPw.length < 8 ||
-      !/^[A-Za-z\d!@#$%^&*]+$/.test(encryptedLoginPw) ||
-      !/[!@#$%^&*]/.test(encryptedLoginPw)
+      password.length < 8 ||
+      !/^[A-Za-z\d!@#$%^&*]+$/.test(password) ||
+      !/[!@#$%^&*]/.test(password)
     )
       return alert(
         "비밀번호는 8자 이상이고 허용된 특수문자를 포함해야 합니다."
       );
-    if (encryptedLoginPw !== confirmPw) return alert("비밀번호가 일치하지 않습니다.");
+    if (password !== confirmPw) return alert("비밀번호가 일치하지 않습니다.");
     if (!name.trim()) return alert("이름을 입력해주세요.");
     if (!/^01[016789]-?\d{3,4}-?\d{4}$/.test(tell))
       return alert("전화번호 형식이 올바르지 않습니다.");
@@ -60,9 +60,9 @@ const SignupStep3 = ({
       />
       <SignUpInput
         label="비밀번호"
-        name="encryptedLoginPw"
+        name="password"
         type="password"
-        value={memberData.encryptedLoginPw}
+        value={memberData.password}
         onChange={InputChange}
         validate={(val) =>
           val.length >= 8 &&

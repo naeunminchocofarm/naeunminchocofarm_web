@@ -85,7 +85,6 @@ const UserMain = () => {
           </select>
         </div>
 
-        {/* 농장 카드 리스트 */}
         <div className={gridCol3}>
           {filteredFarms.length > 0 ? (
             filteredFarms.map((farm, i) => (
