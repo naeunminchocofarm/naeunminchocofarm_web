@@ -11,9 +11,9 @@ const memberApi = {
     const response = axiosInstance.post("/member/signup", memberInfo);
     return response;
   },
-  login: function (loginInfo) {
-    const response = axiosInstance.post("/member/login", loginInfo);
-    return response;
+  login: function (loginData) {
+    return axiosInstance.post("/member/login", loginData)
+      .then(res => {return {token: res.headers['authorization'], loginInfo: res.data}});
   },
   getMemInfo: function () {
     const response = axiosInstance.get("/member/memberInfo", { });
