@@ -1,15 +1,20 @@
 import React from "react";
 import Card from "../../common_components/Card";
 import profileImage from "../../assets/images/layouts/mem-farmer.png";
-import { useAuthInfo } from "../../hooks/AuthInfo";
+import { useNavigate } from "react-router-dom";
+import {logout} from "../../redux/store"
 
 const buttonStyle = "w-full py-1 rounded text-sm";
 const logoutBtnStyle = `${buttonStyle} bg-white text-red-600 border border-red-500 hover:bg-red-50`;
 const mypageBtnStyle = `${buttonStyle} bg-green-500 hover:bg-green-600 text-white`;
 
 const UserProfileBox = () => {
-  
-  const { logout } = useAuthInfo();
+  const nav = useNavigate();
+
+  function handleLogout() {
+    logout();
+    nav("/web/home");
+  }
 
   return (
     <Card className="bg-white rounded-xl shadow p-4 space-y-3 text-sm">
@@ -32,7 +37,7 @@ const UserProfileBox = () => {
       </button>
 
       <button
-        onClick={logout}
+        onClick={handleLogout}
         className={logoutBtnStyle}
       >
         로그아웃
