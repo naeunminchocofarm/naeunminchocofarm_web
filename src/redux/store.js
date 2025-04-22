@@ -49,15 +49,7 @@ export function useLoginInfo() {
 export async function login(loginData) {
   const res = await memberApi.login(loginData);
   const accessToken = res.headers['authorization'];
-  const loginInfo = {
-    id: res.data.id,
-    roleName: res.data.roleName,
-    roleFlag: res.data.roleFlag,
-    loginId: res.data.loginId,
-    email: res.data.email,
-    name: res.data.name,
-    tell: res.data.tell
-  }
+  const loginInfo = res.data;
   loginAction(store.dispatch, {accessToken, loginInfo});
   return loginInfo;
 }

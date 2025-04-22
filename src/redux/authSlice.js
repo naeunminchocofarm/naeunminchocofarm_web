@@ -80,7 +80,13 @@ export function loginInfoSelector(state) {
   return state.auth.loginInfo;
 }
 
-export function loginAction(dispatch, {accessToken, loginInfo}) {
+export function loginAction(dispatch, {accessToken, loginInfo: {id, roleName, roleFlag, loginId, name}}) {
+  const loginInfo = {
+    id, 
+    roleName, 
+    roleFlag, 
+    loginId, 
+    name};
   dispatch(authSlice.actions.loginReducer({accessToken, loginInfo}));
 }
 
