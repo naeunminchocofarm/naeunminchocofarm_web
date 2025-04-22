@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../../members/apis/authCheck";
 import serviceApi from "../apis/service_api";
+// import { getAccessToken } from "../../auth/auth_storage";
+import { useSelector } from "react-redux";
+import { useAccessToken } from "../../redux/authSlice";
 
 const ServiceApply = () => {
   const nav = useNavigate();
+  const accessToken = useAccessToken();
 
   const [form, setForm] = useState({
     type: "",
@@ -15,10 +19,12 @@ const ServiceApply = () => {
   const [userInfo, setUserInfo] = useState({}); // 사용자 정보
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
+    // const accessToken = localStorage.getItem("accessToken");
+    // const accessToken = getAccessToken();
     const loginInfo = JSON.parse(localStorage.getItem("loginInfo"))
+    // const loginInfo = getLoginInfo();
 
-    if (!token || !isAuthenticated(token) || !loginInfo) {
+    if (!accessToken || !isAuthenticated(accessToken) || !loginInfo) {
       alert("로그인 후 이용해 주세요.");
       nav("/web/login");
     } else {

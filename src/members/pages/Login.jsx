@@ -1,42 +1,55 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import memberApi from "../apis/member_api";
-import { loginReducer } from "../../redux/authSlice";
+// import { useDispatch } from "react-redux";
+// import memberApi from "../apis/member_api";
+// import { loginReducer, useAuthActions } from "../../redux/authSlice";
+import { useAuthActions } from "../../redux/authSlice";
 import loginImg from "../../assets/images/contents/img-login.png";
 
 const Login = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const nav = useNavigate();
+  const {login} = useAuthActions();
 
-  const [loginInfo, setLoginInfo] = useState({
+  const [loginData, setLoginData] = useState({
     loginId: "",
     password: "",
   });
 
   const changeLoginInfo = (e) => {
-    setLoginInfo({
-      ...loginInfo,
+    setLoginData({
+      ...loginData,
       [e.target.name]: e.target.value,
     });
   };
 
   //로그인 요청 함수
   const loginCheck = () => {
-    memberApi
-      .login(loginInfo)
-      .then(({token, loginInfo}) => {
-        alert("로그인 성공");
-        dispatch(loginReducer({ token, loginInfo }));
-        nav("/web/home");
-      })
-      .catch((e) => {
-        if (e.status === 401) {
-          alert("로그인 실패");
-        } else {
-          console.log(e);
-        }
-      });
+    login(loginData)
+    .then(loginInfo => {
+      console.log(loginInfo);
+      nav("/web/home");
+    })
+    .catch(err => {
+      if (err.status === 401) {
+        alert("로그인 실패");
+      }
+
+      console.error(err);
+    });
+    // memberApi
+    //   .login(loginData)
+    //   .then(res => {
+    //     alert("로그인 성공");
+    //     dispatch(loginReducer({token: res.headers['authorization'], loginInfo: res.data}));
+    //     nav("/web/home");
+    //   })
+    //   .catch((e) => {
+    //     if (e.status === 401) {
+    //       alert("로그인 실패");
+    //     }
+    //     console.log(e);
+    //   });
   };
 
   const loginContianer =  "w-full min-h-[calc(100vh-140px)] flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]";
@@ -62,7 +75,7 @@ const Login = () => {
                 <input
                   type="text"
                   name="loginId"
-                  value={loginInfo.loginId}
+                  value={loginData.loginId}
                   className={loginInput}
                   placeholder="아이디를 입력하세요"
                   onChange={changeLoginInfo}
@@ -74,7 +87,7 @@ const Login = () => {
                 <input
                   type="password"
                   name="password"
-                  value={loginInfo.password}
+                  value={loginData.password}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
                   placeholder="비밀번호를 입력하세요"
                   onChange={changeLoginInfo}

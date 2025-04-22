@@ -1,21 +1,23 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useSelector, useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { logoutReducer } from "../redux/authSlice";
+// import { logoutReducer, useAccessToken } from "../redux/authSlice";
+import { useAccessToken } from "../redux/authSlice";
 
 export const useAuthInfo = () => { //head들에 권한 확인용임
-  const dispatch = useDispatch();
-  const nav = useNavigate();
-  const token = useSelector((state) => state.auth.token);
+  // const dispatch = useDispatch();
+  // const nav = useNavigate();
+  // const token = useSelector((state) => state.auth.token);
+  const accessToken = useAccessToken();
 
-  const isLogin = !!token;
+  const isLogin = !!accessToken;
   let roleName = null;
   let roleFlag = null;
   let loginId = null;
 
-  if (token) {
+  if (accessToken) {
     try {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(accessToken);
       roleName = decoded.roleName;
       roleFlag = decoded.roleFlag;
       loginId = decoded.loginId;
@@ -24,17 +26,17 @@ export const useAuthInfo = () => { //head들에 권한 확인용임
     }
   }
 
-  const logout = () => {
-    dispatch(logoutReducer());
-    nav("/web/home");
-  };
+  // const logout = () => {
+  //   dispatch(logoutReducer());
+  //   nav("/web/home");
+  // };
 
   return {
     isLogin,
-    token,
+    accessToken,
     roleName,
     roleFlag,
-    loginId,
-    logout,
+    loginId
+    // ,logout
   };
 };

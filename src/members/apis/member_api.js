@@ -12,8 +12,7 @@ const memberApi = {
     return response;
   },
   login: function (loginData) {
-    return axiosInstance.post("/member/login", loginData)
-      .then(res => {return {token: res.headers['authorization'], loginInfo: res.data}});
+    return axiosInstance.post("/member/login", loginData);
   },
   getMemInfo: function () {
     const response = axiosInstance.get("/member/memberInfo", { });

@@ -4,14 +4,22 @@ import { BsMenuButton } from "react-icons/bs";
 import { adminMenu } from "../routes/MenuByLayout";
 import { useAuthInfo } from "../hooks/AuthInfo";
 import logo from "../assets/images/layouts/h1-logo.png";
+import { useAuthActions } from "../redux/authSlice";
 
 const AdminHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLogin, roleName, logout } = useAuthInfo();
+  // const { isLogin, roleName, logout } = useAuthInfo();
+  const { isLogin, roleName } = useAuthInfo();
+  const {logout} = useAuthActions();
 
   useEffect(() => {
     console.log("권한:", roleName);
   }, [roleName]);
+
+  function handleLogout() {
+    logout();
+    nav("/web/home");
+  }
 
   const headerCss = "bg-white shadow-sm fixed top-0 left-0 right-0 z-50";
 
@@ -42,7 +50,7 @@ const AdminHeader = () => {
 
           {isLogin && roleName === "ROLE_ADMIN" ? (
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="text-red-500 hover:text-red-600 ml-4"
             >
               로그아웃
