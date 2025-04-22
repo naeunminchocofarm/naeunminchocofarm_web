@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/images/contents/img-login.png";
-import { useLogin } from "../../redux/authSlice";
+import { login } from "../../redux/store";
 
 const Login = () => {
   const nav = useNavigate();
-  const login = useLogin();
 
   const [loginData, setLoginData] = useState({
     loginId: "",
@@ -23,7 +22,6 @@ const Login = () => {
   const loginCheck = () => {
     login(loginData)
     .then(loginInfo => {
-      console.log(loginInfo);
       nav("/web/home");
     })
     .catch(err => {

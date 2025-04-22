@@ -3,13 +3,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
 import { adminMenu } from "../routes/MenuByLayout";
 import logo from "../assets/images/layouts/h1-logo.png";
-import { useLoginInfo, useLogout } from "../redux/authSlice";
+import { logout, useLoginInfo } from "../redux/store";
 
 const AdminHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const loginInfo = useLoginInfo();
-  const logout = useLogout();
   const nav = useNavigate();
+  const loginInfo = useLoginInfo();
 
   useEffect(() => {
     console.log("권한:", loginInfo?.roleName);

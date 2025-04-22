@@ -14,6 +14,12 @@ const memberApi = {
   login: function (loginData) {
     return axiosInstance.post("/member/login", loginData);
   },
+  refresh: function() {
+    return axiosInstance.post("/member/refresh");
+  },
+  logout: function() {
+    return axiosInstance.delete("/member/refresh");
+  },
   getMemInfo: function () {
     const response = axiosInstance.get("/member/memberInfo", { });
 

@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { isAuthenticated } from "../../members/apis/authCheck";
 import serviceApi from "../apis/service_api";
-// import { getAccessToken } from "../../auth/auth_storage";
-import { useSelector } from "react-redux";
-import { useAccessToken } from "../../redux/authSlice";
+import { useLoginInfo } from "../../redux/store";
 
 const ServiceApply = () => {
   const nav = useNavigate();
-  const accessToken = useAccessToken();
-
+  const loginInfo = useLoginInfo();
   const [form, setForm] = useState({
     type: "",
     contactTell: "",
     content: "",
   });
 
-  const [userInfo, setUserInfo] = useState({}); // 사용자 정보
-
   useEffect(() => {
-    // const accessToken = localStorage.getItem("accessToken");
-    // const accessToken = getAccessToken();
-    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"))
-    // const loginInfo = getLoginInfo();
-
-    if (!accessToken || !isAuthenticated(accessToken) || !loginInfo) {
+    if (!loginInfo) {
       alert("로그인 후 이용해 주세요.");
       nav("/web/login");
-    } else {
-      console.log("회원정보:", loginInfo); // 여기서 확인
-      setUserInfo(loginInfo);
-    }
+    } 
   }, []);
 
   const handleChange = (e) => {
@@ -63,19 +49,19 @@ const ServiceApply = () => {
             <tbody>
               <tr>
                 <th className="text-left w-28 py-1">이름</th>
-                <td className="py-1">{userInfo.name}</td>
+                <td className="py-1">{loginInfo?.name}</td>
               </tr>
               <tr>
                 <th className="text-left w-28 py-1">아이디</th>
-                <td className="py-1">{userInfo.loginId}</td>
+                <td className="py-1">{loginInfo?.loginId}</td>
               </tr>
               <tr>
                 <th className="text-left py-1">이메일</th>
-                <td className="py-1">{userInfo.email}</td>
+                <td className="py-1">{loginInfo?.email}</td>
               </tr>
               <tr>
               <th className="text-left py-1">전화번호</th>
-              <td className="py-1">{userInfo.tell}</td>
+              <td className="py-1">{loginInfo?.tell}</td>
               </tr>
             </tbody>
           </table>

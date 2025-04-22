@@ -3,12 +3,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
 import { webMenu } from "../routes/MenuByLayout";
 import logo from "../assets/images/layouts/h1-logo.png";
-import { useLoginInfo, useLogout } from "../redux/authSlice";
+import { logout, useLoginInfo } from "../redux/store";
 
 const WebHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const loginInfo = useLoginInfo();
-  const logout = useLogout();
   const nav = useNavigate();
 
   useEffect(() => {
