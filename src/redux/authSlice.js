@@ -19,8 +19,7 @@ function deleteAccessToken() {
 
 function initAccessToken() {
   const token = getAccessToken();
-  if (!token || !token.includes(".")) {
-    deleteAccessToken();
+  if (!token) {
     return null;
   }
 
@@ -33,7 +32,6 @@ function initAccessToken() {
     }
     return token;
   } catch (e) {
-    console.error("유효하지 않은 토큰:", e);
     deleteAccessToken();
     return null;
   }
@@ -76,9 +74,11 @@ const authSlice = createSlice({
 export function useAccessToken() {
   return useSelector(state => state.auth.accessToken);
 }
+
 export function useLoginInfo() {
   return useSelector(state => state.auth.loginInfo);
 }
+
 export function useLogin() {
   const dispatch = useDispatch();
   return async (loginData) => {
@@ -97,6 +97,7 @@ export function useLogin() {
     return res.data;
   }
 }
+
 export function useLogout() {
   const dispatch = useDispatch();
   return () => {
