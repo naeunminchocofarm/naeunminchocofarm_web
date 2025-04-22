@@ -4,7 +4,7 @@ import { getAccessToken, setAccessToken, deleteAccessToken } from "../auth/auth_
 import { useDispatch, useSelector } from "react-redux";
 import memberApi from "../members/apis/member_api";
 
-const initAccessToken = () => {
+function initAccessToken() {
   const token = getAccessToken();
   if (!token || !token.includes(".")) {
     deleteAccessToken();
@@ -48,14 +48,12 @@ const authSlice = createSlice({
       const { token, loginInfo } = action.payload;
       state.token = token;
       state.loginInfo = loginInfo;
-      // localStorage.setItem("accessToken", token);
       setAccessToken(token);
       localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
     },
     logoutReducer: (state) => {
       state.token = null;
       state.loginInfo = null;
-      // localStorage.removeItem("accessToken");
       deleteAccessToken();
       localStorage.removeItem("loginInfo");
     },
@@ -68,21 +66,28 @@ export function useAccessToken() {
 export function useLoginInfo() {
   return useSelector(state => state.auth.loginInfo);
 }
-
-export function useAuthActions() {
+export function useLogin() {
   const dispatch = useDispatch();
-
-  return {
-    login: async (loginData) => {
-      const res = await memberApi.login(loginData);
-      dispatch(authSlice.actions.loginReducer({token: res.headers['authorization'], loginInfo: res.data}));
-      return res.data;
-    },
-    logout: () => {
-      dispatch(authSlice.actions.logoutReducer());
+  return async (loginData) => {
+    const res = await memberApi.login(loginData);
+    const loginInfo = {
+      id: res.data.id,
+      roleName: res.data.roleName,
+      roleFlag: res.data.roleFlag,
+      loginId: res.data.loginId,
+      email: res.data.email,
+      name: res.data.name,
+      tell: res.data.tell
     }
+    dispatch(authSlice.actions.loginReducer({token: res.headers['authorization'], loginInfo}));
+    return res.data;
+  }
+}
+export function useLogout() {
+  const dispatch = useDispatch();
+  return () => {
+    dispatch(authSlice.actions.logoutReducer());
   }
 }
 
-export const { loginReducer, logoutReducer } = authSlice.actions;
 export default authSlice;

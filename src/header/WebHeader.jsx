@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
 import { webMenu } from "../routes/MenuByLayout";
-import { useAuthInfo } from "../hooks/AuthInfo";
 import logo from "../assets/images/layouts/h1-logo.png";
-import { useAuthActions } from "../redux/authSlice";
+import { useLoginInfo, useLogout } from "../redux/authSlice";
 
 const WebHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // const { isLogin, roleName, logout } = useAuthInfo();
-  const { isLogin, roleName } = useAuthInfo();
-  const {logout} = useAuthActions();
+  const loginInfo = useLoginInfo();
+  const logout = useLogout();
+  const nav = useNavigate();
 
   useEffect(() => {
-    console.log("권한:", roleName);
-  }, [roleName]);
+    console.log("권한:", loginInfo?.roleName);
+  }, [loginInfo?.roleName]);
 
   function handleLogout() {
     logout();
@@ -50,19 +49,19 @@ const WebHeader = () => {
 
         {/* PC 로그인/회원가입 or 로그인 상태 */}
         <div className="hidden md:flex items-center space-x-3">
-          {isLogin ? (
+          {loginInfo ? (
             <>
-              {roleName === "ROLE_FAMMER" && (
+              {loginInfo.roleName === "ROLE_FAMMER" && (
                 <NavLink to="/user/home" className="text-sm text-green-600">
                   마이팜
                 </NavLink>
               )}
-              {roleName === "ROLE_ADMIN" && (
+              {loginInfo.roleName === "ROLE_ADMIN" && (
                 <NavLink to="/admin" className="text-sm text-green-600">
                   관리자페이지 
                 </NavLink>
               )}
-              {roleName === "ROLE_USER" && (
+              {loginInfo.roleName === "ROLE_USER" && (
                 <NavLink to="/member/mypage" className="text-sm text-green-600">
                 마이페이지
                 </NavLink>
@@ -111,14 +110,14 @@ const WebHeader = () => {
             </NavLink>
           ))}
 
-          {isLogin ? (
+          {loginInfo ? (
             <>
-              {roleName === "ROLE_FAMMER" && (
+              {loginInfo.roleName === "ROLE_FAMMER" && (
                 <NavLink to="/user/home" onClick={() => setIsOpen(false)}>
                   마이팜
                 </NavLink>
               )}
-              {roleName === "ROLE_ADMIN" && (
+              {loginInfo.roleName === "ROLE_ADMIN" && (
                 <NavLink to="/admin" onClick={() => setIsOpen(false)}>
                   관리자페이지
                 </NavLink>

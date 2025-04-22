@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
 import { adminMenu } from "../routes/MenuByLayout";
-import { useAuthInfo } from "../hooks/AuthInfo";
 import logo from "../assets/images/layouts/h1-logo.png";
-import { useAuthActions } from "../redux/authSlice";
+import { useLoginInfo, useLogout } from "../redux/authSlice";
 
 const AdminHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // const { isLogin, roleName, logout } = useAuthInfo();
-  const { isLogin, roleName } = useAuthInfo();
-  const {logout} = useAuthActions();
+  const loginInfo = useLoginInfo();
+  const logout = useLogout();
+  const nav = useNavigate();
 
   useEffect(() => {
-    console.log("권한:", roleName);
-  }, [roleName]);
+    console.log("권한:", loginInfo?.roleName);
+  }, [loginInfo?.roleName]);
 
   function handleLogout() {
     logout();
@@ -48,7 +47,7 @@ const AdminHeader = () => {
             </NavLink>
           ))}
 
-          {isLogin && roleName === "ROLE_ADMIN" ? (
+          {loginInfo && loginInfo.roleName === "ROLE_ADMIN" ? (
             <button
               onClick={handleLogout}
               className="text-red-500 hover:text-red-600 ml-4"
@@ -85,7 +84,7 @@ const AdminHeader = () => {
             </NavLink>
           ))}
 
-          {isLogin && roleName === "ROLE_ADMIN" ? (
+          {loginInfo && loginInfo.roleName === "ROLE_ADMIN" ? (
             <button
               onClick={() => {
                 logout();

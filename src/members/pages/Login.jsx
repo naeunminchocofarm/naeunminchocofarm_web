@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import memberApi from "../apis/member_api";
-// import { loginReducer, useAuthActions } from "../../redux/authSlice";
-import { useAuthActions } from "../../redux/authSlice";
 import loginImg from "../../assets/images/contents/img-login.png";
+import { useLogin } from "../../redux/authSlice";
 
 const Login = () => {
-  // const dispatch = useDispatch();
   const nav = useNavigate();
-  const {login} = useAuthActions();
+  const login = useLogin();
 
   const [loginData, setLoginData] = useState({
     loginId: "",
@@ -37,19 +33,6 @@ const Login = () => {
 
       console.error(err);
     });
-    // memberApi
-    //   .login(loginData)
-    //   .then(res => {
-    //     alert("로그인 성공");
-    //     dispatch(loginReducer({token: res.headers['authorization'], loginInfo: res.data}));
-    //     nav("/web/home");
-    //   })
-    //   .catch((e) => {
-    //     if (e.status === 401) {
-    //       alert("로그인 실패");
-    //     }
-    //     console.log(e);
-    //   });
   };
 
   const loginContianer =  "w-full min-h-[calc(100vh-140px)] flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]";
