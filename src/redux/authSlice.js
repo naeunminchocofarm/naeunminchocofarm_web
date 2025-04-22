@@ -1,8 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
-import { getAccessToken, setAccessToken, deleteAccessToken } from "../auth/auth_storage";
 import { useDispatch, useSelector } from "react-redux";
 import memberApi from "../members/apis/member_api";
+
+const ACCESS_TOKEN_KEY = "accessToken";
+
+function setAccessToken(token) {
+  localStorage.setItem(ACCESS_TOKEN_KEY, token);
+}
+
+function getAccessToken() {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
+
+function deleteAccessToken() {
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+}
 
 function initAccessToken() {
   const token = getAccessToken();
