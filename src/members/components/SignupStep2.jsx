@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SignUpInput from "../../common_components/SignUpInput";
+import memberApi from "../apis/member_api";
 
 const SignupStep2 = ({
   memberData,
@@ -16,21 +17,26 @@ const SignupStep2 = ({
 
   const sendVerificationCode = async () => {
     try {
-      const res = await memberApi.checkEmailDuplicate(email);
+      const res = await memberApi.checkEmail(email);
       if (res.data.duplicate) {
         alert("이미 사용 중인 이메일입니다. 다른 이메일을 입력해주세요.");
         return;
       }
-  
+
       // 실제 서버에 인증 요청
-      await memberApi.sendVerificationCode(email); // <-- 이게 실제 요청!
-  
-      // 코드 입력창 활성화를 위한 플래그
-      setSentCode("requested"); // 실제 코드는 서버에만 있고, 여긴 UI용으로만!
+      await memberApi.checkEmail(email); // <-- 이게 실제 요청!
+
+      setSentCode("requested"); 
       alert("인증번호가 이메일로 전송되었습니다.");
+
     } catch (error) {
-      console.error("인증 요청 실패:", error);
+      if(error.response?.status === 409){
+        alert("이미 사용종인 이메일입니다");
+
+      }else{
+        console.error("인증 요청 실패:", error);
       alert("이메일 인증 요청 중 오류가 발생했습니다.");
+      }
     }
   };
 

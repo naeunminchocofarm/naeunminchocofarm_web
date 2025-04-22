@@ -21,17 +21,22 @@ const memberApi = {
     return axiosInstance.delete("/member/refresh");
   },
   getMemInfo: function () {
-    const response = axiosInstance.get("/member/memberInfo", { });
+    const response = axiosInstance.get("/member/memberInfo", {});
 
     const token = localStorage.getItem("accessToken");
     console.log("회원정보불러와봐" + token);
-   
+
     return response;
   },
-  checkEmailDuplicate: (email) => {
+  checkEmail: (email) => {
     return axiosInstance.get("/member/check-email", {
-      params: { email }
+      params: { email },
     });
-  }
+  },
+  checkId: (loginId) => {
+    return axiosInstance.get("/member/check-id", {
+      params: { loginId },
+    });
+  },
 };
 export default memberApi;
