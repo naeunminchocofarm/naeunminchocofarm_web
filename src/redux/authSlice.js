@@ -53,19 +53,19 @@ function initLoginInfo() {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    token: initAccessToken(),
+    accessToken: initAccessToken(),
     loginInfo: initLoginInfo(),
   },
   reducers: {
     loginReducer: (state, action) => {
-      const { token, loginInfo } = action.payload;
-      state.token = token;
+      const { accessToken, loginInfo } = action.payload;
+      state.accessToken = accessToken;
       state.loginInfo = loginInfo;
-      setAccessToken(token);
+      setAccessToken(accessToken);
       localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
     },
     logoutReducer: (state) => {
-      state.token = null;
+      state.accessToken = null;
       state.loginInfo = null;
       deleteAccessToken();
       localStorage.removeItem("loginInfo");
@@ -74,7 +74,7 @@ const authSlice = createSlice({
 });
 
 export function useAccessToken() {
-  return useSelector(state => state.auth.token);
+  return useSelector(state => state.auth.accessToken);
 }
 export function useLoginInfo() {
   return useSelector(state => state.auth.loginInfo);
@@ -83,6 +83,7 @@ export function useLogin() {
   const dispatch = useDispatch();
   return async (loginData) => {
     const res = await memberApi.login(loginData);
+    const accessToken = res.headers['authorization'];
     const loginInfo = {
       id: res.data.id,
       roleName: res.data.roleName,
@@ -92,7 +93,7 @@ export function useLogin() {
       name: res.data.name,
       tell: res.data.tell
     }
-    dispatch(authSlice.actions.loginReducer({token: res.headers['authorization'], loginInfo}));
+    dispatch(authSlice.actions.loginReducer({accessToken, loginInfo}));
     return res.data;
   }
 }
