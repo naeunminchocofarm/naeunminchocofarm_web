@@ -17,7 +17,7 @@ const memberApi = {
     return axios.post("/api/member/refresh");
   },
   logout: function() {
-    return axiosInstance.delete("/member/refresh");
+    return axios.delete("/api/member/refresh");
   },
   getMemInfo: function () {
     const response = axiosInstance.get("/member/memberInfo", {});

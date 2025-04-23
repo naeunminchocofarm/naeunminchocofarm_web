@@ -86,7 +86,7 @@ const AdminHeader = () => {
           {loginInfo && loginInfo.roleName === "ROLE_ADMIN" ? (
             <button
               onClick={() => {
-                logout();
+                handleLogout();
                 setIsOpen(false);
               }}
               className="block text-red-500 hover:text-red-600 w-full text-left"

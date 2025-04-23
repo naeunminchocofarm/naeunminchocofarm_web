@@ -124,7 +124,7 @@ const WebHeader = () => {
               <NavLink to="/member/mypage" onClick={() => setIsOpen(false)}>
                 마이페이지
               </NavLink>
-              <button onClick={logout} className="text-red-500">
+              <button onClick={handleLogout} className="text-red-500">
                 로그아웃
               </button>
             </>
