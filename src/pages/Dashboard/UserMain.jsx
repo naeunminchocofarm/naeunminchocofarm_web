@@ -5,6 +5,7 @@ import FarmIssueList from "../../components/user/FarmIssueList";
 import BadgeCompo from "../../common_components/BadgeCompo";
 import UserTitle from "../../header/UserTitle";
 import adminApi from "../../admin/apis/admin_api";
+import memberApi from "../../members/apis/member_api";
 
 const UserMain = () => {
   const mainStyle = "flex-1 p-6 space-y-6 overflow-auto";
@@ -15,35 +16,25 @@ const UserMain = () => {
   const footerBoxStyle = "flex justify-between items-center bg-white p-6 rounded-xl shadow mt-8";
   const noDataCardStyle = "bg-white shadow rounded-xl p-6 text-center text-gray-500 col-span-3 min-h-[40vh] flex items-center justify-center";
 
-
   const [farms, setFarms] = useState([]);
   const [summary, setSummary] = useState({ total: 0, running: 0, warning: 0 });
 
   useEffect(() => {
-    const fetchAllFarms = async () => {
-      try {
-        const idRes = await adminApi.getFarmById();
-        const farmIds = idRes.data;
-
-        const farmDetailPromises = farmIds.map(id => adminApi.getFarmById(id));
-        const detailResults = await Promise.all(farmDetailPromises);
-        const farmList = detailResults.map(res => res.data);
-
-        setFarms(farmList);
-
-        // 요약 정보 계산
-        const total = farmList.length;
-        const running = farmList.filter(f => f.status === "정상" || f.status === "운영중").length;
-        const warning = farmList.filter(f => f.status === "경고").length;
-
-        setSummary({ total, running, warning });
-      } catch (err) {
-        console.error("농장 데이터 조회 실패", err);
-      }
-    };
-
-    fetchAllFarms();
+    bindFarms();
   }, []);
+
+  function bindFarms() {
+    memberApi.getFarms()
+      .then(res => {
+        const farms = res.data;
+        setFarms(farms);
+        const total = farms.length;
+        const running = farms.filter(x => x.status === '정상' || x.status === '운영중').length;
+        const warning = farms.filter(x => x.status === '경고').length;
+        setSummary({total, running, warning});
+      })
+      .catch(e => {});
+  }
 
   const getStatusType = (status) => {
     switch (status) {

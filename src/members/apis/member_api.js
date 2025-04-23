@@ -38,5 +38,8 @@ const memberApi = {
       params: { loginId },
     });
   },
+  getFarms: function () {
+    return axiosInstance.get("/member/farms");
+  }
 };
 export default memberApi;

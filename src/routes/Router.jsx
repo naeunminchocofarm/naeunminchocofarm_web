@@ -15,7 +15,6 @@ import Home from "../pages/Dashboard/Home";
 import NotFound from "../pages/NotFound";
 import FullPageSpinner from "../pages/FullPageSpinner";
 
-// import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
 import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
 
 export default function Router() {
