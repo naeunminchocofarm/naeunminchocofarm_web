@@ -28,18 +28,18 @@ import AdminFarmCreate from "../admin/components/farm/AdminFarmCreate";
 
 //user
 import UserMain from "../pages/Dashboard/UserMain";
-import TemperaturePage from "../temperature/pages/TemperaturePage";
-import HumidityPage from "../humidity/pages/HumidityPage";
-import SunshinePage from "../sunshine/pages/SunshinePage";
-import SoilPage from "../soil/pages/SoilPage";
-import CoTwo from "../Cotwo/pages/CoTwo";
+// import TemperaturePage from "../temperature/pages/TemperaturePage";
+// import HumidityPage from "../humidity/pages/HumidityPage";
+// import SunshinePage from "../sunshine/pages/SunshinePage";
+// import SoilPage from "../soil/pages/SoilPage";
+// import CoTwo from "../Cotwo/pages/CoTwo";
 import Privacy from "../pages/web/Privacy";
 import UserFarmList from "../pages/user/UserFarmList";
-import UserZoneDetail from "../pages/user/UserZoneDetail";
-import UserZoneControl from "../pages/user/UserZoneControl";
+// import UserZoneDetail from "../pages/user/UserZoneDetail";
+// import UserZoneControl from "../pages/user/UserZoneControl";
 import UserSensorOverview from "../pages/user/UserSensorOverview";
 import UserAlarmList from "../pages/user/UserAlarmList";
-import UserFarmDetail from "../pages/user/UserFarmDetail.JSX";
+import UserFarmDetail from "../pages/user/UserFarmDetail";
 
 
 

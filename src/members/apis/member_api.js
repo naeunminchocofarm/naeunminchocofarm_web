@@ -2,8 +2,6 @@ import { axiosInstance } from "./axiosInstance";
 
 const memberApi = {
   getMemList: function () {
-    const token = localStorage.getItem("accessToken");
-    console.log("회원목록불러와봐" + token);
     const response = axiosInstance.get("/admin/members", {});
     return response;
   },
@@ -22,10 +20,6 @@ const memberApi = {
   },
   getMemInfo: function () {
     const response = axiosInstance.get("/member/memberInfo", {});
-
-    const token = localStorage.getItem("accessToken");
-    console.log("회원정보불러와봐" + token);
-
     return response;
   },
   checkEmail: (email) => {
@@ -40,6 +34,9 @@ const memberApi = {
   },
   getFarms: function () {
     return axiosInstance.get("/member/farms");
+  },
+  getFarmDetail: function(farmId) {
+    return axiosInstance.get(`/member/farms/${farmId}`)
   }
 };
 export default memberApi;

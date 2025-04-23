@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 const ACCESS_TOKEN_KEY = "accessToken";
+const LOGIN_INFO_KEY = "loginInfo";
 
 function _setAccessToken(token) {
   localStorage.setItem(ACCESS_TOKEN_KEY, token);
@@ -13,6 +14,24 @@ function _getAccessToken() {
 
 function _deleteAccessToken() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
+}
+
+function _setLoginInfo(loginInfo) {
+  localStorage.setItem(LOGIN_INFO_KEY, JSON.stringify(loginInfo));
+}
+
+function _getLoginInfo() {
+  console.log('로그인 인포 읽는 중');
+  try {
+    return JSON.parse(localStorage.getItem(LOGIN_INFO_KEY));
+  } catch (e) {
+    _deleteLoginInfo();
+    return null;
+  }
+}
+
+function _deleteLoginInfo() {
+  localStorage.removeItem(LOGIN_INFO_KEY);
 }
 
 function _initAccessToken() {
@@ -36,14 +55,7 @@ function _initAccessToken() {
 };
 
 function _initLoginInfo() {
-  try {
-    const stored = localStorage.getItem("loginInfo");
-    return stored && stored !== "undefined" ? JSON.parse(stored) : null;
-  } catch (e) {
-    console.error("⚠️ loginInfo 파싱 실패:", e);
-    localStorage.removeItem("loginInfo");
-    return null;
-  }
+  return _getLoginInfo()
 }
 
 function _initAuthState() {
@@ -61,13 +73,13 @@ const authSlice = createSlice({
       state.accessToken = accessToken;
       state.loginInfo = loginInfo;
       _setAccessToken(accessToken);
-      localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
+      _setLoginInfo(loginInfo);
     },
     logoutReducer: (state) => {
       state.accessToken = null;
       state.loginInfo = null;
       _deleteAccessToken();
-      localStorage.removeItem("loginInfo");
+      _deleteLoginInfo();
     },
   },
 });

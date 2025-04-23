@@ -90,7 +90,7 @@ const UserMain = () => {
             farms.map((farm, i) => (
               <Link
                 key={farm.id || i}
-                to={`/user/farm/${farm.id}`}
+                to={`/user/farms/${farm.id}`}
                 className={farmCardStyle}
               >
                 <div className="flex items-center gap-4">

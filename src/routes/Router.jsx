@@ -33,7 +33,6 @@ export default function Router() {
 
   return (
     <>
-
       <Routes>
         <Route path="/" element={<Navigate to="/web" />} />
 

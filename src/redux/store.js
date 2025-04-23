@@ -34,6 +34,11 @@ async function refreshIfAccessTokenIsExpired() {
   }
 }
 
+export async function getAccessToken() {
+  await refreshIfAccessTokenIsExpired();
+  return accessTokenSelector(store.getState()); 
+}
+
 export function useLoginInfo() {
   const dispatch = useDispatch();
   const loginInfo = useSelector(loginInfoSelector);
@@ -55,6 +60,7 @@ export async function login(loginData) {
 }
 
 export async function logout() {
+  console.log('로그아웃로그아웃로그아웃로그아웃로그아웃로그아웃로그아웃로그아웃');
   try {
     const res = await memberApi.logout();
     logoutAction(store.dispatch);
