@@ -95,7 +95,7 @@ const UserMain = () => {
               >
                 <div className="flex items-center gap-4">
                   <img
-                    src="/assets/images/contents/ico-farm.png"
+                    src="/src/assets/images/contents/ico-farm.png"
                     alt="스마트팜 아이콘"
                     className="w-12 h-12 object-contain"
                   />
@@ -103,8 +103,9 @@ const UserMain = () => {
                     <div className="text-lg font-semibold border-b pb-1">
                       {farm.name || `스마트팜 ${i + 1}`}
                     </div>
-                    <div className="text-sm text-gray-800 font-medium">구역 수: {farm.zoneCount ?? 0}</div>
-                    <div className="text-sm text-gray-800 font-medium">센서 수: {farm.sensorCount ?? 0}</div>
+                    {/* <div className="text-sm text-gray-800 font-medium">구역 수: {farm.zoneCount ?? 0}</div> */}
+                    {/* <div className="text-sm text-gray-800 font-medium">센서 수: {farm.sensorCount ?? 0}</div> */}
+                    <div className="text-sm text-gray-800 font-medium">작물 이름: {farm.cropName}</div>
                     <div className="text-sm font-medium">
                       상태: <BadgeCompo label={farm.status || "정상"} type={getStatusType(farm.status)} />
                     </div>
