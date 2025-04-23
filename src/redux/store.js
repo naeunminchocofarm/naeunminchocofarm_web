@@ -5,6 +5,7 @@ import memberApi from "../members/apis/member_api";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 export const store = configureStore({
   reducer: {
@@ -27,13 +28,8 @@ async function refreshIfAccessTokenIsExpired() {
   if (!isExpiredToken(accessToken)) {
     return;
   }
-  
-  try {
-    console.log("액세스 토큰 갱신하기");
-    await refresh();
-  } catch (e) {
-    console.error(e);
-  }
+  console.log("액세스 토큰 갱신하기");
+  await refresh();
 }
 
 export async function getAccessToken() {
@@ -79,15 +75,18 @@ export async function refresh() {
       roleName: res.data.roleName,
       roleFlag: res.data.roleFlag,
       loginId: res.data.loginId,
-      email: res.data.email,
-      name: res.data.name,
-      tell: res.data.tell
+      name: res.data.name
     };
     loginAction(store.dispatch, {accessToken, loginInfo});
     return accessToken;
   } catch (err) {
-    console.error(err);
-    logoutAction(store.dispatch);
-    return Promise.reject(err)
+    if (err instanceof AxiosError) {
+      if (err.status === 400 && err.response?.data?.code === 'EMPTY_REFRESH') {
+        logoutAction(store.dispatch);
+        return null;
+      }
+    }
+
+    throw err;
   }
 }

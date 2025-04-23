@@ -25,14 +25,9 @@ const ServiceApply = () => {
 
   const applySubmit = async (e) => {
     e.preventDefault();
-    try {
-      await serviceApi.serviceApplyWrite(form);
-      alert("신청이 완료되었습니다.");
-      nav("/web");
-    } catch (err) {
-      console.error("신청 실패:", err);
-      alert("신청에 실패했습니다.");
-    }
+    await serviceApi.serviceApplyWrite(form);
+    alert("신청이 완료되었습니다.");
+    nav("/web");
   };
 
   return (
@@ -54,14 +49,6 @@ const ServiceApply = () => {
               <tr>
                 <th className="text-left w-28 py-1">아이디</th>
                 <td className="py-1">{loginInfo?.loginId}</td>
-              </tr>
-              <tr>
-                <th className="text-left py-1">이메일</th>
-                <td className="py-1">{loginInfo?.email}</td>
-              </tr>
-              <tr>
-              <th className="text-left py-1">전화번호</th>
-              <td className="py-1">{loginInfo?.tell}</td>
               </tr>
             </tbody>
           </table>
