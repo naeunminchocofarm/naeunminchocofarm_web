@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axiosInstance } from "./axiosInstance";
 
 const memberApi = {
@@ -10,10 +11,10 @@ const memberApi = {
     return response;
   },
   login: function (loginData) {
-    return axiosInstance.post("/member/login", loginData);
+    return axios.post("/api/member/login", loginData);
   },
   refresh: function() {
-    return axiosInstance.post("/member/refresh");
+    return axios.post("/api/member/refresh");
   },
   logout: function() {
     return axiosInstance.delete("/member/refresh");

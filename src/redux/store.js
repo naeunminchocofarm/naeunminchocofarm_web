@@ -27,10 +27,12 @@ async function refreshIfAccessTokenIsExpired() {
   if (!isExpiredToken(accessToken)) {
     return;
   }
-
+  
   try {
+    console.log("액세스 토큰 갱신하기");
     await refresh();
   } catch (e) {
+    console.error(e);
   }
 }
 
@@ -60,7 +62,6 @@ export async function login(loginData) {
 }
 
 export async function logout() {
-  console.log('로그아웃로그아웃로그아웃로그아웃로그아웃로그아웃로그아웃로그아웃');
   try {
     const res = await memberApi.logout();
     logoutAction(store.dispatch);
@@ -85,6 +86,7 @@ export async function refresh() {
     loginAction(store.dispatch, {accessToken, loginInfo});
     return accessToken;
   } catch (err) {
+    console.error(err);
     logoutAction(store.dispatch);
     return Promise.reject(err)
   }
