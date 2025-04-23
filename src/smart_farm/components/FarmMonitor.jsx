@@ -19,7 +19,9 @@ export default function FarmSensorMonitor({status, dataName}) {
             <div key={i} className={controllerCardCss}>
               <div className="font-bold text-lg mb-1">{name}</div>
               <div className="flex justify-center items-center text-gray-600">
-                <SensorData name={dataName} value={sensorValue} />
+                <div className="w-[25%]">
+                  <SensorData name={dataName} value={sensorValue} />
+                </div>
               </div>
             </div>
           )

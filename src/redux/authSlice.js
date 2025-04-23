@@ -21,7 +21,6 @@ function _setLoginInfo(loginInfo) {
 }
 
 function _getLoginInfo() {
-  console.log('로그인 인포 읽는 중');
   try {
     return JSON.parse(localStorage.getItem(LOGIN_INFO_KEY));
   } catch (e) {

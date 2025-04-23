@@ -95,11 +95,9 @@ function SensorTab({tabs, value, onChange, dataProvider, DataComponent}) {
             onClick={() => onChange(key)}
           >
             {label}
-            <span className="ml-2 px-2 py-0.5 bg-white border rounded text-xs font-semibold text-gray-700">
+            <div className="ml-2 px-2 py-0.5 bg-white border rounded text-xs font-semibold text-gray-700 min-w-8">
               <DataComponent name={key} value={dataProvider(key)} />
-              {/* {dataProvider(key)} */}
-              {/* {unit} */}
-            </span>
+            </div>
           </button>
         ))}
       </div>

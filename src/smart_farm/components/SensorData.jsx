@@ -32,9 +32,9 @@ function SoilMoistureData({value}) {
 }
 
 function MotionData({value}) {
-  const shapeCss = "rounded-full w-[30%] aspect-square mx-auto";
+  const shapeCss = "rounded-full w-full aspect-square mx-auto";
   const colorCss = value === 'detected' ? 
-    "bg-red-500" : 
+    "bg-green-600" : 
     "bg-gray-200";
 
   return (
