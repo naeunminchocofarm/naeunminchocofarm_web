@@ -11,7 +11,7 @@ const WebHeader = () => {
   const nav = useNavigate();
 
   useEffect(() => {
-    console.log("권한:", loginInfo?.roleName);
+    // console.log("권한:", loginInfo?.roleName);
   }, [loginInfo?.roleName]);
 
   function handleLogout() {

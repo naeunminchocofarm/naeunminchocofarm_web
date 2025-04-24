@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     if (!isFammer(loginInfo)) {
-      alert("로그인이 필요합니다.\n첫 화면으로 이동합니다.");
+      alert("로그인이 필요합니다.\n첫 화면으로 이동합니다잉.");
       setIsAccessible(false);
     } else {
       setIsAccessible(true);

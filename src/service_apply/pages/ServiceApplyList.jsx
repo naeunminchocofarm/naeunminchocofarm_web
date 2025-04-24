@@ -13,12 +13,8 @@ const ServiceApplyList = () => {
   const nav = useNavigate();
 
   const fetchServiceApply = async () => {
-    try {
-      const res = await serviceApi.getServiceApplyList();
-      setApplyList(res.data);
-    } catch (error) {
-      console.error("서비스 신청 목록 조회 실패:", error);
-    }
+    const res = await serviceApi.getServiceApplyList();
+    setApplyList(res.data);
   };
 
   useEffect(() => {
@@ -71,20 +67,20 @@ const ServiceApplyList = () => {
                     <input type="checkbox" />
                   </td>
                   <td className={tdStyle}>{i+1}</td> 
-                  <td className={tdStyle}>{apply.loginInfo.loginId}</td> 
-                  <td className={tdStyle}>{apply.loginInfo.name}</td> 
-                  <td className={tdStyle}>{apply.loginInfo.email}</td>
-                  <td className={tdStyle}>{apply.loginInfo.tell}</td> 
+                  <td className={tdStyle}>{apply.proposerLoginId}</td> 
+                  <td className={tdStyle}>{apply.proposerName}</td> 
+                  <td className={tdStyle}>{apply.proposerEmail}</td>
+                  <td className={tdStyle}>{apply.proposerTell}</td> 
                   <td className={tdStyle}>{apply.type}</td> 
-                  <td className={tdStyle}>{apply.serviceStatus.serviceStatus}</td> 
+                  <td className={tdStyle}>{apply.status}</td> 
                   <td className={tdStyle}>{apply.applicationAt}</td>
                   <td className={tdStyle}>
-                  <button
-                    onClick={() => nav(`/admin/serviceApplyDetail/${apply.id}`)}
-                    className="px-4 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600 transition"
-                  >
-                    관리
-                  </button>
+                    <button
+                      onClick={() => nav(`/admin/serviceApplyDetail/${apply.id}`)}
+                      className="px-4 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600 transition"
+                    >
+                      관리
+                    </button>
                   </td>
                 </tr>
               ))
