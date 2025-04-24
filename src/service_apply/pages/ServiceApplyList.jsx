@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import serviceApi from "../apis/service_api";
 
 // 공통 스타일
@@ -67,10 +67,10 @@ const ServiceApplyList = () => {
                     <input type="checkbox" />
                   </td>
                   <td className={tdStyle}>{i+1}</td> 
-                  <td className={tdStyle}>{apply.proposerLoginId}</td> 
-                  <td className={tdStyle}>{apply.proposerName}</td> 
-                  <td className={tdStyle}>{apply.proposerEmail}</td>
-                  <td className={tdStyle}>{apply.proposerTell}</td> 
+                  <td className={tdStyle}>{apply.memberLoginId}</td> 
+                  <td className={tdStyle}>{apply.memberName}</td> 
+                  <td className={tdStyle}>{apply.memberEmail}</td>
+                  <td className={tdStyle}>{apply.contactTell}</td> 
                   <td className={tdStyle}>{apply.type}</td> 
                   <td className={tdStyle}>{apply.status}</td> 
                   <td className={tdStyle}>{apply.applicationAt}</td>
