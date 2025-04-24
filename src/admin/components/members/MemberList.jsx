@@ -11,12 +11,8 @@ const MemberList = () => {
   const [memberList, setMemberList] = useState([]);
 
   const fetchMembers = async () => {
-    try {
-      const res = await memberApi.getMemList();
-      setMemberList(res.data);
-    } catch (error) {
-      console.error("멤버 리스트 가져오기 실패:", error);
-    }
+    const res = await memberApi.getMemList();
+    setMemberList(res.data);
   };
 
   useEffect(() => {
@@ -28,8 +24,6 @@ const MemberList = () => {
     else if (id === 2) return '농장주'
     else return '관리자'
   }
-
-  console.log(memberList);
 
   return (
     <div className="p-6 space-y-6">

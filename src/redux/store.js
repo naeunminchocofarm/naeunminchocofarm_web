@@ -28,7 +28,6 @@ async function refreshIfAccessTokenIsExpired() {
   if (!isExpiredToken(accessToken)) {
     return;
   }
-  console.log("액세스 토큰 갱신하기");
   await refresh();
 }
 

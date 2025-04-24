@@ -20,8 +20,7 @@ const memberApi = {
     return axios.delete("/api/member/refresh");
   },
   getMemInfo: function () {
-    const response = axiosInstance.get("/member/memberInfo", {});
-    return response;
+    return axiosInstance.get("/member/memberInfo");
   },
   checkEmail: (email) => {
     return axiosInstance.get("/member/check-email", {
