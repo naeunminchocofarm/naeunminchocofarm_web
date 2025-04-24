@@ -6,3 +6,7 @@ export const isFammer = (loginInfo) => {
 export const isAdmin = (loginInfo) => {
   return loginInfo && loginInfo.roleName === 'ROLE_ADMIN';
 };
+
+export function isUser(loginInfo) {
+  return loginInfo && loginInfo.roleName === 'ROLE_USER';
+}

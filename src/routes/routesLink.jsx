@@ -64,7 +64,7 @@ export const routesLink = [
   { layout: "admin", path: "crops", title: "작물 목록", element: <CropList />, depth: 1, hidden: true },
 
   { layout: "member", path: "mytab", title: "계정관리", element: <MyTab />, depth: 1, hidden: true },
-  { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 2, hidden: true },,
+  { layout: "member", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 2, hidden: true },
   { layout: "member", path: "myapply", title: "마이서비스", element: <MyApply />, depth: 2, hidden: true },
   { layout: "member", path: "mypassword", title: "마이비밀번호", element: <MyPassword />, depth: 2, hidden: true },
 

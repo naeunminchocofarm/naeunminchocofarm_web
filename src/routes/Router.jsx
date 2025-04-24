@@ -64,9 +64,7 @@ export default function Router() {
         {/* 사용자 */}
         <Route
           path="/user/*"
-          element={
-              <UserLayout />
-          }
+          element={<UserLayout />}
         >
           <Route index element={<UserMain />} />
           {layoutRoutes.user}
