@@ -9,7 +9,7 @@ function NcfSocketClient(webSocketPath) {
   this.onOpen = _ => {};
   this.onText = _ => {};
   this.onJson = _ => {};
-  this.onSubscribeFaild = _ => {};
+  this.onSubscribeFailed = _ => {};
   this.onSubscribeSuccess = _ => {};
   this.onClose = _ => {};
   this.onError = _ => {};
@@ -18,6 +18,7 @@ function NcfSocketClient(webSocketPath) {
   this.onHandshakeFailed = frame => {};
   this.reconnectDelay = MIN_RECONNECT_DELAY;
   this.isExit = false;
+  this.destinations = [];
 }
 
 function _send(socket, message) {
@@ -46,7 +47,7 @@ NcfSocketClient.prototype.connect = function() {
     return;
   }
   console.log('trying connect websocket');
-
+  this.destinations = [];
   this.socket = new WebSocket(this.webSocketPath);
   this.socket.onopen = e => {
     this.reconnectDelay = MIN_RECONNECT_DELAY;
@@ -80,10 +81,11 @@ NcfSocketClient.prototype.connect = function() {
         }
         break;
       case 'SUBSCRIBE_SUCCESS':
+        this.destinations.push(frame.headers['destination']);
         this.onSubscribeSuccess(frame);
         break;
-      case 'SUBSCRIBE_FAILD':
-        this.onSubscribeFaild(frame);
+      case 'SUBSCRIBE_FAILED':
+        this.onSubscribeFailed(frame);
         break;
       default:
         break;
@@ -141,15 +143,16 @@ NcfSocketClient.prototype.sendJson = function(destination, dict) {
 }
 
 NcfSocketClient.prototype.close = function() {
+  this.isExit = true;
   if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-    this.isExit = true;
-    this.unsubscribe();
+    this.destinations.forEach(x => this.unsubscribe(x));
+    this.destinations = [];
     this.socket.close();
   }
 }
 
 NcfSocketClient.prototype.getReadyState = function() {
-  return this.socket.readyState;
+  return this.socket?.readyState ?? WebSocket.CLOSED;
 }
 
 export default NcfSocketClient;

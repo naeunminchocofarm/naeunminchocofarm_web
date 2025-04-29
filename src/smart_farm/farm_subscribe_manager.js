@@ -43,7 +43,6 @@ function _readySmartFarmSubscriber(farmUuid) {
 
     sockets[farmUuid] = socketClient;
   }
-
   sockets[farmUuid].connect();
 }
 
@@ -63,8 +62,8 @@ function _unsubscribe(farmUuid, subscribers, callback) {
   subscribers[farmUuid].splice(index, 1);
   if (subscribers[farmUuid].length == 0) {
     delete subscribers[farmUuid];
+    _closeSubscriberIfEmpty(farmUuid);
   }
-  _closeSubscriberIfEmpty(farmUuid);
 }
 
 function _requestCurrentSettings(socket, farmUuid) {
