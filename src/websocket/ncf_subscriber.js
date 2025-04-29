@@ -47,7 +47,6 @@ NcfSubscriber.prototype.connect = function() {
           default:
             break;
         }
-        this.onMessage(frame);
         break;
       case 'SUBSCRIBE_SUCCESS':
         this.onSubscribeSuccess(frame);

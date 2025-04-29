@@ -19,35 +19,29 @@ const SENSOR_TABS = [
 
 export default function UserFarmDetail() {
   const {farmId} = useParams();
-  const [farmUuid, setFarmUuid] = useState(undefined);
   const nav = useNavigate();
   const [settings, setSettings] = useState(undefined);
   const [status, setStatus] = useState(undefined);
   const updateSettings = useRef(undefined);
   const [activeTab, setActiveTab] = useState("soil_moisture");
+  const cleanUpTasks = useRef([]);
 
   useEffect(() => {
-    bindFarmUuid(farmId);
-  }, [farmId]);
-
-  useEffect(() => {
-    const disconnectFarm = connectFarm(farmUuid);
-    return () => {
-      disconnectFarm();
-    }
-  }, [farmUuid]);
-
-  function bindFarmUuid(farmId) {
     memberApi.getFarmDetail(farmId)
       .then(res => {
         if (!res.data) {
           alert("스마트팜을 보유하고 있지 않습니다. 이전 화면으로 이동합니다.");
           nav(-1);
         }
-        setFarmUuid(res.data.uuid);
+        const disconnectFarm = connectFarm(res.data.uuid);
+        cleanUpTasks.current.push(disconnectFarm);
       })
       .catch(e => console.error(e));
-  }
+
+    return () => {
+      cleanUpTasks.current.forEach(task => task());
+    }
+  }, [farmId]);
 
   function connectFarm(farmUuid) {
     const [unsubscribeSettings, _updateSettings] = subscribeFarmSettings(farmUuid, setSettings);
@@ -60,7 +54,7 @@ export default function UserFarmDetail() {
     }
   }
 
-  if (!farmUuid || !status || !settings) {
+  if (!status || !settings) {
     return <FullPageSpinner title={"스마트팜 정보를 불러오는 중입니다."} />;
   }
 

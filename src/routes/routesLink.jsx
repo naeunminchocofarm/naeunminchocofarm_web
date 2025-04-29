@@ -76,7 +76,6 @@ export const routesLink = [
   { layout: "user", path: "apply", title: "서비스 신청", element: <ServiceApply />, depth: 2, hidden: false },
   // { layout: "user", path: "alarm", title: "알림", element: <UserAlarmList />, depth: 1, hidden: false },
   { layout: "user", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: false },
-  
   // { layout: "user", path: "temp", title: "온도", element: <TemperaturePage />, depth: 2, hidden: false },
   // { layout: "user", path: "hume", title: "습도", element: <HumidityPage />, depth: 2, hidden: false },
   // { layout: "user", path: "sunshine", title: "일조량", element: <SunshinePage />, depth: 2, hidden: false },
