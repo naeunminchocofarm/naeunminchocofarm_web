@@ -14,7 +14,7 @@ function _readySmartFarmSubscriber(farmUuid) {
       return await getAccessToken();
     }
 
-    socketClient.onHandshakeSuccess = e => {
+    socketClient.onHandshakeSuccess = (client, frame) => {
       socketClient.subscribe(farmUuid);
       _requestCurrentSettings(socketClient, farmUuid);
       _requestCurrentStatus(socketClient, farmUuid);
