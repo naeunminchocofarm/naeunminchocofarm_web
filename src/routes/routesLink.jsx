@@ -28,17 +28,8 @@ import AdminFarmCreate from "../admin/components/farm/AdminFarmCreate";
 
 //user
 import UserMain from "../pages/Dashboard/UserMain";
-// import TemperaturePage from "../temperature/pages/TemperaturePage";
-// import HumidityPage from "../humidity/pages/HumidityPage";
-// import SunshinePage from "../sunshine/pages/SunshinePage";
-// import SoilPage from "../soil/pages/SoilPage";
-// import CoTwo from "../Cotwo/pages/CoTwo";
 import Privacy from "../pages/web/Privacy";
 import UserFarmList from "../pages/user/UserFarmList";
-// import UserZoneDetail from "../pages/user/UserZoneDetail";
-// import UserZoneControl from "../pages/user/UserZoneControl";
-// import UserSensorOverview from "../pages/user/UserSensorOverview";
-// import UserAlarmList from "../pages/user/UserAlarmList";
 import UserFarmDetail from "../pages/user/UserFarmDetail";
 
 
@@ -71,13 +62,7 @@ export const routesLink = [
   { layout: "user", path: "home", title: "홈", element: <UserMain />, depth: 1, hidden: false },
   { layout: "user", path: "myfarms", title: "내 스마트팜", element: <UserFarmList />, depth: 1, hidden: false },
   { layout: "user", path: "farms/:farmId", title: "스마트팜 상세", element: <UserFarmDetail />, depth: 2, hidden: true },
-  // { layout: "user", path: "farms/:farmId/sensor-overview", title: "센서 전체보기", element: <UserSensorOverview />, depth: 2, hidden: true },
   { layout: "user", path: "apply/list", title: "서비스 관리", element: <MyApply />, depth: 1, hidden: false },
   { layout: "user", path: "apply", title: "서비스 신청", element: <ServiceApply />, depth: 2, hidden: false },
-  // { layout: "user", path: "alarm", title: "알림", element: <UserAlarmList />, depth: 1, hidden: false },
   { layout: "user", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: false },
-  // { layout: "user", path: "temp", title: "온도", element: <TemperaturePage />, depth: 2, hidden: false },
-  // { layout: "user", path: "hume", title: "습도", element: <HumidityPage />, depth: 2, hidden: false },
-  // { layout: "user", path: "sunshine", title: "일조량", element: <SunshinePage />, depth: 2, hidden: false },
-  // { layout: "user", path: "soil", title: "토양", element: <SoilPage />, depth: 2, hidden: false },
 ];

@@ -40,14 +40,6 @@ NcfFrame.parse = function(rawFrame = "") {
   return new NcfFrame(command, headers, body);
 }
 
-// NcfFrame.createSubscribe = function(destination) {
-//   const headers = {
-//     'destination': destination
-//   };
-//   const requestFrame = new NcfFrame('SUBSCRIBE', headers, '');
-//   return requestFrame;
-// }
-
 NcfFrame.createUnsubscribe = function(destination) {
   const headers = {
     'destination': destination

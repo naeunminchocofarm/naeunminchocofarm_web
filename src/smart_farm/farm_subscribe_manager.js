@@ -109,7 +109,7 @@ function _closeSubscriberIfEmpty(farmUuid) {
 }
 
 function _sendUpdateSettings(farmUuid, newSettings) {
-  sockets[farmUuid].sendJson({'method': 'update-settings', 'settings': newSettings});
+  sockets[farmUuid].sendJson(farmUuid, {'method': 'update-settings', 'settings': newSettings});
 }
 
 export {

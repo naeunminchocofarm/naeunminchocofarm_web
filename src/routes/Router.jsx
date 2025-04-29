@@ -15,8 +15,6 @@ import Home from "../pages/Dashboard/Home";
 import NotFound from "../pages/NotFound";
 import FullPageSpinner from "../pages/FullPageSpinner";
 
-import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
-
 export default function Router() {
   const layoutRoutes = {
     web: [],
@@ -75,8 +73,6 @@ export default function Router() {
         <Route path="/loading" element={<FullPageSpinner />} />
 
         {/* 소켓&테스트 */}
-        <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
-        {/* <Route path="/test/farms-detail" element={<FarmDetailPage />} /> */}
         <Route path="/homebackup" element={<Home />} />
       </Routes>
     </>

@@ -118,8 +118,6 @@ NcfSocketClient.prototype.subscribe = function(destination) {
     const frame = new NcfFrame("SUBSCRIBE", headers, "");
     this.sendFrame(frame);
   })();
-  // const accessToken = this.accessTokenProvider();
-  // _send(this.socket, NcfFrame.createSubscribe(destination, accessToken).toString());
 }
 
 NcfSocketClient.prototype.unsubscribe = function(destination) {
