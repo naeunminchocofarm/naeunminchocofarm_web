@@ -109,7 +109,17 @@ NcfSocketClient.prototype.connect = function() {
 }
 
 NcfSocketClient.prototype.subscribe = function(destination) {
-  _send(this.socket, NcfFrame.createSubscribe(destination).toString());
+  (async () => {
+    const accessToken = await Promise.resolve(this.accessTokenProvider());
+    const headers = {
+      'Authorization': `Bearer ${accessToken}`,
+      'destination': destination
+    }
+    const frame = new NcfFrame("SUBSCRIBE", headers, "");
+    this.sendFrame(frame);
+  })();
+  // const accessToken = this.accessTokenProvider();
+  // _send(this.socket, NcfFrame.createSubscribe(destination, accessToken).toString());
 }
 
 NcfSocketClient.prototype.unsubscribe = function(destination) {
