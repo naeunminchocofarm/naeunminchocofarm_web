@@ -58,7 +58,7 @@ export default function UserFarmDetail() {
     return <FullPageSpinner title={"스마트팜 정보를 불러오는 중입니다."} />;
   }
 
-  function farmFarmDataProvider(dataName) {
+  function farmDataProvider(dataName) {
     const data = status.controllers?.map(c => c.sensor_datas?.find(s => s.name === dataName)?.value)?.find(x => true);
     return data;
   }
@@ -66,7 +66,7 @@ export default function UserFarmDetail() {
   return (
     <div className="px-4 py-6 max-w-6xl mx-auto">
       <UserTitle pageTitle={"스마트팜 상세"}/>
-      <SensorTab tabs={SENSOR_TABS} value={activeTab} onChange={setActiveTab} dataProvider={farmFarmDataProvider} DataComponent={SensorData} />
+      <SensorTab tabs={SENSOR_TABS} value={activeTab} onChange={setActiveTab} dataProvider={farmDataProvider} DataComponent={SensorData} />
       {/* 조건 설정 카드 */}
       <FarmController dataName={activeTab} settings={settings} onChangeSettings={s => updateSettings.current?.(s)} />
       <FarmSensorMonitor status={status} dataName={activeTab} />
