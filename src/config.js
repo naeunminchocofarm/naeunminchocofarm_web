@@ -1,1 +1,1 @@
-export const authWebSocketUrl = "ws://192.168.30.128:8081/aws";
+export const authWebSocketUrl = "ws://192.168.30.128:8080/aws";
