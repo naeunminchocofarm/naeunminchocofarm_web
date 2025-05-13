@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import memberApi from '../apis/member_api';
+import UserTitle from '../../header/UserTitle';
 
 const MyPageCompo = () => {
   const [editMode, setEditMode] = useState(false);
@@ -34,6 +35,8 @@ const MyPageCompo = () => {
   const editButtonStyle = "bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600";
   
   return (
+    <div className='px-6 py-6 max-w-6xl mx-auto'>
+      <UserTitle pageTitle={"마이페이지"}/>
     <div className='cont-area'>
       {!editMode && (
         <div className={editButtonWrapperStyle}>
@@ -117,6 +120,7 @@ const MyPageCompo = () => {
           </div>
         )}
       </form>
+    </div>
     </div>
   );
   

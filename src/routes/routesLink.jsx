@@ -60,9 +60,9 @@ export const routesLink = [
   { layout: "member", path: "mypassword", title: "마이비밀번호", element: <MyPassword />, depth: 2, hidden: true },
 
   { layout: "user", path: "home", title: "홈", element: <UserMain />, depth: 1, hidden: false },
-  { layout: "user", path: "myfarms", title: "내 스마트팜", element: <UserFarmList />, depth: 1, hidden: false },
+  { layout: "user", path: "myfarms", title: "내 스마트팜", element: <UserFarmList />, depth: 1, hidden: true },
   { layout: "user", path: "farms/:farmId", title: "스마트팜 상세", element: <UserFarmDetail />, depth: 2, hidden: true },
   { layout: "user", path: "apply/list", title: "서비스 관리", element: <MyApply />, depth: 1, hidden: false },
   { layout: "user", path: "apply", title: "서비스 신청", element: <ServiceApply />, depth: 2, hidden: false },
-  { layout: "user", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: false },
+  { layout: "user", path: "mypage", title: "마이페이지", element: <MyPage />, depth: 1, hidden: true },
 ];

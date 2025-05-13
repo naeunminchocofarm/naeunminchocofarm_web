@@ -65,7 +65,7 @@ export default function UserFarmDetail() {
 
   return (
     <div className="px-4 py-6 max-w-6xl mx-auto">
-      <UserTitle pageTitle={"스마트팜 상세"}/>
+      <UserTitle pageTitle={"스마트팜"}/>
       <SensorTab tabs={SENSOR_TABS} value={activeTab} onChange={setActiveTab} dataProvider={farmDataProvider} DataComponent={SensorData} />
       {/* 조건 설정 카드 */}
       <FarmController dataName={activeTab} settings={settings} onChangeSettings={s => updateSettings.current?.(s)} />

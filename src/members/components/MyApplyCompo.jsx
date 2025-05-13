@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BadgeCompo from "../../common_components/BadgeCompo";
 import serviceApi from "../../service_apply/apis/service_api";
+import UserTitle from "../../header/UserTitle";
 
 const MyApplyCompo = () => {
   const [openId, setOpenId] = useState(null);
@@ -32,7 +33,8 @@ const MyApplyCompo = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="px-6 py-6 mx-auto">
+      <UserTitle pageTitle={"서비스 신청 관리"}/>
       <div className="flex justify-end">
         <Link
           to="/web/serviceApply"
