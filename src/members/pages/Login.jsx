@@ -86,17 +86,6 @@ const Login = () => {
                   onChange={changeLoginInfo}
                 />
               </div>
-
-              <div className="flex justify-between items-center text-sm">
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" className="accent-green-500" />
-                  <span>로그인 상태 유지</span>
-                </label>
-                <a href="#" className="text-green-500 hover:underline">
-                  비밀번호 찾기
-                </a>
-              </div>
-
               <div className="flex space-x-3 mt-6">
                 <button
                   type="button"
