@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { BsMenuButton } from "react-icons/bs";
 import { webMenu } from "../routes/MenuByLayout";
-import { useAuthInfo } from "../hooks/AuthInfo";
 import logo from "../assets/images/layouts/h1-logo.png";
+import { logout, useLoginInfo } from "../redux/store";
 
 const WebHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLogin, roleName, logout } = useAuthInfo();
+  const loginInfo = useLoginInfo();
+  const nav = useNavigate();
 
   useEffect(() => {
-    console.log("권한:", roleName);
-  }, [roleName]);
+    // console.log("권한:", loginInfo?.roleName);
+  }, [loginInfo?.roleName]);
+
+  function handleLogout() {
+    logout();
+    nav("/web/home");
+  }
 
   const headerCss = "bg-white shadow-sm fixed top-0 left-0 right-0 z-50";
 
@@ -42,25 +48,25 @@ const WebHeader = () => {
 
         {/* PC 로그인/회원가입 or 로그인 상태 */}
         <div className="hidden md:flex items-center space-x-3">
-          {isLogin ? (
+          {loginInfo ? (
             <>
-              {roleName === "ROLE_FAMMER" && (
+              {loginInfo.roleName === "ROLE_FAMMER" && (
                 <NavLink to="/user/home" className="text-sm text-green-600">
                   마이팜
                 </NavLink>
               )}
-              {roleName === "ROLE_ADMIN" && (
+              {loginInfo.roleName === "ROLE_ADMIN" && (
                 <NavLink to="/admin" className="text-sm text-green-600">
                   관리자페이지 
                 </NavLink>
               )}
-              {roleName === "ROLE_USER" && (
+              {loginInfo.roleName === "ROLE_USER" && (
                 <NavLink to="/member/mypage" className="text-sm text-green-600">
                 마이페이지
                 </NavLink>
               )}
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="text-sm text-red-500 hover:underline"
               >
                 로그아웃
@@ -103,14 +109,14 @@ const WebHeader = () => {
             </NavLink>
           ))}
 
-          {isLogin ? (
+          {loginInfo ? (
             <>
-              {roleName === "ROLE_FAMMER" && (
+              {loginInfo.roleName === "ROLE_FAMMER" && (
                 <NavLink to="/user/home" onClick={() => setIsOpen(false)}>
                   마이팜
                 </NavLink>
               )}
-              {roleName === "ROLE_ADMIN" && (
+              {loginInfo.roleName === "ROLE_ADMIN" && (
                 <NavLink to="/admin" onClick={() => setIsOpen(false)}>
                   관리자페이지
                 </NavLink>
@@ -118,7 +124,7 @@ const WebHeader = () => {
               <NavLink to="/member/mypage" onClick={() => setIsOpen(false)}>
                 마이페이지
               </NavLink>
-              <button onClick={logout} className="text-red-500">
+              <button onClick={handleLogout} className="text-red-500">
                 로그아웃
               </button>
             </>

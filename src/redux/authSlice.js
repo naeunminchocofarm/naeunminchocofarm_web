@@ -1,10 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
-const getToken = () => {
-  const token = localStorage.getItem("accessToken");
-  if (!token || !token.includes(".")) {
-    localStorage.removeItem("accessToken");
+const ACCESS_TOKEN_KEY = "accessToken";
+const LOGIN_INFO_KEY = "loginInfo";
+
+function _setAccessToken(token) {
+  localStorage.setItem(ACCESS_TOKEN_KEY, token);
+}
+
+function _getAccessToken() {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
+
+function _deleteAccessToken() {
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+}
+
+function _setLoginInfo(loginInfo) {
+  localStorage.setItem(LOGIN_INFO_KEY, JSON.stringify(loginInfo));
+}
+
+function _getLoginInfo() {
+  try {
+    return JSON.parse(localStorage.getItem(LOGIN_INFO_KEY));
+  } catch (e) {
+    _deleteLoginInfo();
+    return null;
+  }
+}
+
+function _deleteLoginInfo() {
+  localStorage.removeItem(LOGIN_INFO_KEY);
+}
+
+function _initAccessToken() {
+  const token = _getAccessToken();
+  if (!token) {
     return null;
   }
 
@@ -12,49 +43,66 @@ const getToken = () => {
     const decoded = jwtDecode(token);
     const now = Date.now() / 1000;
     if (decoded.exp < now) {
-      localStorage.removeItem("accessToken");
+      _deleteAccessToken();
       return null;
     }
     return token;
   } catch (e) {
-    console.error("유효하지 않은 토큰:", e);
-    localStorage.removeItem("accessToken");
+    _deleteAccessToken();
     return null;
   }
 };
 
-let parsedLoginInfo = null;
-try {
-  const stored = localStorage.getItem("loginInfo");
-  parsedLoginInfo = stored && stored !== "undefined" ? JSON.parse(stored) : null;
-} catch (e) {
-  console.error("⚠️ loginInfo 파싱 실패:", e);
-  localStorage.removeItem("loginInfo");
+function _initLoginInfo() {
+  return _getLoginInfo()
+}
+
+function _initAuthState() {
+  const accessToken = _initAccessToken();
+  const loginInfo = _initLoginInfo();
+  return {accessToken, loginInfo};
 }
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    token: getToken(),
-    loginInfo: parsedLoginInfo,
-  },
+  initialState: _initAuthState(),
   reducers: {
     loginReducer: (state, action) => {
-      const { token, loginInfo } = action.payload;
-      state.token = token;
+      const { accessToken, loginInfo } = action.payload;
+      state.accessToken = accessToken;
       state.loginInfo = loginInfo;
-
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
+      _setAccessToken(accessToken);
+      _setLoginInfo(loginInfo);
     },
     logoutReducer: (state) => {
-      state.token = null;
+      state.accessToken = null;
       state.loginInfo = null;
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("loginInfo");
+      _deleteAccessToken();
+      _deleteLoginInfo();
     },
   },
 });
 
-export const { loginReducer, logoutReducer } = authSlice.actions;
+export function accessTokenSelector(state) {
+  return state.auth.accessToken;
+}
+
+export function loginInfoSelector(state) {
+  return state.auth.loginInfo;
+}
+
+export function loginAction(dispatch, {accessToken, loginInfo: {id, roleName, roleFlag, loginId, name}}) {
+  const loginInfo = {
+    id, 
+    roleName, 
+    roleFlag, 
+    loginId, 
+    name};
+  dispatch(authSlice.actions.loginReducer({accessToken, loginInfo}));
+}
+
+export function logoutAction(dispatch) {
+  dispatch(authSlice.actions.logoutReducer());
+}
+
 export default authSlice;

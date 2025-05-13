@@ -15,12 +15,8 @@ const ServiceApplyDetail = () => {
   const [detail, setDetail] = useState(null);
 
   const fetchServiceApply = async (id) => {
-    try {
-      const res = await serviceApi.getServiceApplyDetail(id);
-      setDetail(res.data);
-    } catch (error) {
-      console.error("서비스 신청 목록 조회 실패:", error);
-    }
+    const res = await serviceApi.getServiceApplyDetail(id);
+    setDetail(res.data);
   };
 
   useEffect(() => {
@@ -42,23 +38,23 @@ const ServiceApplyDetail = () => {
           <tbody>
             <tr>
               <th className={thStyle}>신청 상태</th>
-              <td className={tdStyle}>{detail.serviceStatus?.status}</td>
+              <td className={tdStyle}>{detail.status}</td>
               <th className={thStyle}>신청일</th>
               <td className={tdStyle}>
-                {detail.applicationDate?.slice(0, 10)}
+                {detail.applicationAt}
               </td>
             </tr>
             <tr>
               <th className={thStyle}>이름</th>
-              <td className={tdStyle}>{detail.member?.name}</td>
+              <td className={tdStyle}>{detail.memberName}</td>
               <th className={thStyle}>아이디</th>
-              <td className={tdStyle}>{detail.member?.id}</td>
+              <td className={tdStyle}>{detail.memberId}</td>
             </tr>
             <tr>
               <th className={thStyle}>이메일</th>
-              <td className={tdStyle}>{detail.member?.email}</td>
+              <td className={tdStyle}>{detail.memberEmail}</td>
               <th className={thStyle}>전화번호</th>
-              <td className={tdStyle}>{detail.member?.tell}</td>
+              <td className={tdStyle}>{detail.memberTell}</td>
             </tr>
           </tbody>
         </table>

@@ -1,6 +1,5 @@
 import React from "react";
 import { BsBellFill, BsChevronRight, BsPersonFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
 import CurrentDate from "../common_components/Dayjs";
 
 const UserTitle = ({ pageTitle }) => {
@@ -11,7 +10,7 @@ const UserTitle = ({ pageTitle }) => {
         <div className="flex items-center text-sm text-gray-500 mb-1">
           HOME <BsChevronRight className="mx-1" /> {pageTitle}
         </div>
-        <h3 className="text-2xl font-bold text-gray-800">ㅇㅇㅇ{pageTitle}</h3>
+        <h3 className="text-2xl font-bold text-gray-800">{pageTitle}</h3>
         <p className="text-sm text-gray-500 mt-1">
           총 운영 상태 및 데이터를 한눈에 확인하세요
         </p>

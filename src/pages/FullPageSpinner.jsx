@@ -1,6 +1,6 @@
 import { BsTruck } from "react-icons/bs";
 
-const FullPageSpinner = () => {
+const FullPageSpinner = ({title = "나은민팜이 준비 중입니다..."}) => {
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center bg-[#f5f2e9]">
       <div
@@ -13,7 +13,7 @@ const FullPageSpinner = () => {
         <BsTruck className="text-green-700 text-4xl absolute -top-2 rotate-[-10deg]" />
       </div>
       <p className="mt-4 text-[#5c4033] text-lg font-semibold">
-        나은민팜이 준비 중입니다...
+        {title}
       </p>
     </div>
   );

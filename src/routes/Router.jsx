@@ -15,9 +15,6 @@ import Home from "../pages/Dashboard/Home";
 import NotFound from "../pages/NotFound";
 import FullPageSpinner from "../pages/FullPageSpinner";
 
-// import FarmDetailPage from "../smart_farm/pages/FarmDetailPage";
-import ExampleWebSocketPage from "../websocket/ExampleWebSocketPage";
-
 export default function Router() {
   const layoutRoutes = {
     web: [],
@@ -34,7 +31,6 @@ export default function Router() {
 
   return (
     <>
-
       <Routes>
         <Route path="/" element={<Navigate to="/web" />} />
 
@@ -66,9 +62,7 @@ export default function Router() {
         {/* 사용자 */}
         <Route
           path="/user/*"
-          element={
-              <UserLayout />
-          }
+          element={<UserLayout />}
         >
           <Route index element={<UserMain />} />
           {layoutRoutes.user}
@@ -79,8 +73,6 @@ export default function Router() {
         <Route path="/loading" element={<FullPageSpinner />} />
 
         {/* 소켓&테스트 */}
-        <Route path="/examples/websocket" element={<ExampleWebSocketPage />} />
-        {/* <Route path="/test/farms-detail" element={<FarmDetailPage />} /> */}
         <Route path="/homebackup" element={<Home />} />
       </Routes>
     </>

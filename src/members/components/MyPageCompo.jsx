@@ -12,7 +12,8 @@ const MyPageCompo = () => {
   });
 
   useEffect(() => {
-    memberApi.getMemInfo().then(res => setMyInfo(res.data));
+    memberApi.getMemInfo()
+      .then(res => setMyInfo(res.data));
   }, []);
 
   const handleChange = e => {
@@ -21,7 +22,6 @@ const MyPageCompo = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("수정 요청", myInfo);
     setEditMode(false);
   };
 
@@ -33,7 +33,6 @@ const MyPageCompo = () => {
   const editButtonWrapperStyle = "flex justify-end mb-4";
   const editButtonStyle = "bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600";
   
-
   return (
     <div className='cont-area'>
       {!editMode && (
@@ -50,7 +49,7 @@ const MyPageCompo = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label className={labelStyle}>아이디</label>
-        <div className={divStyle}>{myInfo.id}</div>
+        <div className={divStyle}>{myInfo.loginId}</div>
       </div>
 
       <div>
@@ -97,13 +96,13 @@ const MyPageCompo = () => {
         <label className={labelStyle}>전화번호</label>
         {editMode ? (
           <input
-            name="phone"
-            value={myInfo.phone}
+            name="tell"
+            value={myInfo.tell}
             onChange={handleChange}
             className={inputStyle}
           />
         ) : (
-          <div className={divStyle}>{myInfo.phone}</div>
+          <div className={divStyle}>{myInfo.tell}</div>
         )}
       </div>
   

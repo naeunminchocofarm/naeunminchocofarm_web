@@ -1,53 +1,49 @@
-import NcfSubscriber from "../websocket/ncf_subscriber";
-import { webSocketPaths } from "../websocket/wobsocket_paths";
+import { getAccessToken } from "../redux/store";
+import NcfSocketClient from "../websocket/ncf_socket_client";
+import { authWebSocketUrl } from "../config";
 
 const sockets = {};
 const settingsSubscribers = {};
 const statusSubscribers = {};
 
 function _readySmartFarmSubscriber(farmUuid) {
-  if (sockets[farmUuid]) {
-    return;
-  }
+  if (!sockets[farmUuid]) {
+    const socketClient = new NcfSocketClient(authWebSocketUrl);
 
-  const subscriber = new NcfSubscriber(webSocketPaths.production, farmUuid);
-
-  subscriber.onOpen = e => {
-    subscriber.subscribe();
-    _requestCurrentSettings(subscriber);
-    _requestCurrentStatus(subscriber);
-  }
-
-  subscriber.onJson = frame => {
-    const data = JSON.parse(frame.body)
-    switch (data['method']) {
-      case 'current-settings':
-        settingsSubscribers[farmUuid]?.forEach(cb => {
-          try {
-            cb(data['settings']);
-          }
-          catch (err) {
-            console.error(err);
-          }
-        });
-        break;
-      case 'current-status':
-        statusSubscribers[farmUuid]?.forEach(cb => {
-          try {
-            cb(data['status']);
-          }
-          catch (err) {
-            console.error(err);
-          }
-        })
-        break;
-      default:
-        break;
+    socketClient.accessTokenProvider = async () => {
+      return await getAccessToken();
     }
-  }
 
-  subscriber.connect();
-  sockets[farmUuid] = subscriber;
+    socketClient.onHandshakeSuccess = (client, frame) => {
+      socketClient.subscribe(farmUuid);
+    }
+
+    socketClient.onSubscribeSuccess = frame => {
+      _requestCurrentSettings(socketClient, farmUuid);
+      _requestCurrentStatus(socketClient, farmUuid);
+    }
+
+    socketClient.onJson = frame => {
+      const data = JSON.parse(frame.body)
+      switch (data['method']) {
+        case 'current-settings':
+          settingsSubscribers[farmUuid]?.forEach(cb => {
+            cb(data['settings']);
+          });
+          break;
+        case 'current-status':
+          statusSubscribers[farmUuid]?.forEach(cb => {
+            cb(data['status']);
+          })
+          break;
+        default:
+          break;
+      }
+    }
+
+    sockets[farmUuid] = socketClient;
+  }
+  sockets[farmUuid].connect();
 }
 
 function _subscribe(farmUuid, subscribers, callback) {
@@ -66,27 +62,33 @@ function _unsubscribe(farmUuid, subscribers, callback) {
   subscribers[farmUuid].splice(index, 1);
   if (subscribers[farmUuid].length == 0) {
     delete subscribers[farmUuid];
+    _closeSubscriberIfEmpty(farmUuid);
   }
-  _closeSubscriberIfEmpty(farmUuid);
 }
 
-function _requestCurrentSettings(socket) {
-  socket?.sendJson({'method': 'get-settings'});
+function _requestCurrentSettings(socket, farmUuid) {
+  socket?.sendJson(farmUuid, {'method': 'get-settings'});
 }
 
-function _requestCurrentStatus(socket) {
-  socket?.sendJson({'method': 'get-status'});
+function _requestCurrentStatus(socket, farmUuid) {
+  socket?.sendJson(farmUuid, {'method': 'get-status'});
 }
 
 function subscribeFarmSettings(farmUuid, callback) {
+  if (!farmUuid || farmUuid == "") {
+    throw new TypeError("farmUuid cannot be empty");
+  }
   _subscribe(farmUuid, settingsSubscribers, callback);
-  _requestCurrentSettings(sockets[farmUuid]);
+  _requestCurrentSettings(sockets[farmUuid], farmUuid);
   return [() => _unsubscribe(farmUuid, settingsSubscribers, callback), newSettings => _sendUpdateSettings(farmUuid, newSettings)];
 }
 
 function subscribeFarmStatus(farmUuid, callback) {
+  if (!farmUuid || farmUuid == '') {
+    throw new TypeError("farmUuid cannot be empty");
+  }
   _subscribe(farmUuid, statusSubscribers, callback);
-  _requestCurrentStatus(sockets[farmUuid]);
+  _requestCurrentStatus(sockets[farmUuid], farmUuid);
   return () => _unsubscribe(farmUuid, statusSubscribers, callback);
 }
 
@@ -99,15 +101,14 @@ function _closeSubscriberIfEmpty(farmUuid) {
     && (statusSubscriberLength == undefined || settingsSubscriberLength == 0)
   ) {
     if (sockets[farmUuid]) {
-      sockets[farmUuid].unsubscribe();
+      sockets[farmUuid].unsubscribe(farmUuid);
       sockets[farmUuid].close();
-      delete sockets[farmUuid];
     }
   }
 }
 
 function _sendUpdateSettings(farmUuid, newSettings) {
-  sockets[farmUuid].sendJson({'method': 'update-settings', 'settings': newSettings});
+  sockets[farmUuid].sendJson(farmUuid, {'method': 'update-settings', 'settings': newSettings});
 }
 
 export {

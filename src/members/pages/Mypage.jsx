@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import MyPageCompo from "../components/MyPageCompo";
 
 const MyPage = () => {
-  const [tab, setTab] = useState("info");
+  // const [tab, setTab] = useState("info");
 
   return (
-      <>
-        <MyPageCompo/>
-      </>
+    <>
+      <MyPageCompo/>
+    </>
   );
 };
 

@@ -1,48 +1,36 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import memberApi from "../apis/member_api";
-import { loginReducer } from "../../redux/authSlice";
 import loginImg from "../../assets/images/contents/img-login.png";
+import { login } from "../../redux/store";
 
 const Login = () => {
-  const dispatch = useDispatch();
   const nav = useNavigate();
 
-  const [loginInfo, setLoginInfo] = useState({
+  const [loginData, setLoginData] = useState({
     loginId: "",
     password: "",
   });
 
   const changeLoginInfo = (e) => {
-    setLoginInfo({
-      ...loginInfo,
+    setLoginData({
+      ...loginData,
       [e.target.name]: e.target.value,
     });
   };
 
   //로그인 요청 함수
   const loginCheck = () => {
-    memberApi
-      .login(loginInfo)
-      .then((res) => {
-        alert("로그인 성공");
-        console.log(res.headers["authorization"]); //authorization
-        const accessToken = res.headers["authorization"]; //전달받은 jwt 토큰
-        if (res.data) {
-          dispatch(loginReducer({ token: accessToken, loginInfo: res.data }));
-        } else {
-          console.error("로그인 응답에 유저 정보 없음:", res);
-        }
-        nav("/web/home");
-      })
-      .catch((e) => {
-        if (e.status === 401) {
-          alert("로그인 실패");
-        } else {
-          console.log(e);
-        }
-      });
+    login(loginData)
+    .then(loginInfo => {
+      nav("/web/home");
+    })
+    .catch(err => {
+      if (err.status === 401) {
+        alert("로그인 실패");
+      }
+
+      console.error(err);
+    });
   };
 
   const loginContianer =  "w-full min-h-[calc(100vh-140px)] flex items-center justify-center bg-gradient-to-r from-[#faf8f2] via-[#f4fef4] to-[#e6f6e6]";
@@ -68,7 +56,7 @@ const Login = () => {
                 <input
                   type="text"
                   name="loginId"
-                  value={loginInfo.loginId}
+                  value={loginData.loginId}
                   className={loginInput}
                   placeholder="아이디를 입력하세요"
                   onChange={changeLoginInfo}
@@ -79,8 +67,8 @@ const Login = () => {
                 <label className="text-sm text-gray-700">비밀번호</label>
                 <input
                   type="password"
-                  name="encryptedLoginPw"
-                  value={loginInfo.encryptedLoginPw}
+                  name="password"
+                  value={loginData.password}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
                   placeholder="비밀번호를 입력하세요"
                   onChange={changeLoginInfo}

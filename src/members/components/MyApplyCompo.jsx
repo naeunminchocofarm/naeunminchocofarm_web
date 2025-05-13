@@ -8,34 +8,10 @@ const MyApplyCompo = () => {
   const [openId, setOpenId] = useState(null);
   const [applyList, setApplyList] = useState([]);
 
-  const fetchServiceApply = async (loginId) => {
-    try {
-      const res = await serviceApi.getMyServiceApplyList({
-        params: { loginId }
-      });
+  const fetchServiceApply = async () => {
+      const res = await serviceApi.getMyServiceApplyList();
       setApplyList(res.data);
-    } catch (error) {
-      console.error("실패:", error);
-  
-      setApplyList([]); // fallback 빈 배열 처리
-      alert("신청 목록을 불러오는 데 실패했습니다. 잠시 후 다시 시도해주세요.");
-    }
   };
-  // @GetMapping("/service/apply") 일단 프론트에 넣어놓기
-  // public List<ServiceApplyDTO> getServiceApplyList(@RequestParam(required = false) String loginId) {
-  //     return serviceApplyMapper.getServiceApplyList(loginId);
-  // }
-//   <select id="getServiceApplyList" resultMap="ServiceApplyMap">
-//   SELECT *
-//   FROM service_apply sa
-//   JOIN member m ON sa.member_id = m.id
-//   <where>
-//     <!-- 파라미터가 있을 경우만 조건 적용 -->
-//     <if test="loginId != null">
-//       AND m.login_id = #{loginId}
-//     </if>
-//   </where>
-// </select>
 
   useEffect(() => {
     fetchServiceApply();
@@ -80,14 +56,14 @@ const MyApplyCompo = () => {
         </thead>
         <tbody>
         {applyList.length > 0 ? (
-        applyList.map((item, idx) => (
+        applyList.map((item, i) => (
           <React.Fragment key={item.id}>
             <tr className="bg-white hover:bg-gray-50">
-              <td className="px-4 py-2 border text-center">{idx + 1}</td>
-              <td className="px-4 py-2 border">{item.email}</td>
+              <td className="px-4 py-2 border text-center">{i + 1}</td>
+              <td className="px-4 py-2 border">{item.memberEmail}</td>
               <td className="px-4 py-2 border text-center">{item.type}</td>
-              <td className="px-4 py-2 border text-center">{item.tell}</td>
-              <td className="px-4 py-2 border text-center">{item.phone}</td>
+              <td className="px-4 py-2 border text-center">{item.contactTell}</td>
+              <td className="px-4 py-2 border text-center">{item.applicationAt}</td>
               <td className="px-4 py-2 border text-center">
                 <BadgeCompo label={item.status} type={getStatusType(item.status)} />
               </td>
@@ -116,7 +92,6 @@ const MyApplyCompo = () => {
           </td>
         </tr>
       )}
-
         </tbody>
       </table>
     </div>

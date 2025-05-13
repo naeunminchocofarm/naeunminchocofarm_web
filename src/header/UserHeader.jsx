@@ -1,20 +1,10 @@
-import { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { userMenu } from "../routes/MenuByLayout";
 import logo from "../assets/images/layouts/h1-logo.png";
 
 const UserHeader = () => {
-  const [openMenus, setOpenMenus] = useState({});
-
-  const toggleMenu = (path) => {
-    setOpenMenus((prev) => ({
-      ...prev,
-      [path]: !prev[path],
-    }));
-  };
-
-  console.log(userMenu.map((m) => [m.title, m.depth]));
-
+  // console.log(userMenu.map((m) => [m.title, m.depth]));
   return (
     <>
       <aside className="hidden md:flex flex-col justify-between w-80 min-h-screen bg-white shadow-xl">
